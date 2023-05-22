@@ -1,0 +1,26 @@
+/* SEZIONE HEADER */
+header
+{
+  background-color: #ffaa00;
+}
+
+/* SEZIONE NAV */
+nav
+{
+  border: solid 1px black;
+}
+
+/* SEZIONE DEL CONTENUTO - MAIN */
+main
+{
+  border: solid 1px black;
+}
+
+/* SEZIONE FOOTER */
+footer
+{
+  background-color: #007c7c;
+  color: white;
+  font-style: italic;
+  text-align: center;
+}
