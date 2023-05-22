@@ -1,13 +1,19 @@
-import React, { useEffect } from 'react';
 import './App.css';
 
+// Importazione Componenti
+import {Header} from './components/breadcrumb';
+
+/*
 export function App() {
   return (
     <body>
       <header><h1>Lumos Minima</h1></header>
-      <nav>Home</nav>
+      <nav id="breadcrumb">Home</nav>
       <main>
         <h2>Lampioni Collegati</h2>
+        <div id="lamp-box">
+          [placeholder-lampioni]
+        </div>
       </main>
       <footer>
         4ourSquared Team <br></br>
@@ -17,3 +23,11 @@ export function App() {
     </body>
   );
 }
+*/
+
+export function App(){
+  return(
+    <Header />
+  )
+}
+

@@ -1,19 +1,41 @@
+/* GENERALI */
+html
+{
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
 /* SEZIONE HEADER */
 header
 {
+  padding: 1em;
+}
+
+h1
+{
+  text-align: center;
+  font-size: 3em;
   background-color: #ffaa00;
+  padding: 0.5em
 }
 
 /* SEZIONE NAV */
-nav
+.breadcrumb
 {
+  font-size: 1.5em;
   border: solid 1px black;
 }
+
 
 /* SEZIONE DEL CONTENUTO - MAIN */
 main
 {
   border: solid 1px black;
+}
+
+h2
+{
+  border-bottom: 1px dashed black;
 }
 
 /* SEZIONE FOOTER */
