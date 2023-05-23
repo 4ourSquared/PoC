@@ -1,16 +1,6 @@
 /* GENERALI */
-html
-{
-  padding-left: 2%;
-  padding-right: 2%;
-}
 
 /* SEZIONE HEADER */
-header
-{
-  padding: 1em;
-}
-
 h1
 {
   text-align: center;
@@ -24,6 +14,10 @@ h1
 {
   font-size: 1.5em;
   border: solid 1px black;
+}
+
+.breadcrumb li{
+  padding-left: 0.5em;
 }
 
 
