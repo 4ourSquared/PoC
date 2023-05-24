@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { LampioneCard } from './LampioneCard'
+import { LampioneTable } from './LampioneTable'
 
 export class Content extends Component{
     render(){
@@ -7,23 +8,7 @@ export class Content extends Component{
             <main>
                 <h2>Lampioni Collegati</h2>
                 <div className='row'>
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
-                    <LampioneCard />
+                    <LampioneTable/>
                 </div>
             </main>
         )

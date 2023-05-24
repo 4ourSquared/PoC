@@ -33,7 +33,10 @@ h2
   border-bottom: 1px dashed black;
 }
 
-/* CARD */
+/* TABELLA */
+table{
+  text-align: center;
+}
 
 /* SEZIONE FOOTER */
 footer
@@ -42,7 +45,7 @@ footer
   color: white;
   font-style: italic;
   text-align: center;
-  position: fixed;
+  position: sticky;
   left: 0;
   bottom: 0;
   width: 100%;
