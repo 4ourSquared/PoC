@@ -5,9 +5,7 @@ import { RouterComponent } from './routing/routing';
 
 export function App(){
   return(
-    <>
-      <RouterComponent/>
-    </>
+    <RouterComponent/>
   )
 }
 
