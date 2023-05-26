@@ -21,21 +21,21 @@ export class LampioneTable extends Component{
                         <td style={{backgroundColor: 'yellow'}}>ON</td>
                         <td>5</td>
                         <td>Piazza Mazzini</td>
-                        <td><button type="button" className="btn btn-outline-info" onClick={testRequest}>Info</button></td>
+                        <td><button type="button" className="btn btn-outline-info" onClick={() => testRequest(1)}>Info</button></td>
                         </tr>
                         <tr>
                         <th scope="row">2</th>
                         <td style={{backgroundColor: 'black', color:'white'}}>OFF</td>
                         <td>8</td>
                         <td>Via Crescente</td>
-                        <td><button type="button" className="btn btn-outline-info" onClick={testRequest}>Info</button></td>
+                        <td><button type="button" className="btn btn-outline-info" onClick={() => testRequest(2)}>Info</button></td>
                         </tr>
                         <tr>
                         <th scope="row">3</th>
                         <td style={{backgroundColor: 'yellow'}}>ON</td>
                         <td>7</td>
                         <td>Navigli</td>
-                        <td><button type="button" className="btn btn-outline-info" onClick={testRequest}>Info</button></td>
+                        <td><button type="button" className="btn btn-outline-info" onClick={() => testRequest(3)}>Info</button></td>
                         </tr>
                     </tbody>
                 </table>
