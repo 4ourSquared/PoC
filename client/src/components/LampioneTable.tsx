@@ -5,6 +5,7 @@ export class LampioneTable extends Component{
     render(){
         return(
             <div className="row justify-content-center">
+                <button type="button" className="btn btn-primary">Aggiungi Lampione</button>
                 <table className="table table-hover align-middle" style={{width: '90%' }}>
                     <thead>
                         <tr>

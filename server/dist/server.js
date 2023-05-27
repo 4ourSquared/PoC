@@ -29,6 +29,6 @@ app.listen(port, () => {
 });
 //SEZIONE DI PROVA - ELIMINARE PRIMA DELLA PUBBLICAZIONE
 app.get('/info/lampioni/:id', (req, res) => {
-    console.log(`ID: ${req.params.id}`);
+    console.log(`Ricevuta richiesta GET su /info/lampioni -> ID: ${req.params.id}`);
     res.status(200).send();
 });
