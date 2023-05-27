@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import testRequest from './testRequest'
+import { NewLampForm } from './new_lamp_form';
 
 export class LampioneTable extends Component{
     render(){
