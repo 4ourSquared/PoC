@@ -1,4 +1,5 @@
 import express, {Request, Response} from 'express';
+import { Lampione } from './models/lampione';
 
 // Config del Server
 const bodyParser = require('body-parser');
@@ -12,7 +13,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 // Array contenente i lampioni generati - solo per test, rimuovere in produzione
-let lampioni_test = [];
+let lampioni_test :Lampione[] = [];
 
 
 // Metodi per API REST

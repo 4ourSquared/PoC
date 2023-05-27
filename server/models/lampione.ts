@@ -6,7 +6,7 @@ export class Lampione {
     private luogo   : string;
 
     // Costruttore
-    public constructor(id: number, stato: boolean, lum: number, luogo: string){
+    public constructor(id: number = 0, stato: boolean, lum: number, luogo: string){
         this.id = id;
         this.stato = stato;
         this.lum = lum;
