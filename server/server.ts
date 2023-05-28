@@ -23,8 +23,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/lampioni', (req, res) => {
-    console.log('Ricevuta richiesta GET su /api/lampioni -> NO ID');
-    res.status(400).send();
+    console.log('Ricevuta richiesta GET su /api/lampioni -> RETRIEVE ALL DATA');
+    res.status(200).json(lampioni_test);
 });
 
 app.listen(port , () => {

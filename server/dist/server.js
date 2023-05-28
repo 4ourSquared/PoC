@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
     res.status(200).send();
 });
 app.get('/api/lampioni', (req, res) => {
-    console.log('Ricevuta richiesta GET su /api/lampioni -> NO ID');
-    res.status(400).send();
+    console.log('Ricevuta richiesta GET su /api/lampioni -> RETRIEVE ALL DATA');
+    res.status(200).json(lampioni_test);
 });
 app.listen(port, () => {
     console.log('Il server è in ascolto sulla porta 5000');

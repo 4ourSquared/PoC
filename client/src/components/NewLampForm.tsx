@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export class NewLampForm extends Component {
   render() {
     return (
-      <div className="content" style={{ width: "90%" }}>
+      <div className="content">
         <form action="http://localhost:5000/api/lampioni" method="POST">
           <div className="form-group">
             <label htmlFor="id">ID (Automatico)</label>
