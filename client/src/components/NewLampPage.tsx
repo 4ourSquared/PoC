@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import { NewLampForm } from "./NewLampForm";
 import { Header } from "./breadcrumb";
-import { NewLampForm } from "./new_lamp_form";
 import { Footer } from "./footer";
 
 export class NewLampPage extends Component {
@@ -8,7 +8,7 @@ export class NewLampPage extends Component {
     return (
       <>
         <Header />
-        <NewLampForm/>
+        <NewLampForm />
         <Footer />
       </>
     );
