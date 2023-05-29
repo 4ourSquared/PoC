@@ -23,7 +23,7 @@ export class NewLampForm extends Component {
             </select>
             <small id="statusHelp" className="form-text text-muted">
               Indica se il lampione deve essere attivo o no al momento
-              dell'insreimento a sistema.
+              dell'inserimento a sistema.
             </small>
           </div>
           <div className="form-group">
