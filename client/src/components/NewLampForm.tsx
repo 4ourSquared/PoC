@@ -10,10 +10,10 @@ export class NewLampForm extends Component {
             <input
               className="form-control"
               type="text"
-              placeholder="999"
+              defaultValue="999"
               name="id"
               readOnly
-            ></input>
+            />
           </div>
           <div className="form-group">
             <label htmlFor="stato">Stato</label>

@@ -122,31 +122,34 @@ function loadLampioni(){
   const lampioni = JSON.parse(xhttp.responseText);
 
   // Render dei dati in forma tabellare
-  for(let lampione of lampioni){
-    let stat;
-    if(lampione.stato){
-      stat = '<td style={{ backgroundColor : "yellow" }}>ON</td>';
+    for (let lampione of lampioni) {
+      let stat;
+      if (lampione.stato) {
+        stat = '<td style="background-color: yellow">ON</td>';
+      } else {
+        stat = '<td style="background-color: black; color: white">OFF</td>';
+      }
+    
+      //let fun = `onClick={() => testRequest(${lampione.id})}`;
+      const x = `
+        <tr>
+          <th scope="row">${lampione.id}</th>
+          ${stat}
+          <td>${lampione.intensita}</td>
+          <td>${lampione.luogo}</td>
+          <td>
+          <button type="button" class="btn btn-outline-info" id="btn-${lampione.id}">
+              Info
+            </button>
+          </td>
+        </tr>
+      `;
+    
+      // Aggiungi la riga generata al corpo della tabella
+      document.getElementById('tableBody')!.innerHTML += x;
+      const button = document.getElementById(`btn-${lampione.id}`)!;
+      button.addEventListener('click', () => testRequest(lampione.id));
     }
-    else{
-      stat = '<td style={{ backgroundColor: "black", color: "white" }}>OFF</td>';
-    }
-
-    let fun = `onClick={() => testRequest(${lampione.id})}`;
-    const x = 
-    `
-    <tr>
-      <th scope="row">${lampione.id}</th>
-      ${stat}
-      <td>${lampione.intensita}</td>
-      <td>${lampione.luogo}</td>
-      <td>
-        <button type='button' className='btn btn-outline-info' ${fun}>
-          Info
-        </button>
-      </td>
-    </tr>
-    `
-
-    document.getElementById('tableBody')!.innerHTML = document.getElementById('tableBody')! + x;
+    
   }
-}
+
