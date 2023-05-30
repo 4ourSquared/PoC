@@ -126,7 +126,7 @@ function loadLampioni(){
 
   for (let lampione of lampioni) {
     let stat;
-    if (lampione.stato == 'Attivo') {
+    if (lampione.stato === 'Attivo') {
       stat = '<td style="background-color: yellow">ON</td>';
     } else {
       stat = '<td style="background-color: black; color: white">OFF</td>';
