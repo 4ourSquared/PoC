@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const lampione_1 = require("./models/lampione");
 // Config del Server
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -32,7 +33,15 @@ app.get('/api/lampioni/:id', (req, res) => {
     res.status(200).send();
 });
 app.post('/api/lampioni', (req, res) => {
-    const new_lamp = req.body;
+    const id = parseInt(req.body.id, 10);
+    const stato = req.body.stato;
+    const intensita = parseInt(req.body.intensita, 10);
+    const luogo = req.body.luogo;
+    const new_lamp = new lampione_1.Lampione(id, stato, intensita, luogo);
+    console.log(typeof (id) + `: ${id}`);
+    console.log(typeof (stato) + `: ${stato}`);
+    console.log(typeof (intensita) + `: ${intensita}`);
+    console.log(typeof (luogo) + `: ${luogo}`);
     console.log('Richiesta aggiunta di un nuovo lampione');
     console.log(new_lamp);
     lampioni_test.push(new_lamp);

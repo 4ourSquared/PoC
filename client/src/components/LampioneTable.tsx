@@ -67,7 +67,7 @@ function loadLampioni(){
     row.innerHTML += stat;
 
     const intensitaCell = document.createElement('td');
-    intensitaCell.textContent = lampione.intensita.toString();
+    intensitaCell.innerText = lampione.lum.toString();
     row.appendChild(intensitaCell);
 
     const luogoCell = document.createElement('td');

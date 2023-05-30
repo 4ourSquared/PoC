@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 // Array contenente i lampioni generati - solo per test, rimuovere in produzione
-let lampioni_test :Lampione[] = [];
+let lampioni_test : Lampione[] = [];
 
 
 // Metodi per API REST
@@ -38,7 +38,16 @@ app.get('/api/lampioni/:id', (req, res) =>{
 });
 
 app.post('/api/lampioni', (req, res) =>{
-    const new_lamp = req.body;
+    const id : number = parseInt(req.body.id, 10);
+    const stato : string = req.body.stato;
+    const intensita : number = parseInt(req.body.intensita, 10);
+    const luogo : string = req.body.luogo;
+    const new_lamp = new Lampione(id, stato, intensita, luogo);
+
+    console.log(typeof(id) + `: ${id}`);
+    console.log(typeof(stato) + `: ${stato}`);
+    console.log(typeof(intensita) + `: ${intensita}`);
+    console.log(typeof(luogo) + `: ${luogo}`);
 
     console.log('Richiesta aggiunta di un nuovo lampione');
     console.log(new_lamp);
