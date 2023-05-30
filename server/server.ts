@@ -33,7 +33,7 @@ app.listen(port , () => {
 
 // Richiesta di informazioni per un determinato lampione
 app.get('/api/lampioni/:id', (req, res) =>{
-    console.log(`Ricevuta richiesta GET su /info/lampioni -> ID: ${req.params.id}`);
+    console.log(`Ricevuta richiesta GET su /api/lampioni -> ID: ${req.params.id}`);
     res.status(200).send();
 });
 

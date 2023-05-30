@@ -1,12 +1,12 @@
 export class Lampione {
     // Attributi
     private id      : number;
-    private stato   : boolean;
+    private stato   : string;
     private lum     : number;
     private luogo   : string;
 
     // Costruttore
-    public constructor(id: number = 0, stato: boolean, lum: number, luogo: string){
+    public constructor(id: number = 0, stato: string, lum: number, luogo: string){
         this.id = id;
         this.stato = stato;
         this.lum = lum;
@@ -18,7 +18,7 @@ export class Lampione {
         return this.id;
     }
 
-    public getStato() : boolean{
+    public getStato() : string{
         return this.stato;
     }
 

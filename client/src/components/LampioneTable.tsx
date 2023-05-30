@@ -122,34 +122,44 @@ function loadLampioni(){
   const lampioni = JSON.parse(xhttp.responseText);
 
   // Render dei dati in forma tabellare
-    for (let lampione of lampioni) {
-      let stat;
-      if (lampione.stato) {
-        stat = '<td style="background-color: yellow">ON</td>';
-      } else {
-        stat = '<td style="background-color: black; color: white">OFF</td>';
-      }
-    
-      //let fun = `onClick={() => testRequest(${lampione.id})}`;
-      const x = `
-        <tr>
-          <th scope="row">${lampione.id}</th>
-          ${stat}
-          <td>${lampione.intensita}</td>
-          <td>${lampione.luogo}</td>
-          <td>
-          <button type="button" class="btn btn-outline-info" id="btn-${lampione.id}">
-              Info
-            </button>
-          </td>
-        </tr>
-      `;
-    
-      // Aggiungi la riga generata al corpo della tabella
-      document.getElementById('tableBody')!.innerHTML += x;
-      const button = document.getElementById(`btn-${lampione.id}`)!;
-      button.addEventListener('click', () => testRequest(lampione.id));
+    const tableBody = document.getElementById('tableBody')!;
+
+  for (let lampione of lampioni) {
+    let stat;
+    if (lampione.stato == 'Attivo') {
+      stat = '<td style="background-color: yellow">ON</td>';
+    } else {
+      stat = '<td style="background-color: black; color: white">OFF</td>';
     }
-    
+
+    const row = document.createElement('tr');
+
+    const idCell = document.createElement('th');
+    idCell.scope = 'row';
+    idCell.textContent = lampione.id.toString();
+    row.appendChild(idCell);
+
+    row.innerHTML += stat;
+
+    const intensitaCell = document.createElement('td');
+    intensitaCell.textContent = lampione.intensita.toString();
+    row.appendChild(intensitaCell);
+
+    const luogoCell = document.createElement('td');
+    luogoCell.textContent = lampione.luogo;
+    row.appendChild(luogoCell);
+
+    const buttonCell = document.createElement('td');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn btn-outline-info';
+    button.textContent = 'Info';
+    button.addEventListener('click', () => testRequest(lampione.id));
+    buttonCell.appendChild(button);
+    row.appendChild(buttonCell);
+
+    tableBody.appendChild(row);
+  }
+
   }
 
