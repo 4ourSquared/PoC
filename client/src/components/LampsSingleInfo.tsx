@@ -1,4 +1,10 @@
 import { Component } from "react";
+
+/*
+    FUNZIONE LAMPSINGLEINFO
+    PRE: id è un numero e si riferisce all'identificativo univoco di un lampione
+    POST: la funzione ritorna la struttura HTML per la visualizzazione delle informazioni di interesse di un singolo lampione
+*/
 export function LampsSingleInfo(id:number){
     // Invio della richiesta dati
     const xhttp = new XMLHttpRequest();
