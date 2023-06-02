@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 
+/*
+  CLASSE NEWLAMPFORM: classe che renderizza automaticamente la struttura HTML della pagina di aggiunta di un lampione, definendo anche il metodo per la trasmissione dei dati al server. Stile associato a Bootstrap.
+  ATTENZIONE: Bisogna ancora implementare l'avanzamento automatico del campo ID affinchè tale chiave sia univoca per l'identificazione del lampione.
+*/
 export class NewLampForm extends Component {
   render() {
     return (
