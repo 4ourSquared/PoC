@@ -4,6 +4,10 @@ import { LampsFullView } from "../components/LampsFullView";
 import { LampsSingleView } from "../components/LampsSingleView";
 import { NewLampPage } from "../components/NewLampPage";
 
+/*
+  ANONYMOUS FUNCTION ROUTERCOMPONENT: componente fittizio che si pone l'obiettivo di gestire il routing dell'applicazione. Qualora si digitasse il "path", verrebbe renderizzato sulla pagina
+                                      il "component"
+*/
 export const RouterComponent: React.FC = () => {
   return (
     <Router>
