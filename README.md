@@ -41,5 +41,4 @@ Serve per fare la build del server. Va usato nella cartella 'server'.\
 
 Comando da dare dentro la cartella 'server' per far partire il server. Scegliete
 il comando in base al vostro sistema operativo (Windows il primo, Linux/Mac per
-il secondo).\
-Nel dubbio tentate entrambi.
+il secondo); nel dubbio tentate entrambi.\
