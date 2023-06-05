@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 
+/*
+    CLASSE FOOTER: classe che renderizza automaticamente il footer della pagina. Stile associato a Bootstrap.
+*/
 export class Footer extends Component{
     render(){
         return(

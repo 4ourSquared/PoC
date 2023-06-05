@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import { NewLampForm } from "./NewLampForm";
 import testRequest from "./testRequest";
 
-// Provo a creare la parte di programma che legge il JSON inviato dal server per generare la tabella
+/*
+  CLASSE LAMPIONETABLE: classe che renderizza automaticamente la struttura di base della tabella contenente le informazioni generali riguardanti i lampioni collegati a sistema.
+                        La parte dinamica letta dal server viene generata nella funzione sottostante
+*/
 export class LampioneTable extends Component {
   render(){
     return(
@@ -36,6 +39,11 @@ export class LampioneTable extends Component {
   }
 }
 
+/*
+  FUNZIONE LOADLAMPIONI: modifica la tabella aggiungendo i dati dei lampioni
+  PRE: Il server è in funzione e configurato per ricevere richieste GET sulla porta 5000 su /api/lampioni
+  POST: Il server inoltra i dati di tutti i lampioni inseriti a sistema e la funzione modifica il codice HTML inserendo dentro la tabella i dati dei lampioni sopra citati
+*/
 function loadLampioni(){
   const xhttp = new XMLHttpRequest();
 
@@ -48,6 +56,7 @@ function loadLampioni(){
 
   // Render dei dati in forma tabellare
     const tableBody = document.getElementById('tableBody')!;
+    tableBody.innerHTML = ("");
 
   for (let lampione of lampioni) {
     let stat;

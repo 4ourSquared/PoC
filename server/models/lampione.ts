@@ -1,3 +1,6 @@
+/*
+*   CLASSE LAMPIONE: classe di base per il lampione, contiene le informazioni necessarie per il funzionamento minimo.
+*/
 export class Lampione {
     // Attributi
     private id      : number;
