@@ -56,6 +56,7 @@ function loadLampioni(){
 
   // Render dei dati in forma tabellare
     const tableBody = document.getElementById('tableBody')!;
+    tableBody.innerHTML = ("");
 
   for (let lampione of lampioni) {
     let stat;
