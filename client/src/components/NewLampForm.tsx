@@ -8,13 +8,17 @@ export class NewLampForm extends Component {
   render() {
     return (
       <div className="content">
-        <form action="http://localhost:5000/api/lampioni" method="POST">
+        <form
+          title="Form per inserimento nuovo lampione"
+          action="http://localhost:5000/api/lampioni"
+          method="POST"
+        >
           <div className="form-group">
             <label htmlFor="id">ID (Automatico)</label>
             <input
               className="form-control"
               type="text"
-              defaultValue="999"
+              defaultValue="NULL"
               name="id"
               readOnly
             />
@@ -31,8 +35,8 @@ export class NewLampForm extends Component {
             </small>
           </div>
           <div className="form-group">
-            <label htmlFor="intensita">Intensità Luminosa</label>
-            <select className="form-control" id="intensita" name="intensita">
+            <label htmlFor="lum">Intensità Luminosa</label>
+            <select className="form-control" id="lum" name="lum">
               <option>0</option>
               <option>1</option>
               <option>2</option>

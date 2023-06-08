@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { LampsSingleView } from "../LampsSingleView";
+import LampSingleView from "../LampSingleView";
 
 test("apre la pagina dedicata alla info del singolo lampione", () => {
-  render(<LampsSingleView />);
+  render(<LampSingleView />);
   const title = screen.getByText(/Info del lampione id: da passare/i);
   const id = screen.getByText(/ID: /i);
   const stato = screen.getByText(/Stato: /i);

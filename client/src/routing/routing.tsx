@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import LampsSingleView from "../components/LampSingleView";
 import { LampsFullView } from "../components/LampsFullView";
-import { LampsSingleView } from "../components/LampsSingleView";
 import { NewLampPage } from "../components/NewLampPage";
 
 /*
