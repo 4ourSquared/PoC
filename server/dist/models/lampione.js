@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Lampione = void 0;
+/*
+*   CLASSE LAMPIONE: classe di base per il lampione, contiene le informazioni necessarie per il funzionamento minimo.
+*/
 class Lampione {
     // Costruttore
     constructor(id = 0, stato, lum, luogo) {
