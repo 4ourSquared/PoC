@@ -14,5 +14,7 @@ RUN npm install
 # Copia tutto il codice sorgente nella directory di lavoro
 COPY . .
 
+EXPOSE 3000
+
 # Avvia l'app client
 CMD ["npm", "start"]

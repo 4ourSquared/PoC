@@ -21,8 +21,8 @@ COPY . .
 # Compila il codice TypeScript specificando il percorso di tsconfig.json
 RUN tsc --skipLibCheck -p ./tsconfig.json
 
-# Espone la porta 3000 per il server
-EXPOSE 3000
+# Espone la porta 5000 per il server
+EXPOSE 5000
 
 # Comando di avvio del server
 CMD ["node", "./dist/server.js"]
