@@ -10,13 +10,12 @@ const lampione_1 = require("./models/lampione");
             dal client
 */
 // Config del Server
-const bodyParser = require("body-parser"); // Per il parsing del body delle richieste HTTP
 const cors = require("cors"); // Per la configurazione di un certificato valido che permetta lo scambio di informazioni tra due endpoint senza l'utilizzo di proxy
 const app = (0, express_1.default)(); // Per il routing e il middleware
 const port = 5000;
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express_1.default.json()); //body-parser già incluso in express, eliminata l'installazione
+app.use(express_1.default.urlencoded({ extended: false }));
 // Array contenente i lampioni generati - solo per test, rimuovere in produzione
 let lampioni_test = [];
 // Metodi per API REST
@@ -47,13 +46,22 @@ app.get("/api/lampioni/:id", (req, res) => {
         res.status(404).json({ error: "Lampione non trovato." });
     }
 });
+// Funzione (sarà da spostare in cartella apposita) per generare un id
+// incrementale per il lampione
+// PRE: lampioni_test deve essere un array di Lampione
+function generateId() {
+    const maxId = lampioni_test.length > 0
+        ? Math.max(...lampioni_test.map((lamp) => lamp.getId()))
+        : 0;
+    return maxId + 1;
+}
+// POST: ritorna un id incrementale e lo assegna al lampione, verificando sempre
+// la presenza di eventuali altri id nei lampioni già presenti
 // Richiesta per la creazione e l'inserimento di un nuovo lampione a sistema
 app.post("/api/lampioni", (req, res) => {
-    const id = parseInt(req.body.id, 10);
-    const stato = req.body.stato;
-    const lum = parseInt(req.body.lum, 10);
-    const luogo = req.body.luogo;
-    const new_lamp = new lampione_1.Lampione(id, stato, lum, luogo);
+    const { stato, lum, luogo } = req.body; //Semplificata la richiesta e l'inserimento dei dati
+    const id = generateId();
+    const new_lamp = new lampione_1.Lampione(id, stato, parseInt(lum, 10), luogo);
     console.log(typeof id + `: ${id}`);
     console.log(typeof stato + `: ${stato}`);
     console.log(typeof lum + `: ${lum}`);

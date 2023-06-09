@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import LampItem from "../types/LampItem";
 
 const LampSingleView: React.FC = () => {
@@ -9,24 +9,26 @@ const LampSingleView: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, []); //Anche se il compilatore da warning, mantenere l'array vuoto per evitare loop infiniti, dato che
+  //effettua la richiesta ad ogni render della pagina
 
   const fetchData = async () => {
+    axios.defaults.baseURL = "http://localhost:5000/api";
     try {
-      const response = await axios.get<LampItem>(
-        `http://localhost:5000/api/lampioni/${id}`
-      );
+      const response = await axios.get<LampItem>(`lampioni/${id}`);
       setLamp(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-
+  //È presente una funzione con operatore ternario, che permette la
+  //visualizzazione dei dati solo se lamp non è null, inoltre identifica il
+  //lampione in base all'id passato come parametro dalla richiesta GET
   return (
     <div>
-      <h1>Info sul lampione</h1>
       {lamp ? (
         <div key={lamp.id}>
+          <h1>Info sul lampione {lamp.id}</h1>
           <h3>Id: {lamp.id}</h3>
           <ul>
             <li>Stato: {lamp.stato}</li>
@@ -37,6 +39,9 @@ const LampSingleView: React.FC = () => {
       ) : (
         <p>Nessun dato disponibile</p>
       )}
+      <Link to="/" type="button" className="btn btn-primary">
+        Indietro
+      </Link>
     </div>
   );
 };

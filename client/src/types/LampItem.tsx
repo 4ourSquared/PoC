@@ -1,4 +1,7 @@
-export {}; // Add this line to make the file compilable as a module
+//INTERFACCIA: serve ad ottenere le info sul tipo di file che stiamo importando
+//dalla richiesta GET al server
+
+export {};
 
 interface LampItem {
   id: number;

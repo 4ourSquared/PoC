@@ -32,13 +32,6 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
         <Link to="api/lampioni/add" type="button" className="btn btn-primary">
           Aggiungi Lampione
         </Link>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={loadLampioni}
-        >
-          Aggiorna Lista
-        </button>
         <table
           className="table table-hover align-middle"
           style={{ width: "90%" }}
