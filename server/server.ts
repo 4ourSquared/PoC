@@ -7,6 +7,7 @@ import { Lampione } from "./models/lampione";
 */
 
 // Config del Server
+// AGGIUNTO SOLO NEL TS
 
 const cors = require("cors"); // Per la configurazione di un certificato valido che permetta lo scambio di informazioni tra due endpoint senza l'utilizzo di proxy
 

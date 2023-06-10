@@ -20,6 +20,7 @@ services:
     volumes:
       - ./server:/server-dir
       - ./server/tsconfig.json:/server-dir/tsconfig.json:ro
+
   client:
     build:
       context: ./client

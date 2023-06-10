@@ -10,6 +10,7 @@ const lampione_1 = require("./models/lampione");
             dal client
 */
 // Config del Server
+// AGGIUNTO SOLO NEL TS
 const cors = require("cors"); // Per la configurazione di un certificato valido che permetta lo scambio di informazioni tra due endpoint senza l'utilizzo di proxy
 const app = (0, express_1.default)(); // Per il routing e il middleware
 const port = 5000;
