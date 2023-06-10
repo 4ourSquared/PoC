@@ -1,9 +1,8 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import {App} from './App';
+import { render, screen } from "@testing-library/react";
+import { App } from "./App";
 
-test('renders learn react link', () => {
+test("Renderizza la pagina principale", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
+  const linkElement = screen.getByText(/Lumos Minima/i);
   expect(linkElement).toBeInTheDocument();
 });
