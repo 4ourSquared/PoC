@@ -71,7 +71,7 @@ app.post("/api/lampioni", (req, res) => {
     lampioni_test.push(new_lamp);
     console.log(typeof id + `: ${id}`);
     console.log(typeof stato + `: ${stato}`);
-    console.log(typeof lum + `: ${lum}`, lum); // Add lum value to the log
+    console.log(typeof lum + `: ${lum}`); // Add lum value to the log
     console.log(typeof luogo + `: ${luogo}`);
     res.status(200).send("Lampione aggiunto con successo");
 });
