@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NewLampForm } from "./NewLampForm";
+import NewLampForm from "./NewLampForm";
 import { Header } from "./breadcrumb";
 import { Footer } from "./footer";
 
