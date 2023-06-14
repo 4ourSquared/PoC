@@ -7,18 +7,24 @@ import { Lampione } from "./models/lampione";
             dal client    
 */
 
-// Config del Server
+/*
+------------------------------------------------------------------------------
+                        CONFIGURAZIONE DEL SERVER
+------------------------------------------------------------------------------
+*/
 const cors = require("cors"); // Per la configurazione di un certificato valido che permetta lo scambio di informazioni tra due endpoint senza l'utilizzo di proxy
-
 const app = express(); // Per il routing e il middleware
 const port = 5000;
-
 app.use(cors());
 app.use(express.json()); //body-parser già incluso in express, eliminata l'installazione
 app.use(express.urlencoded({ extended: false }));
 
 
-// COLLEGAMENTO AL DB
+/*
+------------------------------------------------------------------------------
+                        COLLEGAMENTO AL DATABASE
+------------------------------------------------------------------------------
+*/
 import mongoose from "mongoose";
 
 const mongoURI = "mongodb://poc-db-1:27017";
@@ -33,10 +39,18 @@ db.once("open", () => {
 });
 
 
-// Array contenente i lampioni generati - solo per test, rimuovere in produzione
+/*
+------------------------------------------------------------------------------
+                                ARRAY DI TEST
+------------------------------------------------------------------------------
+*/
 let lampioni_test: Lampione[] = [];
 
-// Metodi per API REST
+/*
+------------------------------------------------------------------------------
+                              CONFIGURAZIONE API
+------------------------------------------------------------------------------
+*/
 // Porta di ascolto predefinita per il server
 app.listen(port, () => {
   console.log("Il server è in ascolto sulla porta 5000");
@@ -70,6 +84,12 @@ app.get("/api/lampioni/:id", (req, res) => {
   }
 });
 
+
+/*
+------------------------------------------------------------------------------
+                        GESTIONE RECUPERO LAMPIONI
+------------------------------------------------------------------------------
+*/
 // Funzione (sarà da spostare in cartella apposita) per generare un id
 // incrementale per il lampione
 // PRE: lampioni_test deve essere un array di Lampione
