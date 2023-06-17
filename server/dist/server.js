@@ -70,9 +70,38 @@ app.post("/api/lampioni", (req, res) => {
     console.log("Richiesta aggiunta di un nuovo lampione");
     console.log(new_lamp);
     lampioni_test.push(new_lamp);
-    console.log(typeof id + `: ${id}`);
-    console.log(typeof stato + `: ${stato}`);
-    console.log(typeof lum + `: ${lum}`); // Add lum value to the log
-    console.log(typeof luogo + `: ${luogo}`);
     res.status(200).send("Lampione aggiunto con successo");
+});
+// Richiesta per eliminare un lampione dal sistema
+app.delete("/api/lampioni/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    const lampToDelete = lampioni_test.find((element) => element.getId() === id);
+    if (lampToDelete === undefined) {
+        res.status(404).send(`Lampione con id = ${id} non trovato`);
+    }
+    else {
+        const idx = lampioni_test.indexOf(lampToDelete);
+        lampioni_test.splice(idx, 1);
+        res.status(200).send(`Lampione con id = ${id} eliminato con successo`);
+    }
+});
+// Richiesta per aggiornare i dati di un lampione nel sistema
+app.put("/api/lampioni/:id", (req, res) => {
+    const id = parseInt(req.params.id); // ID del lampione da aggiornare
+    const lampToUpdate = lampioni_test.find((element) => element.getId() === id);
+    if (lampToUpdate === undefined) {
+        res.status(404).send(`Lampione con id = ${id} non trovato`);
+    }
+    else {
+        if (req.body.stato !== undefined) {
+            lampToUpdate.setStato(req.body.stato);
+        }
+        if (req.body.lum !== undefined) {
+            lampToUpdate.setLum(parseInt(req.body.lum, 10));
+        }
+        if (req.body.luogo !== undefined) {
+            lampToUpdate.setLuogo(req.body.luogo);
+        }
+    }
+    res.status(200).send(`Lampione con id = ${id} aggiornato con successo`);
 });
