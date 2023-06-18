@@ -89,6 +89,8 @@ app.delete("/api/lampioni/:id", (req, res) => {
 app.put("/api/lampioni/:id", (req, res) => {
     const id = parseInt(req.params.id); // ID del lampione da aggiornare
     const lampToUpdate = lampioni_test.find((element) => element.getId() === id);
+    console.log(`Ricevuta richiesta PUT su /api/lampioni -> ID: ${id}`);
+    console.log("Richiesta aggiornamento di un lampione esistente");
     if (lampToUpdate === undefined) {
         res.status(404).send(`Lampione con id = ${id} non trovato`);
     }
@@ -104,4 +106,15 @@ app.put("/api/lampioni/:id", (req, res) => {
         }
     }
     res.status(200).send(`Lampione con id = ${id} aggiornato con successo`);
+});
+// Richiesta per ottenere l'id dell'ultimo lampione inserito: serve per mostrare
+// nel form l'id che verrà inserito nel successivo lampione
+app.get("/api/lampioni/last", (req, res) => {
+    const idLastLamp = lampioni_test[lampioni_test.length - 1].getId();
+    if (idLastLamp === undefined || idLastLamp === null) {
+        res.send(200).send(0);
+    }
+    else {
+        res.status(200).send(idLastLamp);
+    }
 });
