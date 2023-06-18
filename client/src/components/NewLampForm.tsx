@@ -17,7 +17,7 @@ const NewLampForm: React.FC = () => {
 
   return (
     <Formik
-      initialValues={{ id: 0, stato: "", lum: 0, luogo: "" }}
+      initialValues={{ id: 0, stato: "Attivo", lum: 0, luogo: "" }}
       validationSchema={Yup.object({
         luogo: Yup.string()
           .min(2, "Inserisci almeno 2 caratteri")
@@ -28,8 +28,8 @@ const NewLampForm: React.FC = () => {
       })}
       onSubmit={(values, { setSubmitting }) => {
         axios.post("/lampioni", values); // Solito invio dei dati al server
-        navigate("/");
         setSubmitting(false); //Serve a resettare la submit del form e riportarla False
+        navigate("/");
       }}
     >
       <Form>
