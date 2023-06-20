@@ -75,20 +75,22 @@ app.post("/api/lampioni", (req, res) => {
 // Richiesta per eliminare un lampione dal sistema
 app.delete("/api/lampioni/:id", (req, res) => {
     const id = parseInt(req.params.id);
-    const lampToDelete = lampioni_test.find((element) => element.getId() === id);
+    const lampToDelete = lampioni_test.find((lamp) => lamp.getId() === id); //Individua il lampione con id richiesto
     if (lampToDelete === undefined) {
         res.status(404).send(`Lampione con id = ${id} non trovato`);
     }
     else {
         const idx = lampioni_test.indexOf(lampToDelete);
-        lampioni_test.splice(idx, 1);
+        lampioni_test.splice(idx, 1); //Elimina gli elementi tra idx e il numero indicato, in questo caso 1 solo elemento
         res.status(200).send(`Lampione con id = ${id} eliminato con successo`);
     }
 });
 // Richiesta per aggiornare i dati di un lampione nel sistema
-app.put("/api/lampioni/:id", (req, res) => {
+// Aggiunto /edit/:id per evitare conflitti con la richiesta di info di un
+// singolo lampione
+app.put("/api/lampioni/edit/:id", (req, res) => {
     const id = parseInt(req.params.id); // ID del lampione da aggiornare
-    const lampToUpdate = lampioni_test.find((element) => element.getId() === id);
+    const lampToUpdate = lampioni_test.find((lamp) => lamp.getId() === id);
     console.log(`Ricevuta richiesta PUT su /api/lampioni -> ID: ${id}`);
     console.log("Richiesta aggiornamento di un lampione esistente");
     if (lampToUpdate === undefined) {
@@ -109,12 +111,12 @@ app.put("/api/lampioni/:id", (req, res) => {
 });
 // Richiesta per ottenere l'id dell'ultimo lampione inserito: serve per mostrare
 // nel form l'id che verrà inserito nel successivo lampione
+/* DA SISTEMARE PER RTB
 app.get("/api/lampioni/last", (req, res) => {
-    const idLastLamp = lampioni_test[lampioni_test.length - 1].getId();
-    if (idLastLamp === undefined || idLastLamp === null) {
-        res.send(200).send(0);
-    }
-    else {
-        res.status(200).send(idLastLamp);
-    }
-});
+  const idLastLamp = lampioni_test[lampioni_test.length - 1].getId();
+  if (idLastLamp === undefined || idLastLamp === null) {
+    res.send(200).send(0);
+  } else {
+    res.status(200).send(idLastLamp);
+  }
+});*/

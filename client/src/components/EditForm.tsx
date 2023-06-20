@@ -1,8 +1,9 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik"; //Metodo per creare i form in maniera più semplice e funzionale
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup"; //Libreria per la validazione del form: si può usare anche per il login
+import LampItem from "../types/LampItem";
 
 /*
   CLASSE EDITFORM: classe che renderizza automaticamente la struttura HTML della pagina di modifica di un lampione, definendo anche il metodo per la trasmissione dei dati al server. Stile associato a Bootstrap.
@@ -11,12 +12,26 @@ import * as Yup from "yup"; //Libreria per la validazione del form: si può usar
 const EditForm: React.FC = () => {
   axios.defaults.baseURL = "http://localhost:5000/api"; //URL base, così una volta in produzione basta cambiare questo
   const navigate = useNavigate();
-  const lampToUpdate = axios.get("/lampioni/:id"); //Ottengo i dati del lampione da modificare
-  //Devo successivamente assegnarli ai valori iniziali del form, e permettere la modifica
+  const [lampioneData, setLampioneData] = useState<LampItem | undefined>(
+    undefined
+  );
+  useEffect(() => {
+    axios
+      .get<LampItem>("/lampioni/:id")
+      .then((response) => {
+        setLampioneData(response.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Formik
-      initialValues={{ id: 0, stato: "", lum: 0, luogo: "" }}
+      initialValues={{
+        id: lampioneData?.id || 0,
+        stato: lampioneData?.stato || "",
+        lum: lampioneData?.lum || 0,
+        luogo: lampioneData?.luogo || "",
+      }}
       validationSchema={Yup.object({
         luogo: Yup.string()
           .min(2, "Inserisci almeno 2 caratteri")
@@ -26,9 +41,15 @@ const EditForm: React.FC = () => {
         //riempito correttamente
       })}
       onSubmit={(values, { setSubmitting }) => {
-        axios.put("/lampioni/edit/:id", values); // Invio dei dati al server: da verificare
-        navigate("/");
-        setSubmitting(false); //Serve a resettare la submit del form e riportarla False
+        axios
+          .put("/lampioni/edit/:id", values)
+          .then(() => {
+            navigate("/");
+          }) // Invio dei dati al server: da verificare
+          .catch((err) => console.log(err))
+          .finally(() => {
+            setSubmitting(false); //Serve a resettare la submit del form e riportarla False
+          });
       }}
     >
       <Form>

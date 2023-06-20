@@ -13,7 +13,6 @@ import * as Yup from "yup"; //Libreria per la validazione del form: si può usar
 const NewLampForm: React.FC = () => {
   axios.defaults.baseURL = "http://localhost:5000/api"; //URL base, così una volta in produzione basta cambiare questo
   const navigate = useNavigate();
-  //const lastId = axios.get("/lampioni/last"); DA FIXARE PRIMA DELLA RTB
 
   return (
     <Formik
