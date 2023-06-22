@@ -7,7 +7,7 @@ export class Sensore {
     private iter: string; //tipo di iterazione manuale(pull) o automatica(push) - di default sarà manuale
     private IP: string; //indirizzo IP
     private luogo: string;
-    private raggio: number; //raggio d'azione del sensore in metri
+    private raggio: number; //raggio d'azione del sensore in metri --> probabilmente da togliere
   
     // Costruttore
     public constructor(

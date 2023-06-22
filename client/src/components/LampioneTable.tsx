@@ -26,6 +26,20 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
     }
   };
 
+  const deleteLampione = async (id: number) => {
+    const confirmed = window.confirm(
+      "Sei sicuro di voler eliminare il lampione?"
+    );
+    try {
+      if (confirmed) {
+        await axios.delete(`http://localhost:5000/api/lampioni/${id}`);
+        setLampioni((cur) => cur.filter((item) => item.id !== id));
+      }
+    } catch (error) {
+      console.error("Errore nella cancellazione del lampione: ", error);
+    }
+  };
+
   return (
     <>
       <div className="row justify-content-center">
@@ -58,6 +72,23 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
                     onClick={() => navigate(`/api/lampioni/${lampione.id}`)}
                   >
                     Info
+                  </button>
+                </td>
+                <td>
+                  <Link
+                    to={`/api/lampioni/edit/${lampione.id}`}
+                    type="button"
+                    className="btn btn-outline-warning"
+                  >
+                    Modifica
+                  </Link>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => deleteLampione(lampione.id)}
+                  >
+                    Elimina
                   </button>
                 </td>
               </tr>

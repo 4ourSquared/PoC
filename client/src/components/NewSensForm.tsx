@@ -1,10 +1,10 @@
 import axios from "axios";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 /*
-  CLASSE NEWLAMPFORM: classe che renderizza automaticamente la struttura HTML della pagina di aggiunta di un lampione, definendo anche il metodo per la trasmissione dei dati al server. Stile associato a Bootstrap.
-  ATTENZIONE: Bisogna ancora implementare l'avanzamento automatico del campo ID affinchè tale chiave sia univoca per l'identificazione del lampione.
+  CLASSE NEWSENSFORM: classe che renderizza automaticamente la struttura HTML della pagina di aggiunta di un sensore, definendo anche il metodo per la trasmissione dei dati al server. Stile associato a Bootstrap.
+  ATTENZIONE: Bisogna ancora implementare l'avanzamento automatico del campo ID affinchè tale chiave sia univoca per l'identificazione del sensore.
 */
 const NewSensForm: React.FC = () => {
   axios.defaults.baseURL = "http://localhost:5000/api"; //URL base, così una volta in produzione basta cambiare questo
@@ -47,6 +47,16 @@ const NewSensForm: React.FC = () => {
           </small>
         </div>
         <div className="form-group">
+          <label htmlFor="IP">Indirizzo IP</label>
+          <input
+            type="text"
+            className="form-control"
+            id="IP"
+            placeholder=""
+            name="IP"
+          />
+        </div>
+        <div className="form-group">
           <label htmlFor="Locazione">Luogo di Installazione</label>
           <input
             type="text"
@@ -57,13 +67,37 @@ const NewSensForm: React.FC = () => {
             name="luogo"
           />
           <small id="locazioneHelp" className="form-text text-muted">
-            Indica il luogo in cui è situato il lampione.
+            Indica il luogo in cui è situato il sensore.
           </small>
         </div>
-        
+        <div className="form-group">
+          <label htmlFor="raggio">Raggio d'azione</label>
+          <select className="form-control" id="lum" name="lum">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+          </select>
+          <small id="intensityHelp" className="form-text text-muted">
+            Indica il raggio d'azione (in metri) del sensore e quindi quanti lampioni riesce a gestire. 
+          </small>
+        </div>
         <button type="submit" className="btn btn-primary">
           Crea
         </button>
+        <button type="reset" className="btn btn-secondary">
+          Resetta
+        </button>
+        <Link to="/" type="button" className="btn btn-outline-primary">
+          Indietro
+        </Link>
       </form>
     </div>
   );

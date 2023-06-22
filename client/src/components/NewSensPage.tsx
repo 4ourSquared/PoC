@@ -4,7 +4,7 @@ import { Header } from "./breadcrumb";
 import { Footer } from "./footer";
 
 /*
-  CLASS NEWLAMPPAGE: classe che renderizza automaticamente l'intera pagina contenente il form per l'aggiunta di un nuovo lampione.
+  CLASS NEWSENSPAGE: classe che renderizza automaticamente l'intera pagina contenente il form per l'aggiunta di un nuovo sensore.
 */
 export class NewSensPage extends Component {
   render() {

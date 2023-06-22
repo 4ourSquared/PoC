@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 /*
   CLASSE NEWLAMPFORM: classe che renderizza automaticamente la struttura HTML della pagina di aggiunta di un lampione, definendo anche il metodo per la trasmissione dei dati al server. Stile associato a Bootstrap.
@@ -84,6 +84,12 @@ const NewLampForm: React.FC = () => {
         <button type="submit" className="btn btn-primary">
           Crea
         </button>
+        <button type="reset" className="btn btn-secondary">
+          Resetta
+        </button>
+        <Link to="/" type="button" className="btn btn-outline-primary">
+          Indietro
+        </Link>
       </form>
     </div>
   );
