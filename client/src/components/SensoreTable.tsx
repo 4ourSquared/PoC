@@ -58,7 +58,6 @@ export const SensoreTable: React.FC<SensoreTableProps> = () => {
               <th scope="col">Zona Illuminata</th>
               <th scope="col">Raggio d'azione</th>
               <th scope="col">Info</th>
-              <th scope="col">Info</th>
               <th scope="col">Modifica</th>
               <th scope="col">Elimina</th>
             </tr>

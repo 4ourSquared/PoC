@@ -57,6 +57,8 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
               <th scope="col">Intensità</th>
               <th scope="col">Zona Illuminata</th>
               <th scope="col">Info</th>
+              <th scope="col">Modifica</th>
+              <th scope="col">Elimina</th>
             </tr>
           </thead>
           <tbody id="tableBody">

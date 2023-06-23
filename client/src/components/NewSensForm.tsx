@@ -72,7 +72,7 @@ const NewSensForm: React.FC = () => {
         </div>
         <div className="form-group">
           <label htmlFor="raggio">Raggio d'azione</label>
-          <select className="form-control" id="lum" name="lum">
+          <select className="form-control" id="raggio" name="raggio">
             <option>0</option>
             <option>1</option>
             <option>2</option>
