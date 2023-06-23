@@ -53,7 +53,7 @@ export const SensoreTable: React.FC<SensoreTableProps> = () => {
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Tipo di iterazione</th>
+              <th scope="col">Tipo di interazione</th>
               <th scope="col">Indirizzo IP</th>
               <th scope="col">Zona Illuminata</th>
               <th scope="col">Raggio d'azione</th>

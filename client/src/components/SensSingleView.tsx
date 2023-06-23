@@ -28,10 +28,10 @@ const SensSingleView: React.FC = () => {
     <div>
       {sens ? (
         <div key={sens.id}>
-          <h1>Info sul lampione {sens.id}</h1>
+          <h1>Info sul sensore {sens.id}</h1>
           <h3>Id: {sens.id}</h3>
           <ul>
-            <li>Iterazione: {sens.iter}</li>
+            <li>Interazione: {sens.iter}</li>
             <li>Indirizzo IP: {sens.IP}</li>
             <li>Luogo: {sens.luogo}</li>
             <li>Raggio d'azione: {sens.raggio}</li>

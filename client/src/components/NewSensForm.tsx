@@ -37,7 +37,7 @@ const NewSensForm: React.FC = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="iter">Iterazione</label>
+          <label htmlFor="iter">Interazione</label>
           <select className="form-control" id="iter" name="iter">
             <option>Manuale</option>
             <option>Automatico</option>
