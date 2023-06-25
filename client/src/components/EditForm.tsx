@@ -1,54 +1,55 @@
 import axios from "axios";
-import { ErrorMessage, Field, Form, Formik } from "formik"; //Metodo per creare i form in maniera più semplice e funzionale
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import * as Yup from "yup"; //Libreria per la validazione del form: si può usare anche per il login
+import * as Yup from "yup";
 import LampItem from "../types/LampItem";
 
-/*
-  CLASSE EDITFORM: classe che renderizza automaticamente la struttura HTML della pagina di modifica di un lampione, definendo anche il metodo per la trasmissione dei dati al server. Stile associato a Bootstrap.
-*/
-
 const EditForm: React.FC = () => {
-  axios.defaults.baseURL = "http://localhost:5000/api"; //URL base, così una volta in produzione basta cambiare questo
+  axios.defaults.baseURL = "http://localhost:5000/api";
   const navigate = useNavigate();
-  const [lampioneData, setLampioneData] = useState<LampItem | undefined>(
-    undefined
-  );
+  const [lampioneData, setLampioneData] = useState<LampItem>({
+    id: 0,
+    stato: "",
+    lum: 0,
+    luogo: "",
+  });
+
   useEffect(() => {
-    axios
-      .get<LampItem>("/lampioni/:id")
-      .then((response) => {
-        setLampioneData(response.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    if (lampioneData.id !== 0) {
+      axios
+        .get<LampItem>(`/lampioni/${lampioneData.id}`)
+        .then((response) => {
+          setLampioneData(response.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [lampioneData.id]);
 
   return (
     <Formik
       initialValues={{
-        id: lampioneData?.id || 0,
-        stato: lampioneData?.stato || "",
-        lum: lampioneData?.lum || 0,
-        luogo: lampioneData?.luogo || "",
+        id: lampioneData.id || 0,
+        stato: lampioneData.stato || "",
+        lum: lampioneData.lum || 0,
+        luogo: lampioneData.luogo || "",
       }}
       validationSchema={Yup.object({
         luogo: Yup.string()
           .min(2, "Inserisci almeno 2 caratteri")
           .required("Campo obbligatorio")
-          .trim(), //Grazie a questo pulisce il campo da spazi bianchi ed evito che il campo sia vuoto
-        //Inoltre il form non si completa fino a che il campo non viene
-        //riempito correttamente
+          .trim(),
       })}
       onSubmit={(values, { setSubmitting }) => {
+        const url = `/lampioni/edit/${values.id}`;
         axios
-          .put("/lampioni/edit/:id", values)
+          .put(url, values)
           .then(() => {
             navigate("/");
-          }) // Invio dei dati al server: da verificare
+          })
           .catch((err) => console.log(err))
           .finally(() => {
-            setSubmitting(false); //Serve a resettare la submit del form e riportarla False
+            setSubmitting(false);
           });
       }}
     >
@@ -116,4 +117,5 @@ const EditForm: React.FC = () => {
     </Formik>
   );
 };
+
 export default EditForm;

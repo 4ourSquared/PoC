@@ -121,8 +121,8 @@ app.put("/api/lampioni/edit/:id", (req, res) => {
     if (req.body.luogo !== undefined) {
       lampToUpdate.setLuogo(req.body.luogo);
     }
+    res.status(200).send(`Lampione con id = ${id} aggiornato con successo`);
   }
-  res.status(200).send(`Lampione con id = ${id} aggiornato con successo`);
 });
 
 // Richiesta per ottenere l'id dell'ultimo lampione inserito: serve per mostrare

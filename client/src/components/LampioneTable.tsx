@@ -77,13 +77,14 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
                   </button>
                 </td>
                 <td>
-                  <Link
-                    to={`/api/lampioni/edit/${lampione.id}`}
-                    type="button"
+                  <button
                     className="btn btn-outline-warning"
+                    onClick={() =>
+                      navigate(`/api/lampioni/edit/${lampione.id}`)
+                    }
                   >
                     Modifica
-                  </Link>
+                  </button>
                 </td>
                 <td>
                   <button

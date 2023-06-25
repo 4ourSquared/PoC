@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import EditForm from "../components/EditForm";
 import LampsSingleView from "../components/LampSingleView";
 import { LampsFullView } from "../components/LampsFullView";
 import { NewLampPage } from "../components/NewLampPage";
@@ -14,6 +15,7 @@ export const RouterComponent: React.FC = () => {
       <Routes>
         <Route path="/" Component={LampsFullView} />
         <Route path="api/lampioni/:id" Component={LampsSingleView} />
+        <Route path="api/lampioni/edit/:id" Component={EditForm} />
         <Route path="api/lampioni/add" Component={NewLampPage} />
       </Routes>
     </Router>
