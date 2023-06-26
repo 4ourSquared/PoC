@@ -94,7 +94,7 @@ app.delete("/api/lampioni/:id", (req, res) => {
     }
 });
 // Richiesta per aggiornare i dati di un lampione nel sistema
-// Aggiunto /edit/:id per evitare conflitti con la richiesta di info di un-------------------------Non è vero (vedere il brench di Nicolas)
+// Aggiunto /edit/:id per evitare conflitti con la richiesta di info di un
 // singolo lampione
 app.put("/api/lampioni/edit/:id", (req, res) => {
     const id = parseInt(req.params.id); // ID del lampione da aggiornare
@@ -177,11 +177,11 @@ app.delete("/api/sensori/:id", (req, res) => {
     else {
         const idx = sensori_test.indexOf(sensToDelete);
         sensori_test.splice(idx, 1); //Elimina gli elementi tra idx e il numero indicato, in questo caso 1 solo elemento
-        res.status(200).send(`Lampione con id = ${id} eliminato con successo`);
+        res.status(200).send(`Sensore con id = ${id} eliminato con successo`);
     }
 });
 // Richiesta per aggiornare i dati di un sensore nel sistema
-// Aggiunto /edit/:id per evitare conflitti con la richiesta di info di un --------------------------Non è vero (bisogna crearlo)
+// Aggiunto /edit/:id per evitare conflitti con la richiesta di info di un
 // singolo sensore
 app.put("/api/sensori/edit/:id", (req, res) => {
     const id = parseInt(req.params.id); // ID del sensore da aggiornare
@@ -189,7 +189,7 @@ app.put("/api/sensori/edit/:id", (req, res) => {
     console.log(`Ricevuta richiesta PUT su /api/sensori -> ID: ${id}`);
     console.log("Richiesta aggiornamento di un sensore esistente");
     if (sensToUpdate === undefined) {
-        res.status(404).send(`Lampione con id = ${id} non trovato`);
+        res.status(404).send(`Sensore con id = ${id} non trovato`);
     }
     else {
         if (req.body.iter !== undefined) {
@@ -205,5 +205,5 @@ app.put("/api/sensori/edit/:id", (req, res) => {
             sensToUpdate.setRaggio(parseInt(req.body.raggio, 10));
         }
     }
-    res.status(200).send(`Lampione con id = ${id} aggiornato con successo`);
+    res.status(200).send(`Sensore con id = ${id} aggiornato con successo`);
 });
