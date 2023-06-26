@@ -1,15 +1,17 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import LampItem from "../types/LampItem";
 
 const EditForm: React.FC = () => {
   axios.defaults.baseURL = "http://localhost:5000/api";
   const navigate = useNavigate();
+  const { id: paramId } = useParams<{ id: string }>();
+  const [isLoading, setIsLoading] = useState(true);
   const [lampioneData, setLampioneData] = useState<LampItem>({
-    id: 0,
+    id: Number(paramId),
     stato: "",
     lum: 0,
     luogo: "",
@@ -21,10 +23,15 @@ const EditForm: React.FC = () => {
         .get<LampItem>(`/lampioni/${lampioneData.id}`)
         .then((response) => {
           setLampioneData(response.data);
+          setIsLoading(false);
         })
         .catch((err) => console.log(err));
     }
-  }, [lampioneData.id]);
+  }, []); //Dipendenze vuote significa che viene eseguito solo al montaggio
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Banner per ingannare l'attesa del caricamento
+  }
 
   return (
     <Formik
@@ -41,7 +48,7 @@ const EditForm: React.FC = () => {
           .trim(),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        const url = `/lampioni/edit/${values.id}`;
+        const url = `/lampioni/edit/${lampioneData.id}`;
         axios
           .put(url, values)
           .then(() => {
