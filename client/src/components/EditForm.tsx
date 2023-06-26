@@ -27,7 +27,7 @@ const EditForm: React.FC = () => {
         })
         .catch((err) => console.log(err));
     }
-  }, []); //Dipendenze vuote significa che viene eseguito solo al montaggio
+  }, [lampioneData.id]); //Dipendenze vuote significa che viene eseguito solo al montaggio
 
   if (isLoading) {
     return <div>Loading...</div>; // Banner per ingannare l'attesa del caricamento
