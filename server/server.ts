@@ -1,27 +1,56 @@
 import express, { Request, Response } from "express";
 import { Lampione } from "./models/lampione";
 
+
 /*
     SERVER: questo file al momento rappresenta il server in tutto e per tutto. Al suo interno si trovano tutti i metodi attualmente sviluppati per la gestione delle richieste in arrivo
             dal client    
 */
 
-// Config del Server
-// AGGIUNTO SOLO NEL TS
-
+/*
+------------------------------------------------------------------------------
+                        CONFIGURAZIONE DEL SERVER
+------------------------------------------------------------------------------
+*/
 const cors = require("cors"); // Per la configurazione di un certificato valido che permetta lo scambio di informazioni tra due endpoint senza l'utilizzo di proxy
-
 const app = express(); // Per il routing e il middleware
 const port = 5000;
-
 app.use(cors());
 app.use(express.json()); //body-parser già incluso in express, eliminata l'installazione
 app.use(express.urlencoded({ extended: false }));
 
-// Array contenente i lampioni generati - solo per test, rimuovere in produzione
+
+/*
+------------------------------------------------------------------------------
+                        COLLEGAMENTO AL DATABASE
+------------------------------------------------------------------------------
+*/
+import mongoose from "mongoose";
+
+const mongoURI = "mongodb://poc-db-1:27017";
+
+mongoose.connect(mongoURI, {});
+
+const db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "Errore di connessione MongoDB:"));
+db.once("open", () => {
+  console.log("Connessione a MongoDB avvenuta con successo");
+});
+
+
+/*
+------------------------------------------------------------------------------
+                                ARRAY DI TEST
+------------------------------------------------------------------------------
+*/
 let lampioni_test: Lampione[] = [];
 
-// Metodi per API REST
+/*
+------------------------------------------------------------------------------
+                              CONFIGURAZIONE API
+------------------------------------------------------------------------------
+*/
 // Porta di ascolto predefinita per il server
 app.listen(port, () => {
   console.log("Il server è in ascolto sulla porta 5000");
@@ -55,6 +84,12 @@ app.get("/api/lampioni/:id", (req, res) => {
   }
 });
 
+
+/*
+------------------------------------------------------------------------------
+                        GESTIONE RECUPERO LAMPIONI
+------------------------------------------------------------------------------
+*/
 // Funzione (sarà da spostare in cartella apposita) per generare un id
 // incrementale per il lampione
 // PRE: lampioni_test deve essere un array di Lampione
