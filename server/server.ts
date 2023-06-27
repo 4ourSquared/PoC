@@ -1,10 +1,7 @@
 import express, { Request, Response } from "express";
 import { Lampione } from "./models/lampione";
-<<<<<<< Updated upstream
-=======
 import { Sensore } from "./models/sensore";
 import { Area } from "./models/area";
->>>>>>> Stashed changes
 
 /*
     SERVER: questo file al momento rappresenta il server in tutto e per tutto. Al suo interno si trovano tutti i metodi attualmente sviluppati per la gestione delle richieste in arrivo
@@ -26,15 +23,12 @@ app.use(express.urlencoded({ extended: false }));
 // Array contenente i lampioni generati - solo per test, rimuovere in produzione
 let lampioni_test: Lampione[] = [];
 
-<<<<<<< Updated upstream
-=======
 // Array contenente i sensori generati - solo per test, rimuovere in produzione
 let sensori_test: Sensore[] = [];
 
 // Array contenente le aree generati - solo per test, rimuovere in produzione
 let aree_test: Area[] = [];
 
->>>>>>> Stashed changes
 // Metodi per API REST
 // Porta di ascolto predefinita per il server
 app.listen(port, () => {
@@ -105,8 +99,6 @@ app.post("/api/lampioni", (req, res) => {
 
   res.status(200).send("Lampione aggiunto con successo");
 });
-<<<<<<< Updated upstream
-=======
 
 // Richiesta per eliminare un lampione dal sistema
 app.delete("/api/lampioni/:id", (req, res) => {
@@ -337,4 +329,3 @@ app.put("/api/aree/edit/:id", (req, res) => {
 
   res.status(200).send(`Area con id = ${id} aggiornata con successo`);
 });
->>>>>>> Stashed changes

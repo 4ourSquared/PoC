@@ -5,11 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const lampione_1 = require("./models/lampione");
-<<<<<<< Updated upstream
-=======
 const sensore_1 = require("./models/sensore");
 const area_1 = require("./models/area");
->>>>>>> Stashed changes
 /*
     SERVER: questo file al momento rappresenta il server in tutto e per tutto. Al suo interno si trovano tutti i metodi attualmente sviluppati per la gestione delle richieste in arrivo
             dal client
@@ -24,13 +21,10 @@ app.use(express_1.default.json()); //body-parser già incluso in express, elimin
 app.use(express_1.default.urlencoded({ extended: false }));
 // Array contenente i lampioni generati - solo per test, rimuovere in produzione
 let lampioni_test = [];
-<<<<<<< Updated upstream
-=======
 // Array contenente i sensori generati - solo per test, rimuovere in produzione
 let sensori_test = [];
 // Array contenente le aree generati - solo per test, rimuovere in produzione
 let aree_test = [];
->>>>>>> Stashed changes
 // Metodi per API REST
 // Porta di ascolto predefinita per il server
 app.listen(port, () => {
@@ -88,8 +82,6 @@ app.post("/api/lampioni", (req, res) => {
     console.log(typeof luogo + `: ${luogo}`);
     res.status(200).send("Lampione aggiunto con successo");
 });
-<<<<<<< Updated upstream
-=======
 // Richiesta per eliminare un lampione dal sistema
 app.delete("/api/lampioni/:id", (req, res) => {
     const id = parseInt(req.params.id);
@@ -290,4 +282,3 @@ app.put("/api/aree/edit/:id", (req, res) => {
     }
     res.status(200).send(`Area con id = ${id} aggiornata con successo`);
 });
->>>>>>> Stashed changes
