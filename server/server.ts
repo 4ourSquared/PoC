@@ -1,5 +1,10 @@
 import express, { Request, Response } from "express";
 import { Lampione } from "./models/lampione";
+<<<<<<< Updated upstream
+=======
+import { Sensore } from "./models/sensore";
+import { Area } from "./models/area";
+>>>>>>> Stashed changes
 
 /*
     SERVER: questo file al momento rappresenta il server in tutto e per tutto. Al suo interno si trovano tutti i metodi attualmente sviluppati per la gestione delle richieste in arrivo
@@ -21,6 +26,15 @@ app.use(express.urlencoded({ extended: false }));
 // Array contenente i lampioni generati - solo per test, rimuovere in produzione
 let lampioni_test: Lampione[] = [];
 
+<<<<<<< Updated upstream
+=======
+// Array contenente i sensori generati - solo per test, rimuovere in produzione
+let sensori_test: Sensore[] = [];
+
+// Array contenente le aree generati - solo per test, rimuovere in produzione
+let aree_test: Area[] = [];
+
+>>>>>>> Stashed changes
 // Metodi per API REST
 // Porta di ascolto predefinita per il server
 app.listen(port, () => {
@@ -91,3 +105,236 @@ app.post("/api/lampioni", (req, res) => {
 
   res.status(200).send("Lampione aggiunto con successo");
 });
+<<<<<<< Updated upstream
+=======
+
+// Richiesta per eliminare un lampione dal sistema
+app.delete("/api/lampioni/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const lampToDelete = lampioni_test.find((lamp) => lamp.getId() === id); //Individua il lampione con id richiesto
+  if (lampToDelete === undefined) {
+    res.status(404).send(`Lampione con id = ${id} non trovato`);
+  } else {
+    const idx = lampioni_test.indexOf(lampToDelete);
+    lampioni_test.splice(idx, 1); //Elimina gli elementi tra idx e il numero indicato, in questo caso 1 solo elemento
+    res.status(200).send(`Lampione con id = ${id} eliminato con successo`);
+  }
+});
+
+// Richiesta per aggiornare i dati di un lampione nel sistema
+// Aggiunto /edit/:id per evitare conflitti con la richiesta di info di un
+// singolo lampione
+app.put("/api/lampioni/edit/:id", (req, res) => {
+  const id = parseInt(req.params.id); // ID del lampione da aggiornare
+  const lampToUpdate = lampioni_test.find((lamp) => lamp.getId() === id);
+  console.log(`Ricevuta richiesta PUT su /api/lampioni -> ID: ${id}`);
+  console.log("Richiesta aggiornamento di un lampione esistente");
+
+  if (lampToUpdate === undefined) {
+    res.status(404).send(`Lampione con id = ${id} non trovato`);
+  } else {
+    if (req.body.stato !== undefined) {
+      lampToUpdate.setStato(req.body.stato);
+    }
+    if (req.body.lum !== undefined) {
+      lampToUpdate.setLum(parseInt(req.body.lum, 10));
+    }
+    if (req.body.luogo !== undefined) {
+      lampToUpdate.setLuogo(req.body.luogo);
+    }
+  }
+  res.status(200).send(`Lampione con id = ${id} aggiornato con successo`);
+});
+
+
+
+/** SENSORI **/
+
+// Recupero delle informazioni di tutti i sensori inseriti a sistema
+app.get("/api/sensori", (req, res) => {
+  console.log("Ricevuta richiesta GET su /api/sensori -> RETRIEVE ALL DATA");
+  res.status(200).json(sensori_test);
+});
+
+// Richiesta di informazioni per un determinato sensore
+app.get("/api/sensori/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  console.log(`Ricevuta richiesta GET su /api/sensori -> ID: ${id}`);
+
+  // Trova il lampione con l'ID specificato
+  const sensore = sensori_test.find((sens) => sens.getId() === id);
+
+  if (sensore) {
+    res.status(200).json(sensore);
+  } else {
+    res.status(404).json({ error: "Sensore non trovato." });
+  }
+});
+
+// Funzione (sarà da spostare in cartella apposita) per generare un id --------------------------- da valutare
+// incrementale per il sensore
+// PRE: sensori_test deve essere un array di Sensori
+
+function generateIdSensori() {
+  const maxId =
+    sensori_test.length > 0
+      ? Math.max(...sensori_test.map((sens) => sens.getId()))
+      : 0;
+  return maxId + 1;
+}
+// POST: ritorna un id incrementale e lo assegna al sensore, verificando sempre
+// la presenza di eventuali altri id nei sensori già presenti
+
+// Richiesta per la creazione e l'inserimento di un nuovo sensore a sistema
+app.post("/api/sensori", (req, res) => {
+  const { iter, IP, luogo, raggio } = req.body; //Semplificata la richiesta e l'inserimento dei dati
+  const id: number = generateIdSensori();
+  const new_sens = new Sensore(id, iter, IP, luogo, parseInt(raggio, 10));
+
+  console.log(typeof id + `: ${id}`);
+  console.log(typeof iter + `: ${iter}`);
+  console.log(typeof IP + `: ${IP}`);
+  console.log(typeof luogo + `: ${luogo}`);
+  console.log(typeof raggio + `: ${raggio}`);
+
+  console.log("Richiesta aggiunta di un nuovo sensore");
+  console.log(new_sens);
+  sensori_test.push(new_sens);
+
+  console.log(typeof id + `: ${id}`);
+  console.log(typeof iter + `: ${iter}`);
+  console.log(typeof IP + `: ${IP}`);
+  console.log(typeof luogo + `: ${luogo}`);
+  console.log(typeof raggio + `: ${raggio}`);
+
+  res.status(200).send("Sensore aggiunto con successo");
+});
+
+// Richiesta per eliminare un sensore dal sistema
+app.delete("/api/sensori/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const sensToDelete = sensori_test.find((sens) => sens.getId() === id); //Individua il sensore con id richiesto
+  if (sensToDelete === undefined) {
+    res.status(404).send(`Sensore con id = ${id} non trovato`);
+  } else {
+    const idx = sensori_test.indexOf(sensToDelete);
+    sensori_test.splice(idx, 1); //Elimina gli elementi tra idx e il numero indicato, in questo caso 1 solo elemento
+    res.status(200).send(`Sensore con id = ${id} eliminato con successo`);
+  }
+});
+
+// Richiesta per aggiornare i dati di un sensore nel sistema
+// Aggiunto /edit/:id per evitare conflitti con la richiesta di info di un
+// singolo sensore
+app.put("/api/sensori/edit/:id", (req, res) => {
+  const id = parseInt(req.params.id); // ID del sensore da aggiornare
+  const sensToUpdate = sensori_test.find((sens) => sens.getId() === id);
+  console.log(`Ricevuta richiesta PUT su /api/sensori -> ID: ${id}`);
+  console.log("Richiesta aggiornamento di un sensore esistente");
+
+  if (sensToUpdate === undefined) {
+    res.status(404).send(`Sensore con id = ${id} non trovato`);
+  } else {
+    if (req.body.iter !== undefined) {
+      sensToUpdate.setIter(req.body.stato);
+    }
+    if (req.body.IP !== undefined) {
+      sensToUpdate.setIP(req.body.IP);
+    }
+    if (req.body.luogo !== undefined) {
+      sensToUpdate.setLuogo(req.body.luogo);
+    }
+    if (req.body.raggio !== undefined) {
+      sensToUpdate.setRaggio(parseInt(req.body.raggio, 10));
+    }
+  }
+  res.status(200).send(`Sensore con id = ${id} aggiornato con successo`);
+});
+
+/** AREE **/
+// Recupero delle informazioni di tutte le aree inserite nel sistema
+app.get("/api/aree", (req, res) => {
+  console.log("Ricevuta richiesta GET su /api/aree -> RETRIEVE ALL DATA");
+  res.status(200).json(aree_test);
+});
+
+// Recupero delle informazioni per una specifica area
+app.get("/api/aree/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  console.log(`Ricevuta richiesta GET su /api/aree -> ID: ${id}`);
+
+  const area = aree_test.find((a) => a.getId() === id);
+
+  if (area) {
+    res.status(200).json(area);
+  } else {
+    res.status(404).json({ error: "Area non trovata." });
+  }
+});
+
+// Genera un ID incrementale per le aree
+function generateIdAree() {
+  const maxId =
+    aree_test.length > 0
+      ? Math.max(...aree_test.map((a) => a.getId()))
+      : 0;
+  return maxId + 1;
+}
+
+// Aggiunge una nuova area al sistema
+app.post("/api/aree", (req, res) => {
+  const { nome, descrizione, latitudine, longitudine } = req.body;
+  const id: number = generateIdAree();
+  const newArea = new Area(id, nome, descrizione, latitudine, longitudine);
+
+  console.log("Richiesta di aggiunta di una nuova area");
+  console.log(newArea);
+  aree_test.push(newArea);
+
+  res.status(200).send("Area aggiunta con successo");
+});
+
+// Elimina un'area dal sistema
+app.delete("/api/aree/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const areaToDelete = aree_test.find((a) => a.getId() === id);
+
+  if (areaToDelete === undefined) {
+    res.status(404).send(`Area con id = ${id} non trovata`);
+  } else {
+    const idx = aree_test.indexOf(areaToDelete);
+    aree_test.splice(idx, 1);
+    res.status(200).send(`Area con id = ${id} eliminata con successo`);
+  }
+});
+
+// Aggiorna i dati di un'area nel sistema
+app.put("/api/aree/edit/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const areaToUpdate = aree_test.find((a) => a.getId() === id);
+
+  console.log(`Ricevuta richiesta PUT su /api/aree -> ID: ${id}`);
+  console.log("Richiesta di aggiornamento di un'area esistente");
+
+  if (areaToUpdate === undefined) {
+    res.status(404).send(`Area con id = ${id} non trovata`);
+  } else {
+    if (req.body.nome !== undefined) {
+      areaToUpdate.setNome(req.body.nome);
+    }
+    if (req.body.descrizione !== undefined) {
+      areaToUpdate.setDescrizione(req.body.descrizione);
+    }
+    if (req.body.latitudine !== undefined) {
+      areaToUpdate.setLatitudine(req.body.latitudine);
+    }
+    if (req.body.longitudine !== undefined) {
+      areaToUpdate.setLongitudine(req.body.longitudine);
+    }
+  }
+
+  res.status(200).send(`Area con id = ${id} aggiornata con successo`);
+});
+>>>>>>> Stashed changes
