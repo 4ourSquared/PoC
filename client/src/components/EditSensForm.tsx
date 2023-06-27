@@ -22,7 +22,7 @@ const EditSensForm: React.FC = () => {
   const fetchData = async () => {
     axios.defaults.baseURL = "http://localhost:5000/api";
     try {
-      const response = await axios.get<SensItem>(`sensori/${id}`);
+      const response = await axios.put<SensItem>(`sensori/edit/${id}`);
       setSens(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
