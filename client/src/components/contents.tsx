@@ -1,10 +1,7 @@
 import React, {Component} from 'react'
 import { LampioneTable } from './LampioneTable'
-<<<<<<< Updated upstream
-=======
 import { SensoreTable } from './SensoreTable'
 import { AreaTable } from './AreaTable'
->>>>>>> Stashed changes
 
 /*
     CLASSE CONTENT: classe che renderizza automaticamente il content. Stile associato a Bootstrap.
@@ -18,8 +15,6 @@ export class Content extends Component{
                 <div className='row'>
                     <LampioneTable/>
                 </div>
-<<<<<<< Updated upstream
-=======
                 <h2>Sensori Collegati</h2>
                 <div className='row'>
                     <SensoreTable/>
@@ -28,7 +23,6 @@ export class Content extends Component{
                 <div className='row'>
                     <AreaTable />
                 </div>
->>>>>>> Stashed changes
             </main>
         )
     }
