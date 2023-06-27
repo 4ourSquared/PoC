@@ -39,7 +39,7 @@ export const AreaTable: React.FC = () => {
   return (
     <>
       <div className="row justify-content-center">
-        <Link to="/aree/add" type="button" className="btn btn-primary">
+        <Link to="/api/aree/add" type="button" className="btn btn-primary">
           Aggiungi Area
         </Link>
         <table
@@ -67,7 +67,7 @@ export const AreaTable: React.FC = () => {
                 <td>{area.longitudine}</td>
                 <td>
                   <Link
-                    to={`/aree/edit/${area.id}`}
+                    to={`/api/aree/edit/${area.id}`}
                     type="button"
                     className="btn btn-outline-warning"
                   >
