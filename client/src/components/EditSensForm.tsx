@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import SensItem from "../types/SensItem";
+import { useFormik } from "formik";
+import * as Yup from 'yup';
 
 /*
   CLASSE EDITFORM: classe che renderizza automaticamente la struttura HTML della pagina di modifica di un lampione, definendo anche il metodo per la trasmissione dei dati al server. Stile associato a Bootstrap.
@@ -20,7 +22,7 @@ const EditSensForm: React.FC = () => {
   const fetchData = async () => {
     axios.defaults.baseURL = "http://localhost:5000/api";
     try {
-      const response = await axios.get<SensItem>(`sensori/edit/${id}`);
+      const response = await axios.get<SensItem>(`sensori/${id}`);
       setSens(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
