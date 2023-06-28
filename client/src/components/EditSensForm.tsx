@@ -44,6 +44,10 @@ const EditSensForm: React.FC = () => {
         raggio: sens.raggio || 0,
       }}
       validationSchema={Yup.object({
+        IP: Yup.string()
+          .matches(/\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b/ig,"Deve essre un indirizzo IP valido")
+          .required("Campo obbligatorio")
+          .trim(),
         luogo: Yup.string()
           .min(2, "Inserisci almeno 2 caratteri")
           .required("Campo obbligatorio")
@@ -62,6 +66,7 @@ const EditSensForm: React.FC = () => {
           });
       }}
     >
+      
       <Form>
         <div className="form-group">
           <label htmlFor="id">ID (Automatico)</label>
