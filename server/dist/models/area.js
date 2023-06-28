@@ -6,7 +6,7 @@ exports.Area = void 0;
  */
 class Area {
     // Costruttore
-    constructor(id = 0, nome = "", descrizione = "", latitudine = "", longitudine = "") {
+    constructor(id = 0, nome = "", descrizione = "", latitudine = "", longitudine = "", sensori = [], lampioni = []) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
