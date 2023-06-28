@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import AreaItem from "../types/AreaItem";
+import Sensore from "../types/SensItem";
+import Lampione from "../types/LampItem";
 
 const EditAreaForm: React.FC = () => {
   axios.defaults.baseURL = "http://localhost:5000/api";
@@ -16,16 +18,14 @@ const EditAreaForm: React.FC = () => {
     descrizione: "",
     latitudine: "",
     longitudine: "",
-    sensori: [], // Aggiunto
-    lampioni: [], // Aggiunto
+    sensori: [],
+    lampioni: [],
   });
 
-  // Aggiunto: stato per i sensori e i lampioni disponibili
   const [availableSensori, setAvailableSensori] = useState<Sensore[]>([]);
   const [availableLampioni, setAvailableLampioni] = useState<Lampione[]>([]);
 
   useEffect(() => {
-    // Aggiunto: ottenere i sensori e i lampioni disponibili
     axios.get('/sensori').then(response => setAvailableSensori(response.data));
     axios.get('/lampioni').then(response => setAvailableLampioni(response.data));
 

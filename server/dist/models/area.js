@@ -1,12 +1,14 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Area = void 0;
 /*
  *   CLASSE AREA: classe di base per l'area illuminata, contiene le informazioni necessarie per il funzionamento minimo.
  */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Area = void 0;
 class Area {
     // Costruttore
-    constructor(id = 0, nome = "", descrizione = "", latitudine = "", longitudine = "", sensori = [], lampioni = []) {
+    constructor(id = 0, nome = "", descrizione = "", latitudine = "", longitudine = "", sensori = [], // Aggiunto
+    lampioni = [] // Aggiunto
+    ) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -43,19 +45,16 @@ class Area {
     setLongitudine(longitudine) {
         this.longitudine = longitudine;
     }
-    getSensori() { // Aggiunto
+    getSensori() {
         return this.sensori;
     }
-
-    getLampioni() { // Aggiunto
+    getLampioni() {
         return this.lampioni;
     }
-
-    setSensori(sensori) { // Aggiunto
+    setSensori(sensori) {
         this.sensori = sensori;
     }
-
-    setLampioni(lampioni) { // Aggiunto
+    setLampioni(lampioni) {
         this.lampioni = lampioni;
     }
 }

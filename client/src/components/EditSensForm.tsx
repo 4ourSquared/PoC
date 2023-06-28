@@ -16,6 +16,7 @@ const EditSensForm: React.FC = () => {
     IP: "",
     luogo: "",
     raggio: 0,
+    nome: ""
   });
 
   useEffect(() => {

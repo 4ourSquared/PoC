@@ -4,8 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const lampione_1 = require("./models/lampione");
-const sensore_1 = require("./models/sensore");
 const area_1 = require("./models/area");
 /*
     SERVER: questo file al momento rappresenta il server in tutto e per tutto. Al suo interno si trovano tutti i metodi attualmente sviluppati per la gestione delle richieste in arrivo
@@ -279,10 +277,10 @@ app.put("/api/aree/edit/:id", (req, res) => {
         if (req.body.longitudine !== undefined) {
             areaToUpdate.setLongitudine(req.body.longitudine);
         }
-        if (req.body.sensori !== undefined) { // Aggiunto
+        if (req.body.sensori !== undefined) {
             areaToUpdate.setSensori(req.body.sensori);
         }
-        if (req.body.lampioni !== undefined) { // Aggiunto
+        if (req.body.lampioni !== undefined) {
             areaToUpdate.setLampioni(req.body.lampioni);
         }
     }

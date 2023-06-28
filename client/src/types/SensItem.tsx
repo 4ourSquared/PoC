@@ -9,6 +9,7 @@ interface SensItem {
   IP: string;
   luogo: string;
   raggio: number;
+  nome: string;
 }
 
 export default SensItem;
