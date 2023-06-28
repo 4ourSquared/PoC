@@ -277,9 +277,9 @@ function generateIdAree() {
 
 // Aggiunge una nuova area al sistema
 app.post("/api/aree", (req, res) => {
-  const { nome, descrizione, latitudine, longitudine } = req.body;
+  const { nome, descrizione, latitudine, longitudine, sensori, lampioni  } = req.body;
   const id: number = generateIdAree();
-  const newArea = new Area(id, nome, descrizione, latitudine, longitudine);
+  const newArea = new Area(id, nome, descrizione, latitudine, longitudine, sensori, lampioni );
 
   console.log("Richiesta di aggiunta di una nuova area");
   console.log(newArea);
@@ -324,6 +324,12 @@ app.put("/api/aree/edit/:id", (req, res) => {
     }
     if (req.body.longitudine !== undefined) {
       areaToUpdate.setLongitudine(req.body.longitudine);
+    }
+    if (req.body.sensori !== undefined) {
+      areaToUpdate.setSensori(req.body.sensori);
+    }
+    if (req.body.lampioni !== undefined) {
+      areaToUpdate.setLampioni(req.body.lampioni);
     }
   }
 

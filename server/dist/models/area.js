@@ -12,6 +12,8 @@ class Area {
         this.descrizione = descrizione;
         this.latitudine = latitudine;
         this.longitudine = longitudine;
+        this.sensori = sensori; // Aggiunto
+        this.lampioni = lampioni; // Aggiunto
     }
     // Interfaccia
     getId() {
@@ -40,6 +42,21 @@ class Area {
     }
     setLongitudine(longitudine) {
         this.longitudine = longitudine;
+    }
+    getSensori() { // Aggiunto
+        return this.sensori;
+    }
+
+    getLampioni() { // Aggiunto
+        return this.lampioni;
+    }
+
+    setSensori(sensori) { // Aggiunto
+        this.sensori = sensori;
+    }
+
+    setLampioni(lampioni) { // Aggiunto
+        this.lampioni = lampioni;
     }
 }
 exports.Area = Area;

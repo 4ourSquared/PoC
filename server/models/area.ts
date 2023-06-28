@@ -1,6 +1,10 @@
 /*
  *   CLASSE AREA: classe di base per l'area illuminata, contiene le informazioni necessarie per il funzionamento minimo.
  */
+
+import { Sensore } from './sensore';
+import { Lampione } from './lampione';
+
 export class Area {
   // Attributi
   private id: number;
@@ -8,6 +12,8 @@ export class Area {
   private descrizione: string;
   private latitudine: string;
   private longitudine: string;
+  private sensori: Sensore[]; // Aggiunto
+  private lampioni: Lampione[]; // Aggiunto
 
   // Costruttore
   public constructor(
@@ -15,13 +21,17 @@ export class Area {
     nome: string = "",
     descrizione: string = "",
     latitudine: string = "",
-    longitudine: string = ""
+    longitudine: string = "",
+    sensori: Sensore[] = [], // Aggiunto
+    lampioni: Lampione[] = [] // Aggiunto
   ) {
     this.id = id;
     this.nome = nome;
     this.descrizione = descrizione;
     this.latitudine = latitudine;
     this.longitudine = longitudine;
+    this.sensori = sensori; // Aggiunto
+    this.lampioni = lampioni; // Aggiunto
   }
 
   // Interfaccia
@@ -59,5 +69,21 @@ export class Area {
 
   public setLongitudine(longitudine: string): void {
     this.longitudine = longitudine;
+  }
+
+  public getSensori(): Sensore[] { // Aggiunto
+    return this.sensori;
+  }
+
+  public getLampioni(): Lampione[] { // Aggiunto
+    return this.lampioni;
+  }
+
+  public setSensori(sensori: Sensore[]): void { // Aggiunto
+    this.sensori = sensori;
+  }
+
+  public setLampioni(lampioni: Lampione[]): void { // Aggiunto
+    this.lampioni = lampioni;
   }
 }

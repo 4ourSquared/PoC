@@ -16,9 +16,19 @@ const EditAreaForm: React.FC = () => {
     descrizione: "",
     latitudine: "",
     longitudine: "",
+    sensori: [], // Aggiunto
+    lampioni: [], // Aggiunto
   });
 
+  // Aggiunto: stato per i sensori e i lampioni disponibili
+  const [availableSensori, setAvailableSensori] = useState<Sensore[]>([]);
+  const [availableLampioni, setAvailableLampioni] = useState<Lampione[]>([]);
+
   useEffect(() => {
+    // Aggiunto: ottenere i sensori e i lampioni disponibili
+    axios.get('/sensori').then(response => setAvailableSensori(response.data));
+    axios.get('/lampioni').then(response => setAvailableLampioni(response.data));
+
     if (area.id !== 0) {
       axios
         .get<AreaItem>(`/aree/${area.id}`)
@@ -42,6 +52,8 @@ const EditAreaForm: React.FC = () => {
         descrizione: area.descrizione || "",
         latitudine: area.latitudine || "",
         longitudine: area.longitudine || "",
+        sensori: area.sensori || [], // Aggiunto
+        lampioni: area.lampioni || [], // Aggiunto
       }}
       validationSchema={Yup.object({
         nome: Yup.string()
@@ -106,6 +118,26 @@ const EditAreaForm: React.FC = () => {
           <label htmlFor="longitudine">Longitudine</label>
           <Field name="longitudine" type="text" className="form-control" />
           <ErrorMessage name="longitudine" />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="sensori">Sensori</label>
+          <Field name="sensori" as="select" multiple className="form-control">
+            {availableSensori.map(sensore => (
+              <option value={sensore.id}>{sensore.nome}</option>
+            ))}
+          </Field>
+          <ErrorMessage name="sensori" />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="lampioni">Lampioni</label>
+          <Field name="lampioni" as="select" multiple className="form-control">
+            {availableLampioni.map(lampione => (
+              <option value={lampione.id}>{lampione.nome}</option>
+            ))}
+          </Field>
+          <ErrorMessage name="lampioni" />
         </div>
 
         <button type="submit" className="btn btn-primary">

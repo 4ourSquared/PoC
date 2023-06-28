@@ -32,6 +32,8 @@ const AreaSingleView: React.FC = () => {
             <li>Descrizione: {area.descrizione}</li>
             <li>Latitudine: {area.latitudine}</li>
             <li>Longitudine: {area.longitudine}</li>
+            <li>Sensori: {area.sensori.map(sensore => <p>{sensore.id}</p>)}</li> {/* Aggiunto */}
+            <li>Lampioni: {area.lampioni.map(lampione => <p>{lampione.id}</p>)}</li> {/* Aggiunto */}
           </ul>
         </div>
       ) : (

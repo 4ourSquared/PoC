@@ -53,6 +53,8 @@ export const AreaTable: React.FC = () => {
               <th scope="col">Descrizione</th>
               <th scope="col">Latitudine</th>
               <th scope="col">Longitudine</th>
+              <th scope="col">Sensori</th> {/* Aggiunto */}
+              <th scope="col">Lampioni</th> {/* Aggiunto */}
               <th scope="col">Modifica</th>
               <th scope="col">Elimina</th>
             </tr>
@@ -65,6 +67,8 @@ export const AreaTable: React.FC = () => {
                 <td>{area.descrizione}</td>
                 <td>{area.latitudine}</td>
                 <td>{area.longitudine}</td>
+                <td>{area.sensori.map(sensore => sensore.id).join(', ')}</td> {/* Aggiunto */}
+                <td>{area.lampioni.map(lampione => lampione.id).join(', ')}</td> {/* Aggiunto */}
                 <td>
                   <Link
                     to={`/api/aree/edit/${area.id}`}

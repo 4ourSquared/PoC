@@ -15,6 +15,8 @@ const NewAreaForm: React.FC = () => {
         descrizione: "",
         latitudine: "",
         longitudine: "",
+        sensori: [], // Aggiunto
+        lampioni: [] // Aggiunto
   };
 
   const validationSchema = Yup.object({
@@ -22,7 +24,9 @@ const NewAreaForm: React.FC = () => {
     descrizione: Yup.string().required("Campo obbligatorio").trim(),
     latitudine: Yup.string().required("Campo obbligatorio").trim(),
     longitudine: Yup.string().required("Campo obbligatorio").trim(),
-  });
+    sensori: Yup.array().required("Campo obbligatorio"), // Aggiunto
+    lampioni: Yup.array().required("Campo obbligatorio") // Aggiunto
+ });
 
   const handleSubmit = async (values: AreaItem, { setSubmitting }: any) => {
     try {
