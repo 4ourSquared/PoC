@@ -302,7 +302,7 @@ app.delete("/api/aree/:id", (req, res) => {
   }
 });
 
-// Aggiorna i dati di un'area nel sistema
+// Richiesta per aggiornare i dati di un'area nel sistema
 app.put("/api/aree/edit/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const areaToUpdate = aree_test.find((a) => a.getId() === id);
@@ -320,10 +320,10 @@ app.put("/api/aree/edit/:id", (req, res) => {
       areaToUpdate.setDescrizione(req.body.descrizione);
     }
     if (req.body.latitudine !== undefined) {
-      areaToUpdate.setLatitudine(req.body.latitudine);
+      areaToUpdate.setLatitudine(parseFloat(req.body.latitudine));
     }
     if (req.body.longitudine !== undefined) {
-      areaToUpdate.setLongitudine(req.body.longitudine);
+      areaToUpdate.setLongitudine(parseFloat(req.body.longitudine));
     }
     if (req.body.sensori !== undefined) {
       areaToUpdate.setSensori(req.body.sensori);
@@ -331,7 +331,6 @@ app.put("/api/aree/edit/:id", (req, res) => {
     if (req.body.lampioni !== undefined) {
       areaToUpdate.setLampioni(req.body.lampioni);
     }
+    res.status(200).send(`Area con id = ${id} aggiornato con successo`);
   }
-
-  res.status(200).send(`Area con id = ${id} aggiornata con successo`);
 });
