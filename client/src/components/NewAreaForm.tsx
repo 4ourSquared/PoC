@@ -30,7 +30,7 @@ const NewAreaForm: React.FC = () => {
 
   const handleSubmit = async (values: AreaItem, { setSubmitting }: any) => {
     try {
-      await axios.post("/api/aree", values);
+      await axios.post("/aree/add", values);
       navigate("/");
     } catch (error) {
       console.error("Error adding area:", error);
