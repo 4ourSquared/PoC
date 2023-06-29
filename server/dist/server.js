@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const lampione_1 = require("./models/lampione");
+const sensore_1 = require("./models/sensore");
 const area_1 = require("./models/area");
 /*
     SERVER: questo file al momento rappresenta il server in tutto e per tutto. Al suo interno si trovano tutti i metodi attualmente sviluppati per la gestione delle richieste in arrivo
@@ -255,7 +257,7 @@ app.delete("/api/aree/:id", (req, res) => {
         res.status(200).send(`Area con id = ${id} eliminata con successo`);
     }
 });
-// Aggiorna i dati di un'area nel sistema
+// Richiesta per aggiornare i dati di un'area nel sistema
 app.put("/api/aree/edit/:id", (req, res) => {
     const id = parseInt(req.params.id);
     const areaToUpdate = aree_test.find((a) => a.getId() === id);
@@ -283,6 +285,6 @@ app.put("/api/aree/edit/:id", (req, res) => {
         if (req.body.lampioni !== undefined) {
             areaToUpdate.setLampioni(req.body.lampioni);
         }
+        res.status(200).send(`Area con id = ${id} aggiornato con successo`);
     }
-    res.status(200).send(`Area con id = ${id} aggiornata con successo`);
 });

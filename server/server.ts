@@ -320,10 +320,10 @@ app.put("/api/aree/edit/:id", (req, res) => {
       areaToUpdate.setDescrizione(req.body.descrizione);
     }
     if (req.body.latitudine !== undefined) {
-      areaToUpdate.setLatitudine(parseFloat(req.body.latitudine));
+      areaToUpdate.setLatitudine(req.body.latitudine);
     }
     if (req.body.longitudine !== undefined) {
-      areaToUpdate.setLongitudine(parseFloat(req.body.longitudine));
+      areaToUpdate.setLongitudine(req.body.longitudine);
     }
     if (req.body.sensori !== undefined) {
       areaToUpdate.setSensori(req.body.sensori);
