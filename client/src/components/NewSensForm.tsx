@@ -17,18 +17,19 @@ const NewSensForm: React.FC = () => {
     <Formik
       initialValues={{ id: 0, iter: "manuale", IP: "", luogo: "", raggio: 0 }}
       validationSchema={Yup.object({
-        IP: Yup.string()
-          .matches(/\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b/ig,"Deve essre un indirizzo IP valido")
-          .required("Campo obbligatorio")
-          .trim(),
-        luogo: Yup.string()
-          .min(2, "Inserisci almeno 2 caratteri")
-          .required("Campo obbligatorio")
-          .trim(), //Grazie a questo pulisce il campo da spazi bianchi ed evito che il campo sia vuoto
-        //Inoltre il form non si completa fino a che il campo non viene
-        //riempito correttamente
-      })}
+      IP: Yup.string()
+        .matches(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/, "Deve essere un indirizzo IP valido")
+        .required("Campo obbligatorio")
+        .trim(),
+      luogo: Yup.string()
+        .min(2, "Inserisci almeno 2 caratteri")
+        .required("Campo obbligatorio")
+        .trim()
+})}
+
       onSubmit={(values, { setSubmitting }) => {
+        console.log(values);
+        console.log("Ciao");
         axios.post("/sensori", values); // Solito invio dei dati al server
         setSubmitting(false); //Serve a resettare la submit del form e riportarla False
         navigate("/");
@@ -58,6 +59,7 @@ const NewSensForm: React.FC = () => {
             id="IP"
             placeholder=""
           />
+          <ErrorMessage name="IP" component="div" className="error-message" />
         </div>
         <div className="form-group">
           <label htmlFor="Locazione">Luogo di Installazione</label>
@@ -69,6 +71,7 @@ const NewSensForm: React.FC = () => {
             aria-describedby="luogoHelp"
             placeholder=""
           />
+          <ErrorMessage name="luogo" component="div" className="error-message" />
           <small id="locazioneHelp" className="form-text text-muted">
             Indica il luogo in cui è situato il sensore.
           </small>

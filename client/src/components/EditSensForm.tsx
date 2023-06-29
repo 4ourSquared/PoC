@@ -45,7 +45,7 @@ const EditSensForm: React.FC = () => {
       }}
       validationSchema={Yup.object({
         IP: Yup.string()
-          .matches(/\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b/ig,"Deve essre un indirizzo IP valido")
+          .matches(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/,"Deve essre un indirizzo IP valido")
           .required("Campo obbligatorio")
           .trim(),
         luogo: Yup.string()
@@ -87,6 +87,10 @@ const EditSensForm: React.FC = () => {
         <div className="form-group">
           <label htmlFor="IP">Indirizzo IP</label>
           <Field name="IP" type="text" className="form-control" />
+          <small id="IPHelp" className="form-text text-muted">
+            Indica l'indirizzo IP del sensore.
+          </small>
+          <ErrorMessage name="IP" />
         </div>
 
         <div className="form-group">
