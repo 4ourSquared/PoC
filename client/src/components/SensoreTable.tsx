@@ -1,50 +1,50 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import LampItem from "../types/LampItem"; // Import the LampItem type from your types file
+import SensItem from "../types/SensItem"; // Import the SensItem type from your types file
 
-interface LampioneTableProps {
+interface SensoreTableProps {
   // Per definire i props, se necessari
 }
 
-export const LampioneTable: React.FC<LampioneTableProps> = () => {
-  const [lampioni, setLampioni] = useState<LampItem[]>([]);
+export const SensoreTable: React.FC<SensoreTableProps> = () => {
+  const [sensori, setSensori] = useState<SensItem[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    loadLampioni();
+    loadSensori();
   }, []);
 
-  const loadLampioni = async () => {
+  const loadSensori = async () => {
     try {
-      const response = await axios.get<LampItem[]>(
-        "http://localhost:5000/api/lampioni"
+      const response = await axios.get<SensItem[]>(
+        "http://localhost:5000/api/sensori"
       );
-      setLampioni(response.data);
+      setSensori(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  const deleteLampione = async (id: number) => {
+  const deleteSensore = async (id: number) => {
     const confirmed = window.confirm(
-      "Sei sicuro di voler eliminare il lampione?"
+      "Sei sicuro di voler eliminare il sensore?"
     );
     try {
       if (confirmed) {
-        await axios.delete(`http://localhost:5000/api/lampioni/${id}`);
-        setLampioni((cur) => cur.filter((item) => item.id !== id));
+        await axios.delete(`http://localhost:5000/api/sensori/${id}`);
+        setSensori((cur) => cur.filter((item) => item.id !== id));
       }
     } catch (error) {
-      console.error("Errore nella cancellazione del lampione: ", error);
+      console.error("Errore nella cancellazione del sensore: ", error);
     }
   };
 
   return (
     <>
       <div className="row justify-content-center">
-        <Link to="api/lampioni/add" type="button" className="btn btn-primary">
-          Aggiungi Lampione
+        <Link to="api/sensori/add" type="button" className="btn btn-primary">
+          Aggiungi Sensore
         </Link>
         <table
           className="table table-hover align-middle"
@@ -53,32 +53,34 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Stato</th>
-              <th scope="col">Intensità</th>
+              <th scope="col">Tipo di interazione</th>
+              <th scope="col">Indirizzo IP</th>
               <th scope="col">Zona Illuminata</th>
+              <th scope="col">Raggio d'azione</th>
               <th scope="col">Info</th>
               <th scope="col">Modifica</th>
               <th scope="col">Elimina</th>
             </tr>
           </thead>
           <tbody id="tableBody">
-            {lampioni.map((lampione) => (
-              <tr key={lampione.id}>
-                <th scope="row">{lampione.id}</th>
-                <td>{lampione.stato === "Attivo" ? "ON" : "OFF"}</td>
-                <td>{lampione.lum}</td>
-                <td>{lampione.luogo}</td>
+            {sensori.map((sensore) => (
+              <tr key={sensore.id}>
+                <th scope="row">{sensore.id}</th>
+                <td>{sensore.iter === "manuale" ? "Manuale" : "Automatico"}</td>
+                <td>{sensore.IP}</td>
+                <td>{sensore.luogo}</td>
+                <td>{sensore.raggio}</td>
                 <td>
                   <button
                     className="btn btn-outline-primary"
-                    onClick={() => navigate(`/api/lampioni/${lampione.id}`)}
+                    onClick={() => navigate(`/api/sensori/${sensore.id}`)}
                   >
                     Info
                   </button>
                 </td>
                 <td>
                   <Link
-                    to={`/api/lampioni/edit/${lampione.id}`}
+                    to={`/api/sensori/edit/${sensore.id}`}
                     type="button"
                     className="btn btn-outline-warning"
                   >
@@ -88,7 +90,7 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
                 <td>
                   <button
                     className="btn btn-outline-danger"
-                    onClick={() => deleteLampione(lampione.id)}
+                    onClick={() => deleteSensore(sensore.id)}
                   >
                     Elimina
                   </button>

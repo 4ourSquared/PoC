@@ -3,7 +3,7 @@ import { Header } from './breadcrumb';
 import { Content } from './contents';
 import { Footer } from './footer';
 
-export class LampsFullView extends Component{
+export class PageFullView extends Component{
 render(){
     return (
             <>
