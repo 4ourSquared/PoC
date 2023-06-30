@@ -1,19 +1,19 @@
 [
     {
         "id": "1",
-        "stato":"True",
+        "stato":"Attivo",
         "intensita":"5",
         "luogo":"Piazza Mazzini"
     },
     {
         "id": "2",
-        "stato":"False",
+        "stato":"Attivo",
         "intensita":"7",
         "luogo":"Via Crescente"
     },
     {
         "id": "3",
-        "stato":"True",
+        "stato":"Disattivato",
         "intensita":"8",
         "luogo":"Navigli"
     }

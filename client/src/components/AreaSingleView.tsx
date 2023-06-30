@@ -9,7 +9,7 @@ const AreaSingleView: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   const fetchData = async () => {
     axios.defaults.baseURL = "http://localhost:5000/api";
