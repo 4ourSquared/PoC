@@ -3,12 +3,13 @@
 
 export {};
 
-interface LampItem {
+interface SensItem {
   id: number;
-  stato: string;
-  lum: number;
+  iter: string;
+  IP: string;
   luogo: string;
+  raggio: number;
   nome: string;
 }
 
-export default LampItem;
+export default SensItem;

@@ -34,4 +34,13 @@ export class Lampione {
   public getLuogo(): string {
     return this.luogo;
   }
+  public setStato(stato: string): void {
+    this.stato = stato;
+  }
+  public setLum(lum: number): void {
+    this.lum = lum;
+  }
+  public setLuogo(luogo: string): void {
+    this.luogo = luogo;
+  }
 }

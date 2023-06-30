@@ -25,5 +25,14 @@ class Lampione {
     getLuogo() {
         return this.luogo;
     }
+    setStato(stato) {
+        this.stato = stato;
+    }
+    setLum(lum) {
+        this.lum = lum;
+    }
+    setLuogo(luogo) {
+        this.luogo = luogo;
+    }
 }
 exports.Lampione = Lampione;
