@@ -48,13 +48,6 @@ db.once("open", () => {
 */
 let lampioni_test: Lampione[] = [];
 
-<<<<<<< HEAD
-/*
-------------------------------------------------------------------------------
-                              CONFIGURAZIONE API
-------------------------------------------------------------------------------
-*/
-=======
 // Array contenente i sensori generati - solo per test, rimuovere in produzione
 let sensori_test: Sensore[] = [];
 
@@ -62,7 +55,6 @@ let sensori_test: Sensore[] = [];
 let aree_test: Area[] = [];
 
 // Metodi per API REST
->>>>>>> 504d708408a916e3fe810bafa98e5b5539143973
 // Porta di ascolto predefinita per il server
 app.listen(port, () => {
   console.log("Il server è in ascolto sulla porta 5000");
