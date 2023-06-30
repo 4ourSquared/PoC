@@ -1,27 +1,63 @@
 import express, { Request, Response } from "express";
 import { Lampione } from "./models/lampione";
+import { Sensore } from "./models/sensore";
+
 
 /*
     SERVER: questo file al momento rappresenta il server in tutto e per tutto. Al suo interno si trovano tutti i metodi attualmente sviluppati per la gestione delle richieste in arrivo
             dal client    
 */
 
-// Config del Server
-// AGGIUNTO SOLO NEL TS
-
+/*
+------------------------------------------------------------------------------
+                        CONFIGURAZIONE DEL SERVER
+------------------------------------------------------------------------------
+*/
 const cors = require("cors"); // Per la configurazione di un certificato valido che permetta lo scambio di informazioni tra due endpoint senza l'utilizzo di proxy
-
 const app = express(); // Per il routing e il middleware
 const port = 5000;
-
 app.use(cors());
 app.use(express.json()); //body-parser già incluso in express, eliminata l'installazione
 app.use(express.urlencoded({ extended: false }));
 
-// Array contenente i lampioni generati - solo per test, rimuovere in produzione
+
+/*
+------------------------------------------------------------------------------
+                        COLLEGAMENTO AL DATABASE
+------------------------------------------------------------------------------
+*/
+import mongoose from "mongoose";
+
+const mongoURI = "mongodb://poc-db-1:27017";
+
+mongoose.connect(mongoURI, {});
+
+const db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "Errore di connessione MongoDB:"));
+db.once("open", () => {
+  console.log("Connessione a MongoDB avvenuta con successo");
+});
+
+
+/*
+------------------------------------------------------------------------------
+                                ARRAY DI TEST
+------------------------------------------------------------------------------
+*/
 let lampioni_test: Lampione[] = [];
 
+// Array contenente i sensori generati - solo per test, rimuovere in produzione
+let sensori_test: Sensore[] = [];
+
 // Metodi per API REST
+
+/*
+------------------------------------------------------------------------------
+                              CONFIGURAZIONE API
+------------------------------------------------------------------------------
+*/
+
 // Porta di ascolto predefinita per il server
 app.listen(port, () => {
   console.log("Il server è in ascolto sulla porta 5000");
@@ -32,6 +68,9 @@ app.get("/", (req, res) => {
   console.log("Ricevuta richiesta GET su /");
   res.status(200).send();
 });
+
+
+/** LAMPIONI **/
 
 // Recupero delle informazioni di tutti i lampioni inseriti a sistema
 app.get("/api/lampioni", (req, res) => {
@@ -55,6 +94,14 @@ app.get("/api/lampioni/:id", (req, res) => {
   }
 });
 
+// Funzione (sarà da spostare in cartella apposita) per generare un id -------------------------- da valutare
+
+
+/*
+------------------------------------------------------------------------------
+                        GESTIONE RECUPERO LAMPIONI
+------------------------------------------------------------------------------
+*/
 // Funzione (sarà da spostare in cartella apposita) per generare un id
 // incrementale per il lampione
 // PRE: lampioni_test deve essere un array di Lampione
@@ -121,18 +168,114 @@ app.put("/api/lampioni/edit/:id", (req, res) => {
     if (req.body.luogo !== undefined) {
       lampToUpdate.setLuogo(req.body.luogo);
     }
-    res.status(200).send(`Lampione con id = ${id} aggiornato con successo`);
+
+  }
+  res.status(200).send(`Lampione con id = ${id} aggiornato con successo`);
+});
+
+
+
+/** SENSORI **/
+
+// Recupero delle informazioni di tutti i sensori inseriti a sistema
+app.get("/api/sensori", (req, res) => {
+  console.log("Ricevuta richiesta GET su /api/sensori -> RETRIEVE ALL DATA");
+  res.status(200).json(sensori_test);
+});
+
+// Richiesta di informazioni per un determinato sensore
+app.get("/api/sensori/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  console.log(`Ricevuta richiesta GET su /api/sensori -> ID: ${id}`);
+
+  // Trova il lampione con l'ID specificato
+  const sensore = sensori_test.find((sens) => sens.getId() === id);
+
+  if (sensore) {
+    res.status(200).json(sensore);
+  } else {
+    res.status(404).json({ error: "Sensore non trovato." });
   }
 });
 
-// Richiesta per ottenere l'id dell'ultimo lampione inserito: serve per mostrare
-// nel form l'id che verrà inserito nel successivo lampione
-/* DA SISTEMARE PER RTB
-app.get("/api/lampioni/last", (req, res) => {
-  const idLastLamp = lampioni_test[lampioni_test.length - 1].getId();
-  if (idLastLamp === undefined || idLastLamp === null) {
-    res.send(200).send(0);
+// Funzione (sarà da spostare in cartella apposita) per generare un id --------------------------- da valutare
+// incrementale per il sensore
+// PRE: sensori_test deve essere un array di Sensori
+
+function generateIdSensori() {
+  const maxId =
+    sensori_test.length > 0
+      ? Math.max(...sensori_test.map((sens) => sens.getId()))
+      : 0;
+  return maxId + 1;
+}
+// POST: ritorna un id incrementale e lo assegna al sensore, verificando sempre
+// la presenza di eventuali altri id nei sensori già presenti
+
+// Richiesta per la creazione e l'inserimento di un nuovo sensore a sistema
+app.post("/api/sensori", (req, res) => {
+  const { iter, IP, luogo, raggio } = req.body; //Semplificata la richiesta e l'inserimento dei dati
+  const id: number = generateIdSensori();
+  const new_sens = new Sensore(id, iter, IP, luogo, parseInt(raggio, 10));
+
+  console.log(typeof id + `: ${id}`);
+  console.log(typeof iter + `: ${iter}`);
+  console.log(typeof IP + `: ${IP}`);
+  console.log(typeof luogo + `: ${luogo}`);
+  console.log(typeof raggio + `: ${raggio}`);
+
+  console.log("Richiesta aggiunta di un nuovo sensore");
+  console.log(new_sens);
+  sensori_test.push(new_sens);
+
+  console.log(typeof id + `: ${id}`);
+  console.log(typeof iter + `: ${iter}`);
+  console.log(typeof IP + `: ${IP}`);
+  console.log(typeof luogo + `: ${luogo}`);
+  console.log(typeof raggio + `: ${raggio}`);
+
+  res.status(200).send("Sensore aggiunto con successo");
+});
+
+// Richiesta per eliminare un sensore dal sistema
+app.delete("/api/sensori/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const sensToDelete = sensori_test.find((sens) => sens.getId() === id); //Individua il sensore con id richiesto
+  if (sensToDelete === undefined) {
+    res.status(404).send(`Sensore con id = ${id} non trovato`);
   } else {
-    res.status(200).send(idLastLamp);
+    const idx = sensori_test.indexOf(sensToDelete);
+    sensori_test.splice(idx, 1); //Elimina gli elementi tra idx e il numero indicato, in questo caso 1 solo elemento
+    res.status(200).send(`Sensore con id = ${id} eliminato con successo`);
   }
-});*/
+});
+
+// Richiesta per aggiornare i dati di un sensore nel sistema
+// Aggiunto /edit/:id per evitare conflitti con la richiesta di info di un
+// singolo sensore
+app.put("/api/sensori/edit/:id", (req, res) => {
+  const id = parseInt(req.params.id); // ID del sensore da aggiornare
+  const sensToUpdate = sensori_test.find((sens) => sens.getId() === id);
+  console.log(`Ricevuta richiesta PUT su /api/sensori -> ID: ${id}`);
+  console.log("Richiesta aggiornamento di un sensore esistente");
+
+  if (sensToUpdate === undefined) {
+    res.status(404).send(`Sensore con id = ${id} non trovato`);
+  } else {
+    if (req.body.iter !== undefined) {
+      sensToUpdate.setIter(req.body.stato);
+    }
+    if (req.body.IP !== undefined) {
+      sensToUpdate.setIP(req.body.IP);
+    }
+    if (req.body.luogo !== undefined) {
+      sensToUpdate.setLuogo(req.body.luogo);
+    }
+    if (req.body.raggio !== undefined) {
+      sensToUpdate.setRaggio(parseInt(req.body.raggio, 10));
+    }
+  }
+  res.status(200).send(`Sensore con id = ${id} aggiornato con successo`);
+});
+

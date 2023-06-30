@@ -85,6 +85,7 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
                   >
                     Modifica
                   </button>
+
                 </td>
                 <td>
                   <button
