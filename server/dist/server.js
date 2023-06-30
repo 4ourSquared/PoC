@@ -111,10 +111,6 @@ app.post("/api/lampioni", (req, res) => {
     console.log("Richiesta aggiunta di un nuovo lampione");
     console.log(new_lamp);
     lampioni_test.push(new_lamp);
-    console.log(typeof id + `: ${id}`);
-    console.log(typeof stato + `: ${stato}`);
-    console.log(typeof lum + `: ${lum}`); // Add lum value to the log
-    console.log(typeof luogo + `: ${luogo}`);
     res.status(200).send("Lampione aggiunto con successo");
 });
 // Richiesta per eliminare un lampione dal sistema
@@ -151,6 +147,7 @@ app.put("/api/lampioni/edit/:id", (req, res) => {
         if (req.body.luogo !== undefined) {
             lampToUpdate.setLuogo(req.body.luogo);
         }
+
     }
     res.status(200).send(`Lampione con id = ${id} aggiornato con successo`);
 });
@@ -244,3 +241,4 @@ app.put("/api/sensori/edit/:id", (req, res) => {
     }
     res.status(200).send(`Sensore con id = ${id} aggiornato con successo`);
 });
+

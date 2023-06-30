@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import EditForm from "../components/EditForm";
 import LampsSingleView from "../components/LampSingleView";
 import SensSingleView from "../components/SensSingleView";
 import { PageFullView } from "../components/PageFullView";
@@ -17,6 +18,7 @@ export const RouterComponent: React.FC = () => {
       <Routes>
         <Route path="/" Component={PageFullView} />
         <Route path="api/lampioni/:id" Component={LampsSingleView} />
+        <Route path="api/lampioni/edit/:id" Component={EditForm} />
         <Route path="api/lampioni/add" Component={NewLampPage} />
         <Route path="api/sensori/:id" Component={SensSingleView} />
         <Route path="api/sensori/add" Component={NewSensPage} />

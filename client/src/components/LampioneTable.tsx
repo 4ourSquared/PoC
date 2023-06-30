@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import LampItem from "../types/LampItem"; // Import the LampItem type from your types file
+import LampItem from "../types/LampItem"; // Import del tipo LampItem, da rimuovere in futuro
 
 interface LampioneTableProps {
   // Per definire i props, se necessari
@@ -48,7 +48,7 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
         </Link>
         <table
           className="table table-hover align-middle"
-          style={{ width: "90%" }}
+          style={{ width: "90%" }} // Da spostare in un file CSS dedicato
         >
           <thead>
             <tr>
@@ -77,13 +77,15 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
                   </button>
                 </td>
                 <td>
-                  <Link
-                    to={`/api/lampioni/edit/${lampione.id}`}
-                    type="button"
+                  <button
                     className="btn btn-outline-warning"
+                    onClick={() =>
+                      navigate(`/api/lampioni/edit/${lampione.id}`)
+                    }
                   >
                     Modifica
-                  </Link>
+                  </button>
+
                 </td>
                 <td>
                   <button

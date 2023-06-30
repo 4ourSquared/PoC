@@ -6,8 +6,7 @@ services:
       context: ./db
       dockerfile: Dockerfile
     ports:
-      - 27017:27017
-
+      - "27017:27017"
   server:
     build:
       context: ./server
