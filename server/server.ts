@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
-import { Lampione } from "./models/lampione";
+import Lampione, { ILampione } from "./models/lampione";
+
 
 
 /*
@@ -25,9 +26,9 @@ app.use(express.urlencoded({ extended: false }));
                         COLLEGAMENTO AL DATABASE
 ------------------------------------------------------------------------------
 */
-import mongoose from "mongoose";
+import mongoose, { Schema, Document } from 'mongoose';
 
-const mongoURI = "mongodb://poc-db-1:27017";
+const mongoURI = "mongodb://poc-db-1:27017/lumosminima";
 
 mongoose.connect(mongoURI, {});
 
@@ -36,6 +37,7 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "Errore di connessione MongoDB:"));
 db.once("open", () => {
   console.log("Connessione a MongoDB avvenuta con successo");
+  retrieveLampioni();
 });
 
 
@@ -44,7 +46,26 @@ db.once("open", () => {
                                 ARRAY DI TEST
 ------------------------------------------------------------------------------
 */
-let lampioni_test: Lampione[] = [];
+let lampioni_test: ILampione[] = [];
+
+async function retrieveLampioni() {
+  try {
+    const lampioni: ILampione[] = await Lampione.find().exec();
+    lampioni_test = lampioni;
+    lampioni_test.forEach(lampione => {
+      console.log(lampione);
+    });
+    console.log("Lampioni recuperati con successo");
+    return lampioni_test; // Restituisce i lampioni recuperati
+  } catch (error) {
+    console.error("Errore durante il recupero dei lampioni:", error);
+    throw error; // Rilancia l'errore per gestirlo in un'altra parte se necessario
+  }
+}
+
+
+// Importazione dei lampioni (fino a che non vengono aggiunti i modelli del sensore e delle aree)
+
 
 /*
 ------------------------------------------------------------------------------
@@ -63,9 +84,15 @@ app.get("/", (req, res) => {
 });
 
 // Recupero delle informazioni di tutti i lampioni inseriti a sistema
-app.get("/api/lampioni", (req, res) => {
+app.get("/api/lampioni", async (req, res) => {
   console.log("Ricevuta richiesta GET su /api/lampioni -> RETRIEVE ALL DATA");
-  res.status(200).json(lampioni_test);
+
+  try {
+    const lampioni = await retrieveLampioni();
+    res.status(200).json(lampioni);
+  } catch (error) {
+    res.status(500).json({ error: "Errore durante il recupero dei lampioni" });
+  }
 });
 
 // Richiesta di informazioni per un determinato lampione
@@ -75,7 +102,7 @@ app.get("/api/lampioni/:id", (req, res) => {
   console.log(`Ricevuta richiesta GET su /api/lampioni -> ID: ${id}`);
 
   // Trova il lampione con l'ID specificato
-  const lampione = lampioni_test.find((lamp) => lamp.getId() === id);
+  const lampione = lampioni_test.find((lamp) => lamp.id === id);
 
   if (lampione) {
     res.status(200).json(lampione);
@@ -97,7 +124,7 @@ app.get("/api/lampioni/:id", (req, res) => {
 function generateId() {
   const maxId =
     lampioni_test.length > 0
-      ? Math.max(...lampioni_test.map((lamp) => lamp.getId()))
+      ? Math.max(...lampioni_test.map((lamp) => lamp.id))
       : 0;
   return maxId + 1;
 }
@@ -105,24 +132,24 @@ function generateId() {
 // la presenza di eventuali altri id nei lampioni già presenti
 
 // Richiesta per la creazione e l'inserimento di un nuovo lampione a sistema
-app.post("/api/lampioni", (req, res) => {
-  const { stato, lum, luogo } = req.body; //Semplificata la richiesta e l'inserimento dei dati
+app.post("/api/lampioni", async (req, res) => {
+  const { stato, lum, luogo } = req.body;
   const id: number = generateId();
-  const new_lamp = new Lampione(id, stato, parseInt(lum, 10), luogo);
 
-  console.log(typeof id + `: ${id}`);
-  console.log(typeof stato + `: ${stato}`);
-  console.log(typeof lum + `: ${lum}`);
-  console.log(typeof luogo + `: ${luogo}`);
+  try {
+    const newLampione: ILampione = new Lampione({
+      id: id,
+      stato: stato,
+      lum: parseInt(lum, 10),
+      luogo: luogo
+    });
 
-  console.log("Richiesta aggiunta di un nuovo lampione");
-  console.log(new_lamp);
-  lampioni_test.push(new_lamp);
+    const savedLampione: ILampione = await newLampione.save();
+    console.log("Lampione aggiunto con successo:", savedLampione);
 
-  console.log(typeof id + `: ${id}`);
-  console.log(typeof stato + `: ${stato}`);
-  console.log(typeof lum + `: ${lum}`); // Add lum value to the log
-  console.log(typeof luogo + `: ${luogo}`);
-
-  res.status(200).send("Lampione aggiunto con successo");
+    res.status(200).json(savedLampione);
+  } catch (error) {
+    console.error("Errore durante l'aggiunta del lampione:", error);
+    res.status(500).json({ error: "Errore durante l'aggiunta del lampione" });
+  }
 });

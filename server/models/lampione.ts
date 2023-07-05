@@ -1,37 +1,25 @@
 /*
  *   CLASSE LAMPIONE: classe di base per il lampione, contiene le informazioni necessarie per il funzionamento minimo.
  */
-export class Lampione {
-  // Attributi
-  private id: number;
-  private stato: string;
-  private lum: number;
-  private luogo: string;
+import mongoose, { Schema, Document } from 'mongoose';
 
-  // Costruttore
-  public constructor(
-    id: number = 0,
-    stato: string,
-    lum: number,
-    luogo: string
-  ) {
-    this.id = id;
-    this.stato = stato;
-    this.lum = lum;
-    this.luogo = luogo;
-  }
-
-  // Interfaccia
-  public getId(): number {
-    return this.id;
-  }
-  public getStato(): string {
-    return this.stato;
-  }
-  public getLum(): number {
-    return this.lum;
-  }
-  public getLuogo(): string {
-    return this.luogo;
-  }
+// Interfaccia per il modello del Lampione
+export interface ILampione extends Document {
+  id: number;
+  stato: string;
+  lum: number;
+  luogo: string;
 }
+
+// Schema del Lampione
+const LampioneSchema: Schema = new Schema({
+  id: { type: Number, required: true },
+  stato: { type: String, required: true },
+  lum: { type: Number, required: true },
+  luogo: { type: String, required: true }
+});
+
+// Modello del Lampione
+const Lampione = mongoose.model<ILampione>('lampioni', LampioneSchema);
+
+export default Lampione;
