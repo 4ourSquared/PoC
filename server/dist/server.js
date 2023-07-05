@@ -40,17 +40,14 @@ db.once("open", () => {
 ------------------------------------------------------------------------------
 */
 let lampioni_test = [];
-
 // Array contenente i sensori generati - solo per test, rimuovere in produzione
 let sensori_test = [];
 // Metodi per API REST
-
 /*
 ------------------------------------------------------------------------------
                               CONFIGURAZIONE API
 ------------------------------------------------------------------------------
 */
-
 // Porta di ascolto predefinita per il server
 app.listen(port, () => {
     console.log("Il server è in ascolto sulla porta 5000");
@@ -79,16 +76,13 @@ app.get("/api/lampioni/:id", (req, res) => {
         res.status(404).json({ error: "Lampione non trovato." });
     }
 });
-
 // Funzione (sarà da spostare in cartella apposita) per generare un id -------------------------- da valutare
-
 /*
 ------------------------------------------------------------------------------
                         GESTIONE RECUPERO LAMPIONI
 ------------------------------------------------------------------------------
 */
 // Funzione (sarà da spostare in cartella apposita) per generare un id
-
 // incrementale per il lampione
 // PRE: lampioni_test deve essere un array di Lampione
 function generateId() {
@@ -147,7 +141,6 @@ app.put("/api/lampioni/edit/:id", (req, res) => {
         if (req.body.luogo !== undefined) {
             lampToUpdate.setLuogo(req.body.luogo);
         }
-
     }
     res.status(200).send(`Lampione con id = ${id} aggiornato con successo`);
 });
@@ -241,4 +234,3 @@ app.put("/api/sensori/edit/:id", (req, res) => {
     }
     res.status(200).send(`Sensore con id = ${id} aggiornato con successo`);
 });
-

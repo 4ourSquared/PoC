@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LampItem from "../types/LampItem"; // Import del tipo LampItem, da rimuovere in futuro
 
-interface LampioneTableProps {
+interface LampTableProps {
   // Per definire i props, se necessari
 }
 
-export const LampioneTable: React.FC<LampioneTableProps> = () => {
+const LampTable: React.FC<LampTableProps> = () => {
   const [lampioni, setLampioni] = useState<LampItem[]>([]);
   const navigate = useNavigate();
 
@@ -41,9 +41,8 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
   };
 
   return (
-    <>
       <div className="row justify-content-center">
-        <Link to="api/lampioni/add" type="button" className="btn btn-primary">
+        <Link to="/api/lampioni/add" type="button" className="btn btn-primary">
           Aggiungi Lampione
         </Link>
         <table
@@ -100,6 +99,6 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
           </tbody>
         </table>
       </div>
-    </>
   );
 };
+export default LampTable;

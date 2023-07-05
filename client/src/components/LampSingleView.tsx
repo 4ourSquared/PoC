@@ -39,7 +39,7 @@ const LampSingleView: React.FC = () => {
       ) : (
         <p>Nessun dato disponibile</p>
       )}
-      <Link to="/" type="button" className="btn btn-primary">
+      <Link to="/home" type="button" className="btn btn-primary">
         Indietro
       </Link>
     </div>

@@ -88,7 +88,7 @@ const NewLampForm: React.FC = () => {
         <button type="reset" className="btn btn-secondary">
           Resetta
         </button>
-        <Link to="/" type="button" className="btn btn-outline-primary">
+        <Link to="/home" type="button" className="btn btn-outline-primary">
           Indietro
         </Link>
       </Form>
