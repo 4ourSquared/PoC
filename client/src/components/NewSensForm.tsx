@@ -32,7 +32,7 @@ const NewSensForm: React.FC = () => {
         console.log("Ciao");
         axios.post("/sensori", values); // Solito invio dei dati al server
         setSubmitting(false); //Serve a resettare la submit del form e riportarla False
-        navigate("/");
+        navigate("/home");
       }}
     >
       <Form>

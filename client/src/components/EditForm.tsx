@@ -52,7 +52,7 @@ const EditForm: React.FC = () => {
         axios
           .put(url, values)
           .then(() => {
-            navigate("/");
+            navigate("/home");
           })
           .catch((err) => console.log(err))
           .finally(() => {
