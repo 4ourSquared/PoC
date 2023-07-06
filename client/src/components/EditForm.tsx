@@ -1,34 +1,63 @@
 import axios from "axios";
-import { ErrorMessage, Field, Form, Formik } from "formik"; //Metodo per creare i form in maniera più semplice e funzionale
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import * as Yup from "yup"; //Libreria per la validazione del form: si può usare anche per il login
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import * as Yup from "yup";
+import LampItem from "../types/LampItem";
 
-/*
-  CLASSE NEWLAMPFORM: classe che renderizza automaticamente la struttura HTML della pagina di aggiunta di un lampione, definendo anche il metodo per la trasmissione dei dati al server. Stile associato a Bootstrap.
-  ATTENZIONE: L'id univoco è stato implementato in questa versione, non compare
-  come valore iniziale dell'id ancora, bisogna rifarlo nel DB
-*/
-
-const NewLampForm: React.FC = () => {
-  axios.defaults.baseURL = "http://localhost:5000/api"; //URL base, così una volta in produzione basta cambiare questo
+const EditForm: React.FC = () => {
+  axios.defaults.baseURL = "http://localhost:5000/api";
   const navigate = useNavigate();
+  const { id: paramId } = useParams<{ id: string }>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [lampioneData, setLampioneData] = useState<LampItem>({
+    id: Number(paramId),
+    stato: "",
+    lum: 0,
+    luogo: "",
+  });
+
+  useEffect(() => {
+    if (lampioneData.id !== 0) {
+      axios
+        .get<LampItem>(`/lampioni/${lampioneData.id}`)
+        .then((response) => {
+          setLampioneData(response.data);
+          setIsLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [lampioneData.id]); //Dipendenze vuote significa che viene eseguito solo al montaggio
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Banner per ingannare l'attesa del caricamento
+  }
 
   return (
     <Formik
-      initialValues={{ id: 0, stato: "Attivo", lum: 0, luogo: "" }}
+      initialValues={{
+        id: lampioneData.id || 0,
+        stato: lampioneData.stato || "",
+        lum: lampioneData.lum || 0,
+        luogo: lampioneData.luogo || "",
+      }}
       validationSchema={Yup.object({
         luogo: Yup.string()
           .min(2, "Inserisci almeno 2 caratteri")
           .required("Campo obbligatorio")
-          .trim(), //Grazie a questo pulisce il campo da spazi bianchi ed evito che il campo sia vuoto
-        //Inoltre il form non si completa fino a che il campo non viene
-        //riempito correttamente
+          .trim(),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        axios.post("/lampioni", values); // Solito invio dei dati al server
-        setSubmitting(false); //Serve a resettare la submit del form e riportarla False
-        navigate("/");
+        const url = `/lampioni/edit/${lampioneData.id}`;
+        axios
+          .put(url, values)
+          .then(() => {
+            navigate("/");
+          })
+          .catch((err) => console.log(err))
+          .finally(() => {
+            setSubmitting(false);
+          });
       }}
     >
       <Form>
@@ -95,4 +124,5 @@ const NewLampForm: React.FC = () => {
     </Formik>
   );
 };
-export default NewLampForm;
+
+export default EditForm;
