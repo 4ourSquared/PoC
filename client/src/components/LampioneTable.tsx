@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import LampItem from "../types/LampItem"; // Import the LampItem type from your types file
+import LampItem from "../types/LampItem"; // Import del tipo LampItem, da rimuovere in futuro
 
 interface LampioneTableProps {
   // Per definire i props, se necessari
@@ -26,6 +26,20 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
     }
   };
 
+  const deleteLampione = async (id: number) => {
+    const confirmed = window.confirm(
+      "Sei sicuro di voler eliminare il lampione?"
+    );
+    try {
+      if (confirmed) {
+        await axios.delete(`http://localhost:5000/api/lampioni/${id}`);
+        setLampioni((cur) => cur.filter((item) => item.id !== id));
+      }
+    } catch (error) {
+      console.error("Errore nella cancellazione del lampione: ", error);
+    }
+  };
+
   return (
     <>
       <div className="row justify-content-center">
@@ -34,7 +48,7 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
         </Link>
         <table
           className="table table-hover align-middle"
-          style={{ width: "90%" }}
+          style={{ width: "90%" }} // Da spostare in un file CSS dedicato
         >
           <thead>
             <tr>
@@ -43,6 +57,8 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
               <th scope="col">Intensità</th>
               <th scope="col">Zona Illuminata</th>
               <th scope="col">Info</th>
+              <th scope="col">Modifica</th>
+              <th scope="col">Elimina</th>
             </tr>
           </thead>
           <tbody id="tableBody">
@@ -58,6 +74,25 @@ export const LampioneTable: React.FC<LampioneTableProps> = () => {
                     onClick={() => navigate(`/api/lampioni/${lampione.id}`)}
                   >
                     Info
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-outline-warning"
+                    onClick={() =>
+                      navigate(`/api/lampioni/edit/${lampione.id}`)
+                    }
+                  >
+                    Modifica
+                  </button>
+
+                </td>
+                <td>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => deleteLampione(lampione.id)}
+                  >
+                    Elimina
                   </button>
                 </td>
               </tr>

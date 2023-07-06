@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import { Lampione } from "./models/lampione";
 import lampioneRoutes from "./routes/lampioneRoutes";
+import { Sensore } from "./models/sensore";
+
 
 /*
     SERVER: questo file al momento rappresenta il server in tutto e per tutto. Al suo interno si trovano tutti i metodi attualmente sviluppati per la gestione delle richieste in arrivo
@@ -12,8 +14,8 @@ import lampioneRoutes from "./routes/lampioneRoutes";
                         CONFIGURAZIONE DEL SERVER
 ------------------------------------------------------------------------------
 */
-const cors = require("cors");
-const app = express();
+const cors = require("cors"); // Per la configurazione di un certificato valido che permetta lo scambio di informazioni tra due endpoint senza l'utilizzo di proxy
+const app = express(); // Per il routing e il middleware
 const port = 5000;
 app.use(cors());
 app.use(express.json());
@@ -51,6 +53,8 @@ import LampioneModel from "./lampioneSchema";
                               CONFIGURAZIONE API
 ------------------------------------------------------------------------------
 */
+
+// Porta di ascolto predefinita per il server
 app.listen(port, () => {
   console.log("Il server è in ascolto sulla porta 5000");
 });

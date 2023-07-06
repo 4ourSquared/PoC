@@ -5,9 +5,6 @@ import LampioneModel from "../lampioneSchema";
 
 const lampRouter = Router();
 
-// Array di test per i lampioni
-let lampioni_test: Lampione[] = [];
-
 lampRouter.get("/", async (req: Request, res: Response) => {
     try {
         const lampioni = await LampioneModel.find();
