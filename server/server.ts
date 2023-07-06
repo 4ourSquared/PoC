@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { Lampione } from "./models/lampione";
+import cors from "cors";
 
 
 /*
@@ -12,7 +13,6 @@ import { Lampione } from "./models/lampione";
                         CONFIGURAZIONE DEL SERVER
 ------------------------------------------------------------------------------
 */
-const cors = require("cors"); // Per la configurazione di un certificato valido che permetta lo scambio di informazioni tra due endpoint senza l'utilizzo di proxy
 const app = express(); // Per il routing e il middleware
 const port = 5000;
 app.use(cors());
@@ -28,8 +28,12 @@ app.use(express.urlencoded({ extended: false }));
 import mongoose from "mongoose";
 
 const mongoURI = "mongodb://poc-db-1:27017";
+const options : any = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}
 
-mongoose.connect(mongoURI, {});
+mongoose.connect(mongoURI, options);
 
 const db = mongoose.connection;
 
