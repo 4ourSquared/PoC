@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { Lampione } from "./models/lampione";
+import {Lampione}  from "./models/lampione";
 import cors from "cors";
 
 
