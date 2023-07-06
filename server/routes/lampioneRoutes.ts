@@ -18,26 +18,25 @@ lampRouter.get("/", async (req: Request, res: Response) => {
     }
 });
 
-// Richiesta di informazioni per un determinato lampione
-lampRouter.get("/:id", (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
-
-    console.log(`Ricevuta richiesta GET su /api/lampioni -> ID: ${id}`);
-
-  // Trova il lampione con l'ID specificato
-    const lampione = lampioni_test.find((lamp) => lamp.getId() === id);
-
-    if (lampione) {
-        res.status(200).json(lampione);
-    } else {
-        res.status(404).json({ error: "Lampione non trovato." });
+lampRouter.get("/:id", async (req: Request, res: Response) => {
+    const {id} = req.params
+    try {
+        const lampione = await LampioneModel.findOne({ id: parseInt(id, 10) });
+        if (lampione) {
+            res.status(200).json(lampione);
+        } else {
+            res.status(404).json({ error: "Lampione non trovato." });
+        }
+    } catch (error) {
+        console.error("Errore durante il recupero del lampione dal database:", error);
+        res.status(500).send("Errore durante il recupero del lampione dal database");
     }
 });
 
 // Creazione di un nuovo lampione
 lampRouter.post("/", async (req: Request, res: Response) => {
     const { stato, lum, luogo } = req.body;
-    const id = generateId();
+    const id = await generateId();
     const new_lamp = new LampioneModel({
         id,
         stato,
@@ -54,13 +53,15 @@ lampRouter.post("/", async (req: Request, res: Response) => {
     }
 });
 
-// Funzione per generare un ID incrementale per il lampione
-function generateId(): number {
-    const maxId =
-        lampioni_test.length > 0
-        ? Math.max(...lampioni_test.map((lamp) => lamp.getId()))
-        : 0;
-    return maxId + 1;
+async function generateId(): Promise<number> {
+    try {
+        const count = await LampioneModel.countDocuments().exec();
+        return count + 1;
+    } catch (error) {
+        console.error("Errore durante il recupero del conteggio dei documenti:", error);
+        throw new Error("Errore durante la generazione dell'ID incrementale");
+    }
 }
+
 
 export default lampRouter;
