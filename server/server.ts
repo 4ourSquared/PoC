@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
                         COLLEGAMENTO AL DATABASE
 ------------------------------------------------------------------------------
 */
-import mongoose from "mongoose";
+import mongoose, { Schema, Document } from 'mongoose';
 
 const mongoURI = "mongodb://poc-db-1:27017";
 const options : any = {
@@ -49,6 +49,10 @@ db.once("open", () => {
 ------------------------------------------------------------------------------
 */
 let lampioni_test: Lampione[] = [];
+
+
+// Importazione dei lampioni (fino a che non vengono aggiunti i modelli del sensore e delle aree)
+
 
 /*
 ------------------------------------------------------------------------------
