@@ -1,5 +1,7 @@
 import { Router, Request, Response } from "express";
 import SensoreSchema from "../sensoreSchema";
+import sensoreSchema from "../sensoreSchema";
+import { Sensore } from "../models/sensore";
 
 const sensRouter = Router();
 
@@ -8,8 +10,13 @@ sensRouter.get("/", async (req: Request, res: Response) => {
         const sensori = await SensoreSchema.find();
         res.status(200).json(sensori);
     } catch (error) {
-        console.error("Errore durante il recupero dei sensori dal database:", error);
-        res.status(500).send("Errore durante il recupero dei sensori dal database");
+        console.error(
+            "Errore durante il recupero dei sensori dal database:",
+            error
+        );
+        res.status(500).send(
+            "Errore durante il recupero dei sensori dal database"
+        );
     }
 });
 
@@ -23,8 +30,13 @@ sensRouter.get("/:id", async (req: Request, res: Response) => {
             res.status(404).json({ error: "Sensore non trovato." });
         }
     } catch (error) {
-        console.error("Errore durante il recupero del sensore dal database:", error);
-        res.status(500).send("Errore durante il recupero del sensore dal database");
+        console.error(
+            "Errore durante il recupero del sensore dal database:",
+            error
+        );
+        res.status(500).send(
+            "Errore durante il recupero del sensore dal database"
+        );
     }
 });
 
@@ -43,17 +55,26 @@ sensRouter.post("/", async (req: Request, res: Response) => {
         const savedSensore = await newSensore.save();
         res.status(200).json(savedSensore);
     } catch (error) {
-        console.error("Errore durante l'inserimento del sensore nel database:", error);
-        res.status(500).send("Errore durante l'inserimento del sensore nel database");
+        console.error(
+            "Errore durante l'inserimento del sensore nel database:",
+            error
+        );
+        res.status(500).send(
+            "Errore durante l'inserimento del sensore nel database"
+        );
     }
 });
 
 async function generateIdSensori(): Promise<number> {
     try {
-        const count = await SensoreSchema.countDocuments().exec();
-        return count + 1;
+        const maxId = await sensoreSchema
+            .findOne()
+            .sort({ id: -1 })
+            .select("id")
+            .exec();
+        return maxId ? maxId.id + 1 : 1;
     } catch (error) {
-        console.error("Errore durante il recupero del conteggio dei documenti:", error);
+        console.error("Errore durante il recupero dell'ultimo ID:", error);
         throw new Error("Errore durante la generazione dell'ID incrementale");
     }
 }

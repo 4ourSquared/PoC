@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 mongoose.pluralize(null);
 
 const lampioneSchema = new mongoose.Schema({
-    id: Number,
+    id: {
+        type: Number,
+        unique: true,
+        required: true,
+    },
     stato: String,
     lum: Number,
     luogo: String,

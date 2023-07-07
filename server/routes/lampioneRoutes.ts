@@ -42,17 +42,18 @@ lampRouter.get("/:id", async (req: Request, res: Response) => {
 // Creazione di un nuovo lampione
 lampRouter.post("/", async (req: Request, res: Response) => {
     const { stato, lum, luogo } = req.body;
-    const id = await generateId();
-    const new_lamp = new LampioneModel({
-        id,
-        stato,
-        lum: parseInt(lum, 10),
-        luogo,
-    });
 
     try {
-        const savedLamp = await new_lamp.save();
-        res.status(200).json(savedLamp);
+        const id = await generateId();
+        const newLampione = new LampioneModel({
+            id,
+            stato,
+            lum: parseInt(lum, 10),
+            luogo,
+        });
+
+        const savedLampione = await newLampione.save();
+        res.status(200).json(savedLampione);
     } catch (error) {
         console.error(
             "Errore durante l'inserimento del lampione nel database:",
@@ -66,13 +67,13 @@ lampRouter.post("/", async (req: Request, res: Response) => {
 
 async function generateId(): Promise<number> {
     try {
-        const count = await LampioneModel.countDocuments().exec();
-        return count + 1;
+        const maxId = await LampioneModel.findOne()
+            .sort({ id: -1 })
+            .select("id")
+            .exec();
+        return maxId ? maxId.id + 1 : 1;
     } catch (error) {
-        console.error(
-            "Errore durante il recupero del conteggio dei documenti:",
-            error
-        );
+        console.error("Errore durante il recupero dell'ultimo ID:", error);
         throw new Error("Errore durante la generazione dell'ID incrementale");
     }
 }
