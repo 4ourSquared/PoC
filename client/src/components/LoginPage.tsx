@@ -1,7 +1,27 @@
-import React, {ReactElement, useState} from 'react';
-import {Link} from 'react-router-dom'
+import React, {ReactElement} from 'react';
+import {Link, useNavigate} from 'react-router-dom'
 
 export default function LoginPage(): ReactElement {
+
+    const navigate = useNavigate();
+
+    const login = (e:React.MouseEvent) => {
+        e.preventDefault();
+        
+        const username: String = (document.getElementById("username") as HTMLInputElement).value;
+        
+        if(username.startsWith("manut"))
+        {
+            document.cookie="user-type=manutentore"
+            navigate("/home")
+        }
+        else if(username.startsWith("admin"))
+        {
+            document.cookie="user-type=amministratore"
+            navigate("/home")
+        }
+    }
+
     return(
     <div>
         <h1>Lumos Minima</h1>
@@ -27,9 +47,9 @@ export default function LoginPage(): ReactElement {
                 </div>
 
                 <div>
-                    <Link to="/home" type="button" className="btn btn-primary">
+                    <button type="submit" className="btn btn-primary" onClick={(e) => {login(e)}}>
                         Entra
-                    </Link>
+                    </button>
                 </div>
             </fieldset>
         </form>
