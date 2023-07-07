@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import { Lampione } from "./models/lampione";
 import lampioneRoutes from "./routes/lampioneRoutes";
 import { Sensore } from "./models/sensore";
+import sensoreRoutes from "./routes/sensoreRoutes";
+
 
 
 /*
@@ -56,6 +58,9 @@ import LampioneModel from "./lampioneSchema";
 
 // Collegamento alle route per i lampioni
 app.use("/api/lampioni", lampioneRoutes);
+
+// Collegamento alla route per i sensori
+app.use("/api/sensori", sensoreRoutes);
 
 // Accesso alla pagina
 app.get("/", (req, res) => {
