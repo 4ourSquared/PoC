@@ -54,10 +54,8 @@ import LampioneModel from "./lampioneSchema";
 ------------------------------------------------------------------------------
 */
 
-// Porta di ascolto predefinita per il server
-app.listen(port, () => {
-  console.log("Il server è in ascolto sulla porta 5000");
-});
+// Collegamento alle route per i lampioni
+app.use("/api/lampioni", lampioneRoutes);
 
 // Accesso alla pagina
 app.get("/", (req, res) => {
@@ -65,5 +63,7 @@ app.get("/", (req, res) => {
   res.status(200).send();
 });
 
-// Collegamento alle route per i lampioni
-app.use("/api/lampioni", lampioneRoutes);
+// Porta di ascolto predefinita per il server
+app.listen(port, () => {
+  console.log("Il server è in ascolto sulla porta 5000");
+});
