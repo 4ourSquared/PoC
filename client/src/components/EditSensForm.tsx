@@ -58,7 +58,7 @@ const EditSensForm: React.FC = () => {
         axios
           .put(url, values)
           .then(() => {
-            navigate("/home");
+            navigate("/");
           })
           .catch((err) => console.log(err))
           .finally(() => {
@@ -125,7 +125,7 @@ const EditSensForm: React.FC = () => {
         <button type="submit" className="btn btn-primary">
           Modifica
         </button>
-        <Link to="/home" type="button" className="btn btn-outline-primary">
+        <Link to="/" type="button" className="btn btn-outline-primary">
           Indietro
         </Link>
       </Form>

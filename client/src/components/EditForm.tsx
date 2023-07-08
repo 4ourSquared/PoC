@@ -52,7 +52,7 @@ const EditForm: React.FC = () => {
         axios
           .put(url, values)
           .then(() => {
-            navigate("/home");
+            navigate("/");
           })
           .catch((err) => console.log(err))
           .finally(() => {
@@ -117,7 +117,7 @@ const EditForm: React.FC = () => {
         <button type="reset" className="btn btn-secondary">
           Resetta
         </button>
-        <Link to="/home" type="button" className="btn btn-outline-primary">
+        <Link to="/" type="button" className="btn btn-outline-primary">
           Indietro
         </Link>
       </Form>

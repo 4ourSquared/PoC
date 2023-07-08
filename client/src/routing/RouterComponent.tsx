@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import EditForm from "../components/EditForm";
 import EditSensForm from "../components/EditSensForm";
 import NewLampPage from "../components/NewLampPage";
@@ -8,6 +8,7 @@ import LampsSingleView from "../components/LampSingleView";
 import SensSingleView from "../components/SensSingleView";
 import LoginPage from "../components/LoginPage";
 import PageFullView from "../components/PageFullView";
+import GuardedRoute from "./GuardedRoute";
 
 
 /*
@@ -18,15 +19,19 @@ const RouterComponent: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" Component={LoginPage} />
-        
-        <Route path="home" Component={PageFullView} />
+
+      <Route path="login" Component={LoginPage} />
+
+      <Route element={<GuardedRoute/>}>
+        <Route path="/" Component={PageFullView} />
         <Route path="api/lampioni/:id" Component={LampsSingleView} />
         <Route path="api/lampioni/edit/:id" Component={EditForm} />
         <Route path="api/lampioni/add" Component={NewLampPage} />
         <Route path="api/sensori/:id" Component={SensSingleView} />
         <Route path="api/sensori/add" Component={NewSensPage} />
         <Route path="api/sensori/edit/:id" Component={EditSensForm} />
+      </Route>
+
         
       </Routes>
     </Router>

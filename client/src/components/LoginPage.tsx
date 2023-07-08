@@ -27,7 +27,7 @@ export default function LoginPage(): ReactElement {
                 </div>
 
                 <div>
-                    <Link to="/home" type="button" className="btn btn-primary">
+                    <Link to="/" type="button" className="btn btn-primary">
                         Entra
                     </Link>
                 </div>
