@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import VerifyLogin from './VerifyLogin'
+import {isLogged} from '../auth/LoginState'
 
 interface GuardedRouteProps {
 	/**
@@ -11,7 +11,7 @@ interface GuardedRouteProps {
 	 * Route to be redirected to
 	 * @default '/'
 	 */
-	redirectRoute?: string;
+	redirectRoute: string;
 }
 
 /**
@@ -33,8 +33,8 @@ interface GuardedRouteProps {
  * ```
  */
 const GuardedRoute = ({
-	condition = VerifyLogin(),
-	redirectRoute = 'login',
+	condition = isLogged(),
+	redirectRoute,
 }: GuardedRouteProps): JSX.Element =>
 	condition ? <Outlet /> : <Navigate to={redirectRoute} replace />;
 

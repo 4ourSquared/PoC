@@ -22,7 +22,7 @@ const RouterComponent: React.FC = () => {
 
       <Route path="login" Component={LoginPage} />
 
-      <Route element={<GuardedRoute/>}>
+      <Route element={<GuardedRoute redirectRoute="/login"/>}>
         <Route path="/" Component={PageFullView} />
         <Route path="api/lampioni/:id" Component={LampsSingleView} />
         <Route path="api/lampioni/edit/:id" Component={EditForm} />
