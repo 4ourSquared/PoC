@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react';
-<<<<<<< HEAD
+
 import {Link, useNavigate} from 'react-router-dom'
 
 export default function LoginPage(): ReactElement {
@@ -23,7 +23,7 @@ export default function LoginPage(): ReactElement {
         }
     }
 
-=======
+
 import {Link, Navigate, useNavigate} from 'react-router-dom';
 import useLoginMechanism from '../auth/LoginMechanism';
 
@@ -42,7 +42,6 @@ export default function LoginPage(){
         }
     }
 
->>>>>>> guarded-routes
     return(
     <div>
         <h1>Lumos Minima</h1>
@@ -68,11 +67,11 @@ export default function LoginPage(){
                 </div>
 
                 <div>
-<<<<<<< HEAD
+
                     <button type="submit" className="btn btn-primary" onClick={(e) => {login(e)}}>
-=======
+
                     <button className="btn btn-primary" onClick={(e)=>{prepareLogin(e)}}>
->>>>>>> guarded-routes
+
                         Entra
                     </button>
                 </div>
