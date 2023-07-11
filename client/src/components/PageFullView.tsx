@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Header } from './breadcrumb';
-import { Content } from './contents';
-import { Footer } from './footer';
+import Header from './Header';
+import Content from './Content';
+import Footer from './Footer';
 
-export class PageFullView extends Component{
+export default class PageFullView extends Component{
 render(){
     return (
             <>

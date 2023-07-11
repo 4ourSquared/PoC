@@ -1,7 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+var __importDefault =
+  (this && this.__importDefault) ||
+  function (mod) {
+    return mod && mod.__esModule ? mod : { default: mod };
+  };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const lampioneRoutes_1 = __importDefault(require("./routes/lampioneRoutes"));
@@ -29,15 +31,15 @@ app.use(express_1.default.urlencoded({ extended: false }));
 const mongoose_1 = __importDefault(require("mongoose"));
 const mongoURI = "mongodb://poc-db-1:27017/lumosminima";
 const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 };
 mongoose_1.default.connect(mongoURI, options);
 mongoose_1.default.pluralize(null);
 const db = mongoose_1.default.connection;
 db.on("error", console.error.bind(console, "Errore di connessione MongoDB:"));
 db.once("open", () => {
-    console.log("Connessione a MongoDB avvenuta con successo");
+  console.log("Connessione a MongoDB avvenuta con successo");
 });
 /*
 ------------------------------------------------------------------------------
@@ -50,10 +52,10 @@ app.use("/api/lampioni", lampioneRoutes_1.default);
 app.use("/api/sensori", sensoreRoutes_1.default);
 // Accesso alla pagina
 app.get("/", (req, res) => {
-    console.log("Ricevuta richiesta GET su /");
-    res.status(200).send();
+  console.log("Ricevuta richiesta GET su /");
+  res.status(200).send();
 });
 // Porta di ascolto predefinita per il server
 app.listen(port, () => {
-    console.log("Il server è in ascolto sulla porta 5000");
+  console.log("Il server è in ascolto sulla porta 5000");
 });

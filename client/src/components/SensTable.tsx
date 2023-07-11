@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SensItem from "../types/SensItem";
 
-interface SensoreTableProps {
+interface SensTableProps {
   // Per definire i props, se necessari
 }
 
-export const SensoreTable: React.FC<SensoreTableProps> = () => {
+const SensTable: React.FC<SensTableProps> = () => {
   const [sensori, setSensori] = useState<SensItem[]>([]);
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ export const SensoreTable: React.FC<SensoreTableProps> = () => {
   return (
     <>
       <div className="row justify-content-center">
-        <Link to="api/sensori/add" type="button" className="btn btn-primary">
+        <Link to="/api/sensori/add" type="button" className="btn btn-primary">
           Aggiungi Sensore
         </Link>
         <table
@@ -103,3 +103,4 @@ export const SensoreTable: React.FC<SensoreTableProps> = () => {
     </>
   );
 };
+export default SensTable;

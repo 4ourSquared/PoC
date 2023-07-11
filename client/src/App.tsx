@@ -1,9 +1,9 @@
 import './App.css';
 
 // Importazione Componenti
-import { RouterComponent } from './routing/routing';
+import RouterComponent from './routing/RouterComponent';
 
-export function App(){
+export default function App(){
   return(
     <RouterComponent/>
   )

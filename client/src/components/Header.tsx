@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 
 /*
     CLASSE BREADCRUMB: renderizza automaticamente il breadcrumb della pagina. Stile associato a Bootstrap. 
@@ -19,11 +20,12 @@ class Breadcrumb extends Component{
 /*
     CLASSE HEADER: renderizza automaticamente l'header della pagina (breadcrumb incluso). Stile associato a Bootstrap.
 */
-export class Header extends Component{
+export default class Header extends Component{
     render(){
         return(
             <header>
                 <h1>Lumos Minima</h1>
+                <Link to="/" type="button" style={{float:"right"}}>Esci</Link>
                 <Breadcrumb />
             </header>
         )
