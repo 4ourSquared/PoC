@@ -1,4 +1,4 @@
-export default function useLoginMechanism() {
+export default function UseLoginMechanism() {
     return (username:String,password:String): boolean => {
 
         if(username.startsWith("manut"))
