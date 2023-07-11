@@ -1,20 +1,23 @@
 [
     {
         "id": "1",
-        "stato":"Attivo",
-        "intensita":"5",
-        "luogo":"Piazza Mazzini"
+        "stato": "Attivo",
+        "intensita": "5",
+        "luogo": "Piazza Mazzini",
+        "area": "1"
     },
     {
         "id": "2",
-        "stato":"Attivo",
-        "intensita":"7",
-        "luogo":"Via Crescente"
+        "stato": "Attivo",
+        "intensita": "7",
+        "luogo": "Via Crescente",
+        "area": "2"
     },
     {
         "id": "3",
-        "stato":"Disattivato",
-        "intensita":"8",
-        "luogo":"Navigli"
+        "stato": "Disattivato",
+        "intensita": "8",
+        "luogo": "Navigli",
+        "area": "1"
     }
 ]

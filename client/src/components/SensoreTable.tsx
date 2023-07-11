@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import SensItem from "../types/SensItem"; // Import the SensItem type from your types file
+import SensItem from "../types/SensItem";
 
 interface SensoreTableProps {
   // Per definire i props, se necessari
@@ -13,7 +13,7 @@ export const SensoreTable: React.FC<SensoreTableProps> = () => {
 
   useEffect(() => {
     loadSensori();
-  }, []);
+  });
 
   const loadSensori = async () => {
     try {
