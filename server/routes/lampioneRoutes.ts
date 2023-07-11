@@ -1,3 +1,7 @@
+/*
+    Lo scopo di questo script è quello di gestire le routes per le richieste relative ai lampioni in arrivo al server
+*/
+
 import { Router, Request, Response } from "express";
 import { Lampione } from "../models/lampione";
 import LampioneModel from "../lampioneSchema";

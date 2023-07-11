@@ -5,14 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 mongoose_1.default.pluralize(null);
-const lampioneSchema = new mongoose_1.default.Schema({
+const sensoreSchema = new mongoose_1.default.Schema({
     id: {
         type: Number,
         unique: true,
         required: true,
     },
-    stato: String,
-    lum: Number,
+    iter: { type: String, default: "manuale" },
+    IP: String,
     luogo: String,
+    raggio: Number,
 });
-exports.default = mongoose_1.default.model("lampioni", lampioneSchema);
+exports.default = mongoose_1.default.model("sensori", sensoreSchema);

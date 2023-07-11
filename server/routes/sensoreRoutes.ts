@@ -1,3 +1,7 @@
+/*
+    Lo scopo di questo script è quello di gestire le routes per le richieste relative ai sensori in arrivo al server
+*/
+
 import { Router, Request, Response } from "express";
 import SensoreSchema from "../sensoreSchema";
 import sensoreSchema from "../sensoreSchema";
