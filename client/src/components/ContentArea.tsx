@@ -1,17 +1,22 @@
 import React, {Component} from 'react'
-import AreaTable from './AreaTable'
+import LampTable from './LampTable'
+import SensTable from './SensTable'
 
 /*
     CLASSE CONTENT: classe che renderizza automaticamente il content. Stile associato a Bootstrap.
     ATTENZIONE: attualmente questa classe renderizza solamente la table del lampione e del sensore. Probabilmente in futuro verrà rimossa a favore del routing base
 */ 
-export default class Content extends Component{
+export default class ContentArea extends Component{
     render(){
         return(
             <main>
-                <h2>Aree illuminate</h2>
+                <h2>Lampioni Collegati</h2>
                 <div className='row'>
-                    <AreaTable/>
+                    <LampTable/>
+                </div>
+                <h2>Sensori Collegati</h2>
+                <div className='row'>
+                    <SensTable/>
                 </div>
             </main>
         )
