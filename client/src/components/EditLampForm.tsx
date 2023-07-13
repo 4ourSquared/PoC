@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import LampItem from "../types/LampItem";
 
-const EditForm: React.FC = () => {
+const EditLampForm: React.FC = () => {
   axios.defaults.baseURL = "http://localhost:5000/api";
   const navigate = useNavigate();
   const { id: paramId } = useParams<{ id: string }>();
@@ -125,4 +125,4 @@ const EditForm: React.FC = () => {
   );
 };
 
-export default EditForm;
+export default EditLampForm;
