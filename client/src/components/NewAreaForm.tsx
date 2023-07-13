@@ -43,7 +43,11 @@ const NewAreaForm: React.FC = () => {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={handleSubmit}
+      onSubmit={(values, { setSubmitting }) => {
+        axios.post("/aree", values); // Solito invio dei dati al server
+        setSubmitting(false); //Serve a resettare la submit del form e riportarla False
+        navigate("/");
+      }}
     >
       <Form>
         <div className="form-group">

@@ -64,6 +64,9 @@ app.use("/api/lampioni", lampioneRoutes);
 // Collegamento alla route per i sensori
 app.use("/api/sensori", sensoreRoutes);
 
+// Collegamento alla route per i sensori
+app.use("/api/aree", areaRoutes);
+
 // Accesso alla pagina
 app.get("/", (req, res) => {
   console.log("Ricevuta richiesta GET su /");
