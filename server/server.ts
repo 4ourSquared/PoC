@@ -3,6 +3,8 @@ import { Lampione } from "./models/lampione";
 import lampioneRoutes from "./routes/lampioneRoutes";
 import { Sensore } from "./models/sensore";
 import sensoreRoutes from "./routes/sensoreRoutes";
+import { Area } from "./models/area";
+import areaRoutes from "./routes/areaRoutes";
 
 
 
