@@ -36,7 +36,7 @@ const options : any = {
   useUnifiedTopology: true
 };
 
-mongoose.connect(mongoURI, options);
+mongoose.connect(mongoURI/*, options*/);
 mongoose.pluralize(null);
 
 const db = mongoose.connection;
