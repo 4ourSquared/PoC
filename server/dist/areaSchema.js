@@ -15,6 +15,13 @@ const areaSchema = new mongoose_1.default.Schema({
     descrizione: String,
     latitudine: String,
     longitudine: String,
-    //includere lampioni o sensori
+    lampioni: [{
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            ref: "lampioni"
+        }],
+    sensori: [{
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            ref: "sensori"
+        }] // Array di riferimenti ai documenti dei "sensori"
 });
 exports.default = mongoose_1.default.model("aree", areaSchema);
