@@ -44,14 +44,16 @@ areaRouter.get("/:id", async (req: Request, res: Response) => {
 });
 
 areaRouter.post("/", async (req: Request, res: Response) => {
-    const { nome, descrizione, latitudine, longitudine } = req.body;
+    const { nome, descrizione, latitudine, longitudine, sensori, lampioni } = req.body;
     const id: number = await generateIdAree();
     const newArea = new AreaSchema({
         id,
         nome,
         descrizione,
         latitudine,
-        longitudine
+        longitudine,
+        sensori,
+        lampioni
     });
 
     try {

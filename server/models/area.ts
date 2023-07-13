@@ -71,6 +71,7 @@ export class Area {
     this.longitudine = longitudine;
   }
 
+  //da vedere
   public getSensori(): Sensore[] { // Aggiunto
     return this.sensori;
   }
