@@ -71,7 +71,7 @@ export const AreaTable: React.FC = () => {
                     className="btn btn-outline-primary"
                     onClick={() => navigate(`/api/aree/${area.id}`)}
                   >
-                    Elimina
+                    Informazioni
                   </button>
                 </td>
                 <td>
