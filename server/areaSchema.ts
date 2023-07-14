@@ -7,7 +7,7 @@ mongoose.pluralize(null);
 
 const areaSchema = new mongoose.Schema({
     id: {
-        type: String,
+        type: Number,
         unique: true,
         required: true,
     },
