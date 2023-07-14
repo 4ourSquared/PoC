@@ -16,7 +16,7 @@ const NewLampForm: React.FC = () => {
 
   return (
     <Formik
-      initialValues={{ id: 0, stato: "Attivo", lum: 0, luogo: "" }}
+      initialValues={{ id: 0, stato: "Attivo", lum: 0, luogo: "", area: 0 }}
       validationSchema={Yup.object({
         luogo: Yup.string()
           .min(2, "Inserisci almeno 2 caratteri")
@@ -81,7 +81,10 @@ const NewLampForm: React.FC = () => {
           </small>
           <ErrorMessage name="luogo" />
         </div>
-
+        <div className="form-group">
+          <label htmlFor="area">ID Area di Riferimento</label>
+          <Field name="area" type="text" className="form-control" />
+        </div>
         <button type="submit" className="btn btn-primary">
           Crea
         </button>
