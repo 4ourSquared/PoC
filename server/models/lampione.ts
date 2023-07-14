@@ -7,18 +7,21 @@ export class Lampione {
   private stato: string;
   private lum: number;
   private luogo: string;
+  private area: number;
 
   // Costruttore
   public constructor(
     id: number = 0,
     stato: string,
     lum: number,
-    luogo: string
+    luogo: string,
+    area: number
   ) {
     this.id = id;
     this.stato = stato;
     this.lum = lum;
     this.luogo = luogo;
+    this.area = area;
   }
 
   // Interfaccia
@@ -34,6 +37,11 @@ export class Lampione {
   public getLuogo(): string {
     return this.luogo;
   }
+
+  public getArea() : number{
+    return this.area;
+  }
+
   public setStato(stato: string): void {
     this.stato = stato;
   }
@@ -43,4 +51,8 @@ export class Lampione {
   public setLuogo(luogo: string): void {
     this.luogo = luogo;
   }
+  public setArea(area: number): void{
+    this.area = area;
+  }
+
 }

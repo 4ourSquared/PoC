@@ -8,6 +8,7 @@ export class Sensore {
     private IP: string;
     private luogo: string;
     private raggio: number;
+    private area: number;
   
     // Costruttore
     public constructor(
@@ -15,13 +16,15 @@ export class Sensore {
       iter: string = "manuale",
       IP: string,
       luogo: string,
-      raggio: number
+      raggio: number,
+      area: number
     ) {
       this.id = id;
       this.iter = iter;
       this.IP = IP;
       this.luogo = luogo;
       this.raggio = raggio;
+      this.area = area;
     }
   
     // Interfaccia
@@ -40,6 +43,9 @@ export class Sensore {
     public getRaggio(): number {
         return this.raggio;
     }
+    public getArea(): number{
+      return this.area;
+    }
     public setIter(iter: string): void {
         this.iter = iter;
     }
@@ -51,5 +57,8 @@ export class Sensore {
     }
     public setRaggio(raggio: number): void {
         this.raggio = raggio;
+    }
+    public setArea(area:number) : void{
+        this.area = area;
     }
   }

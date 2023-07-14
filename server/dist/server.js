@@ -33,7 +33,7 @@ const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true
 };
-mongoose_1.default.connect(mongoURI, options);
+mongoose_1.default.connect(mongoURI /*, options*/);
 mongoose_1.default.pluralize(null);
 const db = mongoose_1.default.connection;
 db.on("error", console.error.bind(console, "Errore di connessione MongoDB:"));

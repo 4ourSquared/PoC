@@ -15,5 +15,6 @@ const sensoreSchema = new mongoose_1.default.Schema({
     IP: String,
     luogo: String,
     raggio: Number,
+    area: Number,
 });
 exports.default = mongoose_1.default.model("sensori", sensoreSchema);

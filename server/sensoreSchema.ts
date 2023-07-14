@@ -11,6 +11,7 @@ const sensoreSchema = new mongoose.Schema({
     IP: String,
     luogo: String,
     raggio: Number,
+    area : Number,
 });
 
 export default mongoose.model("sensori", sensoreSchema);

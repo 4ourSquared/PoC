@@ -14,5 +14,6 @@ const lampioneSchema = new mongoose_1.default.Schema({
     stato: String,
     lum: Number,
     luogo: String,
+    area: Number,
 });
 exports.default = mongoose_1.default.model("lampioni", lampioneSchema);
