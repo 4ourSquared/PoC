@@ -45,7 +45,7 @@ lampRouter.get("/:id", async (req: Request, res: Response) => {
 
 // Creazione di un nuovo lampione
 lampRouter.post("/", async (req: Request, res: Response) => {
-    const { stato, lum, luogo } = req.body;
+    const { stato, lum, luogo, area } = req.body;
 
     try {
         const id = await generateId();
@@ -54,6 +54,7 @@ lampRouter.post("/", async (req: Request, res: Response) => {
             stato,
             lum: parseInt(lum, 10),
             luogo,
+            area: parseInt(area, 10),
         });
 
         const savedLampione = await newLampione.save();

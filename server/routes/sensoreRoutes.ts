@@ -44,7 +44,7 @@ sensRouter.get("/:id", async (req: Request, res: Response) => {
 });
 
 sensRouter.post("/", async (req: Request, res: Response) => {
-    const { iter, IP, luogo, raggio } = req.body;
+    const { iter, IP, luogo, raggio, area } = req.body;
     const id: number = await generateIdSensori();
     const newSensore = new SensoreSchema({
         id,
@@ -52,6 +52,7 @@ sensRouter.post("/", async (req: Request, res: Response) => {
         IP,
         luogo,
         raggio: parseInt(raggio, 10),
+        area: parseInt(area, 10),
     });
 
     try {
