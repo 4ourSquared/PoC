@@ -16,6 +16,7 @@ const EditSensForm: React.FC = () => {
     IP: "",
     luogo: "",
     raggio: 0,
+    area: 0,
   });
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const EditSensForm: React.FC = () => {
         IP: sens.IP || "",
         luogo: sens.luogo || "",
         raggio: sens.raggio || 0,
+        area: sens.area || 0,
       }}
       validationSchema={Yup.object({
         IP: Yup.string()
@@ -120,6 +122,11 @@ const EditSensForm: React.FC = () => {
           <small id="intensityHelp" className="form-text text-muted">
             Indica il raggio d'azione (in metri) del sensore.
           </small>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="area">ID Area di Riferimento</label>
+          <Field name="area" type="text" className="form-control" readOnly />
         </div>
 
         <button type="submit" className="btn btn-primary">

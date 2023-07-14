@@ -15,6 +15,7 @@ const EditLampForm: React.FC = () => {
     stato: "",
     lum: 0,
     luogo: "",
+    area: 0,
   });
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const EditLampForm: React.FC = () => {
         stato: lampioneData.stato || "",
         lum: lampioneData.lum || 0,
         luogo: lampioneData.luogo || "",
+        area: lampioneData.area || 0,
       }}
       validationSchema={Yup.object({
         luogo: Yup.string()
@@ -109,6 +111,11 @@ const EditLampForm: React.FC = () => {
             Indica il luogo in cui è situato il lampione.
           </small>
           <ErrorMessage name="luogo" />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="area">ID Area di Riferimento</label>
+          <Field name="area" type="text" className="form-control" readOnly />
         </div>
 
         <button type="submit" className="btn btn-primary">
