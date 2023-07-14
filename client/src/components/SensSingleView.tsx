@@ -35,6 +35,7 @@ const SensSingleView: React.FC = () => {
             <li>Indirizzo IP: {sens.IP}</li>
             <li>Luogo: {sens.luogo}</li>
             <li>Raggio d'azione: {sens.raggio}</li>
+            <li>ID Area di Riferimento: {sens.area}</li>
           </ul>
         </div>
       ) : (
