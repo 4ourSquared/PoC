@@ -5,6 +5,7 @@
 import { Router, Request, Response } from "express";
 import { Lampione } from "../models/lampione";
 import LampioneModel from "../lampioneSchema";
+import areaSchema from "../areaSchema";
 
 const lampRouter = Router();
 
@@ -58,6 +59,29 @@ lampRouter.post("/", async (req: Request, res: Response) => {
         });
 
         const savedLampione = await newLampione.save();
+
+        try{
+            const designedArea = await areaSchema.findOne({id: parseInt(area, 10)});
+            if(!designedArea){
+                res.status(404).json({error: "Area illuminata per l'inserimento del lampione non trovata"});
+            }
+            else{
+                console.log("Area Trovata!");
+                designedArea.lampioni.push(savedLampione.id)
+                designedArea.save();
+                console.log(designedArea);
+            }
+        }
+        catch (error){
+            console.error(
+                "Errore durante il recupero dell'area illuminata dal database:",
+                error
+            );
+            res.status(500).send(
+                "Errore durante il recupero dell'area illuminata dal database"
+            );
+        }
+
         res.status(200).json(savedLampione);
     } catch (error) {
         console.error(

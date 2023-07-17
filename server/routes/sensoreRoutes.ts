@@ -5,6 +5,7 @@
 import { Router, Request, Response } from "express";
 import SensoreSchema from "../sensoreSchema";
 import { Sensore } from "../models/sensore";
+import areaSchema from "../areaSchema";
 
 const sensRouter = Router();
 
@@ -56,6 +57,28 @@ sensRouter.post("/", async (req: Request, res: Response) => {
     });
 
     try {
+
+        try{
+            const designedArea = await areaSchema.findOne({id: parseInt(area, 10)});
+            if(!designedArea){
+                res.status(404).json({error: "Area illuminata per l'inserimento del sensore non trovata"});
+            }
+            else{
+                console.log("Area Trovata!");
+                designedArea.sensori.push(newSensore.id)
+                designedArea.save();
+                console.log(designedArea);
+            }
+        }
+        catch (error){
+            console.error(
+                "Errore durante il recupero dell'area illuminata dal database:",
+                error
+            );
+            res.status(500).send(
+                "Errore durante il recupero dell'area illuminata dal database"
+            );
+        }
         const savedSensore = await newSensore.save();
         res.status(200).json(savedSensore);
     } catch (error) {
