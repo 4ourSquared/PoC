@@ -43,6 +43,46 @@ areaRouter.get("/:id", async (req: Request, res: Response) => {
     }
 });
 
+areaRouter.get("/:id/lampioni", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const area = await AreaSchema.findOne({ id: parseInt(id, 10) });
+    if (area) {
+      res.status(200).json(area.lampioni);
+    } else {
+      res.status(404).json({ error: "Area non trovata." });
+    }
+  } catch (error) {
+    console.error(
+      "Errore durante il recupero dei lampioni dall'area dal database:",
+      error
+    );
+    res.status(500).send(
+      "Errore durante il recupero dei lampioni dall'area dal database"
+    );
+  }
+});
+
+areaRouter.get("/:id/sensori", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const area = await AreaSchema.findOne({ id: parseInt(id, 10) });
+    if (area) {
+      res.status(200).json(area.sensori);
+    } else {
+      res.status(404).json({ error: "Area non trovata." });
+    }
+  } catch (error) {
+    console.error(
+      "Errore durante il recupero dei sensori dall'area dal database:",
+      error
+    );
+    res.status(500).send(
+      "Errore durante il recupero dei sensori dall'area dal database"
+    );
+  }
+});
+
 areaRouter.post("/", async (req: Request, res: Response) => {
     const { nome, descrizione, latitudine, longitudine, sensori, lampioni } = req.body;
     const id: number = await generateIdAree();

@@ -1,30 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SensItem from "../types/SensItem";
 
 interface SensTableProps {
-  areaId: string | undefined;
+  sensori: SensItem[];
+  onSensoreDeleted: (id: number) => void; // Aggiunta di una nuova prop
 }
-
-const SensTable: React.FC<SensTableProps> = ({ areaId }) => {
-  const [sensori, setSensori] = useState<SensItem[]>([]);
+const SensTable: React.FC<SensTableProps> = ({ sensori, onSensoreDeleted }) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const loadSensori = async () => {
-    try {
-      const response = await axios.get<SensItem[]>(
-      `http://localhost:5000/api/aree/${areaId}/sensori`
-      );
-      setSensori(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-    loadSensori();
-  }, [areaId]);
-
 
   const deleteSensore = async (id: number) => {
     const confirmed = window.confirm(
@@ -33,7 +17,7 @@ const SensTable: React.FC<SensTableProps> = ({ areaId }) => {
     try {
       if (confirmed) {
         await axios.delete(`http://localhost:5000/api/sensori/${id}`);
-        setSensori((cur) => cur.filter((item) => item.id !== id));
+        onSensoreDeleted(id); // Chiamata alla funzione di callback
       }
     } catch (error) {
       console.error("Errore nella cancellazione del sensore: ", error);
@@ -41,7 +25,6 @@ const SensTable: React.FC<SensTableProps> = ({ areaId }) => {
   };
 
   return (
-    <>
       <div className="row justify-content-center">
         <Link to="/api/sensori/add" type="button" className="btn btn-primary">
           Aggiungi Sensore
@@ -100,7 +83,6 @@ const SensTable: React.FC<SensTableProps> = ({ areaId }) => {
           </tbody>
         </table>
       </div>
-    </>
   );
 };
 export default SensTable;

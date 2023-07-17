@@ -10,13 +10,13 @@ import * as Yup from "yup"; //Libreria per la validazione del form: si può usar
   come valore iniziale dell'id ancora, bisogna rifarlo nel DB
 */
 
-const NewLampForm: React.FC = () => {
+const NewLampForm: React.FC<{ areaId: number }> = ({ areaId }) => {
   axios.defaults.baseURL = "http://localhost:5000/api"; //URL base, così una volta in produzione basta cambiare questo
   const navigate = useNavigate();
 
   return (
     <Formik
-      initialValues={{ id: 0, stato: "Attivo", lum: 0, luogo: "", area: 0 }}
+      initialValues={{ id: 0, stato: "Attivo", lum: 0, luogo: "", area: areaId }}
       validationSchema={Yup.object({
         luogo: Yup.string()
           .min(2, "Inserisci almeno 2 caratteri")
@@ -26,7 +26,7 @@ const NewLampForm: React.FC = () => {
         //riempito correttamente
       })}
       onSubmit={(values, { setSubmitting }) => {
-        axios.post("/lampioni", values); // Solito invio dei dati al server
+        axios.post(`/aree/${values.area}/lampioni`, values);
         setSubmitting(false); //Serve a resettare la submit del form e riportarla False
         navigate("/");
       }}
@@ -83,7 +83,7 @@ const NewLampForm: React.FC = () => {
         </div>
         <div className="form-group">
           <label htmlFor="area">ID Area di Riferimento</label>
-          <Field name="area" type="text" className="form-control" />
+          <Field name="area" type="text" className="form-control" readOnly />
         </div>
         <button type="submit" className="btn btn-primary">
           Crea

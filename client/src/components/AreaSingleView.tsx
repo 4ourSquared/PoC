@@ -14,25 +14,42 @@ const AreaSingleView: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      axios.defaults.baseURL = "http://localhost:5000/api";
       console.log("areaId: ", areaId);
       if (!areaId) {
             console.error('areaId is undefined');
             return;
         }
-  try {
-    const [areaResponse, lampioniResponse, sensoriResponse] = await Promise.all([
-      axios.get<AreaItem>(`/aree/${areaId}`),
-      axios.get<LampItem[]>(`/aree/${areaId}/lampioni`),
-      axios.get<SensItem[]>(`/aree/${areaId}/sensori`),
-    ]);
-    const areaData = areaResponse.data;
-    areaData.lampioni = lampioniResponse.data;
-    areaData.sensori = sensoriResponse.data;
-    setArea(areaData);
-    setLoading(false);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
+      let areaResponse, lampioniResponse, sensoriResponse;
+
+      try {
+      areaResponse = await axios.get<AreaItem>(`/aree/${areaId}`);
+      console.log("Area Response:", areaResponse.data);
+      } catch (error) {
+      console.error("Error fetching area:", error);
+      }
+
+      try {
+      lampioniResponse = await axios.get<LampItem[]>(`/aree/${areaId}/lampioni`);
+      console.log("Lampioni Response:", lampioniResponse.data);
+      } catch (error) {
+      console.error("Error fetching lampioni:", error);
+      }
+
+      try {
+      sensoriResponse = await axios.get<SensItem[]>(`/aree/${areaId}/sensori`);
+      console.log("Sensori Response:", sensoriResponse.data);
+      } catch (error) {
+      console.error("Error fetching sensori:", error);
+      }
+
+      if (areaResponse && lampioniResponse && sensoriResponse) {
+      const areaData = areaResponse.data;
+      areaData.lampioni = lampioniResponse.data;
+      areaData.sensori = sensoriResponse.data;
+      setArea(areaData);
+      setLoading(false);
+      }
 };
     fetchData();
   }, [areaId]);
@@ -53,11 +70,42 @@ const AreaSingleView: React.FC = () => {
           </ul>
           <h2>Lampioni Collegati</h2>
           <div className="row">
-            <LampTable areaId={areaId} />
+            <LampTable 
+              lampioni={area.lampioni} 
+              areaId={area.id}
+              onLampioneDeleted={(id) => {
+                setArea((currentArea) => {
+                  if (currentArea) {
+                    return {
+                      ...currentArea,
+                      lampioni: currentArea.lampioni.filter((lampione) => lampione.id !== id),
+                    };
+                  } else {
+                    return null;
+                  }
+                });
+              }
+              }
+            />
+
           </div>
           <h2>Sensori Collegati</h2>
           <div className="row">
-            <SensTable areaId={areaId} />
+             <SensTable 
+              sensori={area.sensori} 
+              onSensoreDeleted={(id) => {
+                setArea((currentArea) => {
+                  if (currentArea) {
+                    return {
+                      ...currentArea,
+                      sensori: currentArea.sensori.filter((sensore) => sensore.id !== id),
+                    };
+                  } else {
+                    return null;
+                  }
+                });
+              }}
+            />
           </div>
         </div>
       ) : (

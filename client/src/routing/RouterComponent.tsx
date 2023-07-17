@@ -6,17 +6,23 @@ import EditAreaForm from "../components/EditAreaForm";
 import NewLampPage from "../components/NewLampPage";
 import NewSensPage from "../components/NewSensPage";
 import NewAreaPage from "../components/NewAreaPage";
-import LampsSingleView from "../components/LampSingleView";
+import LampSingleView from "../components/LampSingleView";
 import SensSingleView from "../components/SensSingleView";
 import AreaSingleView from "../components/AreaSingleView";
 import LoginPage from "../components/LoginPage";
 import PageFullView from "../components/PageFullView";
 import GuardedRoute from "./GuardedRoute";
+import { useParams } from 'react-router-dom';
 
 const NotFoundPage: React.FC = () => {
   return <h1>Page not found</h1>;
 };
 
+const NewLampPageWrapper: React.FC = () => {
+  const { areaId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0; // converti in numero, usa 0 se undefined
+  return <NewLampPage areaId={areaIdNumber} />;
+};
 
 const RouterComponent: React.FC = () => {
   return (
@@ -28,9 +34,9 @@ const RouterComponent: React.FC = () => {
           <Route path="api/aree/add" element={<NewAreaPage />} />
           <Route path="api/aree/edit/:areaId" element={<EditAreaForm />} />
           <Route path="api/aree/:areaId" element={<AreaSingleView />} />
-          <Route path="api/aree/:areaId/lampioni/:lampioneId" element={<LampsSingleView />} />
+          <Route path="api/aree/:areaId/lampioni/:lampioneId" element={<LampSingleView />} />
           <Route path="api/aree/:areaId/lampioni/edit/:lampioneId" element={<EditLampForm />} />
-          <Route path="api/aree/:areaId/lampioni/add" element={<NewLampPage />} />
+          <Route path="api/aree/:areaId/lampioni/add" element={<NewLampPageWrapper />} />
           <Route path="api/aree/:areaId/sensori/:sensoreId" element={<SensSingleView />} />
           <Route path="api/aree/:areaId/sensori/edit/:sensoreId" element={<EditSensForm />} />
           <Route path="api/aree/:areaId/sensori/add" element={<NewSensPage />} />

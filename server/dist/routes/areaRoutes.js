@@ -44,6 +44,38 @@ areaRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(500).send("Errore durante il recupero dell'area illuminata dal database");
     }
 }));
+areaRouter.get("/:id/lampioni", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    try {
+        const area = yield areaSchema_1.default.findOne({ id: parseInt(id, 10) });
+        if (area) {
+            res.status(200).json(area.lampioni);
+        }
+        else {
+            res.status(404).json({ error: "Area non trovata." });
+        }
+    }
+    catch (error) {
+        console.error("Errore durante il recupero dei lampioni dall'area dal database:", error);
+        res.status(500).send("Errore durante il recupero dei lampioni dall'area dal database");
+    }
+}));
+areaRouter.get("/:id/sensori", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    try {
+        const area = yield areaSchema_1.default.findOne({ id: parseInt(id, 10) });
+        if (area) {
+            res.status(200).json(area.sensori);
+        }
+        else {
+            res.status(404).json({ error: "Area non trovata." });
+        }
+    }
+    catch (error) {
+        console.error("Errore durante il recupero dei sensori dall'area dal database:", error);
+        res.status(500).send("Errore durante il recupero dei sensori dall'area dal database");
+    }
+}));
 areaRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { nome, descrizione, latitudine, longitudine, sensori, lampioni } = req.body;
     const id = yield generateIdAree();
