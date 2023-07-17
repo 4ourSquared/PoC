@@ -6,6 +6,7 @@ import SensTable from './SensTable'
     CLASSE CONTENT: classe che renderizza automaticamente il content. Stile associato a Bootstrap.
     ATTENZIONE: attualmente questa classe renderizza solamente la table del lampione e del sensore. Probabilmente in futuro verrà rimossa a favore del routing base
 */ 
+/*
 export default class ContentArea extends Component{
     render(){
         return(
@@ -22,7 +23,7 @@ export default class ContentArea extends Component{
         )
     }
 }
-
+*/
 
 
 //------------------------------------------------------------ da eliminare il file forse ---------------------------------------------------------------------------
