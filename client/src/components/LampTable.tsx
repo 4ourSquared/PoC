@@ -4,27 +4,26 @@ import { Link, useNavigate } from "react-router-dom";
 import LampItem from "../types/LampItem"; // Import del tipo LampItem, da rimuovere in futuro
 
 interface LampTableProps {
-  // Per definire i props, se necessari
+  areaId: string | undefined;
 }
 
-const LampTable: React.FC<LampTableProps> = () => {
+const LampTable: React.FC<LampTableProps> = ({ areaId }) => {
   const [lampioni, setLampioni] = useState<LampItem[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const loadLampioni = async () => {
+  try {
+    const response = await axios.get<LampItem[]>(
+      `http://localhost:5000/api/aree/${areaId}/lampioni`
+    );
+    setLampioni(response.data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
     loadLampioni();
-  }, []);
-
-  const loadLampioni = async () => {
-    try {
-      const response = await axios.get<LampItem[]>(
-        "http://localhost:5000/api/lampioni"
-      );
-      setLampioni(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  }, [areaId]);
 
   const deleteLampione = async (id: number) => {
     const confirmed = window.confirm(

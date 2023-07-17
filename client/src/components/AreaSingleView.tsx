@@ -2,31 +2,46 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import AreaItem from "../types/AreaItem";
-import LampTable from './LampTable'
-import SensTable from './SensTable'
+import LampItem from "../types/LampItem";
+import SensItem from "../types/SensItem";
+import LampTable from "./LampTable";
+import SensTable from "./SensTable";
 
 const AreaSingleView: React.FC = () => {
   const [area, setArea] = useState<AreaItem | null>(null);
-  const { id } = useParams<{ id: string }>();
+  const [loading, setLoading] = useState(true);
+  const { areaId } = useParams<{ areaId: string }>();
 
   useEffect(() => {
+    const fetchData = async () => {
+      console.log("areaId: ", areaId);
+      if (!areaId) {
+            console.error('areaId is undefined');
+            return;
+        }
+  try {
+    const [areaResponse, lampioniResponse, sensoriResponse] = await Promise.all([
+      axios.get<AreaItem>(`/aree/${areaId}`),
+      axios.get<LampItem[]>(`/aree/${areaId}/lampioni`),
+      axios.get<SensItem[]>(`/aree/${areaId}/sensori`),
+    ]);
+    const areaData = areaResponse.data;
+    areaData.lampioni = lampioniResponse.data;
+    areaData.sensori = sensoriResponse.data;
+    setArea(areaData);
+    setLoading(false);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
     fetchData();
-  });
+  }, [areaId]);
 
-  const fetchData = async () => {
-    axios.defaults.baseURL = "http://localhost:5000/api";
-    try {
-      const response = await axios.get<AreaItem>(`aree/${id}`);
-      setArea(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  //forse bisogna aggiundere render() e quindi modificare anche la funzione AreaSingleView come classe
-  return (
+ return (
     <div>
-      {area ? (
+      {loading ? (
+        <p>Caricamento...</p>
+      ) : area ? (
         <div key={area.id}>
           <h1>Info sull'area {area.id}</h1>
           <h2>ID: {area.id}</h2>
@@ -37,12 +52,12 @@ const AreaSingleView: React.FC = () => {
             <li>Longitudine: {area.longitudine}</li>
           </ul>
           <h2>Lampioni Collegati</h2>
-          <div className='row'>
-            <LampTable/>
+          <div className="row">
+            <LampTable areaId={areaId} />
           </div>
           <h2>Sensori Collegati</h2>
-          <div className='row'>
-            <SensTable/>
+          <div className="row">
+            <SensTable areaId={areaId} />
           </div>
         </div>
       ) : (
@@ -54,5 +69,6 @@ const AreaSingleView: React.FC = () => {
     </div>
   );
 };
+
 
 export default AreaSingleView;

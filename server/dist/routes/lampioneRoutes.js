@@ -17,6 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const lampioneSchema_1 = __importDefault(require("../lampioneSchema"));
+const areaSchema_1 = __importDefault(require("../areaSchema"));
 const lampRouter = (0, express_1.Router)();
 lampRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -46,7 +47,7 @@ lampRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function*
 }));
 // Creazione di un nuovo lampione
 lampRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { stato, lum, luogo } = req.body;
+    const { stato, lum, luogo, area } = req.body;
     try {
         const id = yield generateId();
         const newLampione = new lampioneSchema_1.default({
@@ -54,8 +55,25 @@ lampRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* (
             stato,
             lum: parseInt(lum, 10),
             luogo,
+            area: parseInt(area, 10),
         });
         const savedLampione = yield newLampione.save();
+        try {
+            const designedArea = yield areaSchema_1.default.findOne({ id: parseInt(area, 10) });
+            if (!designedArea) {
+                res.status(404).json({ error: "Area illuminata per l'inserimento del lampione non trovata" });
+            }
+            else {
+                console.log("Area Trovata!");
+                designedArea.lampioni.push(savedLampione.id);
+                designedArea.save();
+                console.log(designedArea);
+            }
+        }
+        catch (error) {
+            console.error("Errore durante il recupero dell'area illuminata dal database:", error);
+            res.status(500).send("Errore durante il recupero dell'area illuminata dal database");
+        }
         res.status(200).json(savedLampione);
     }
     catch (error) {

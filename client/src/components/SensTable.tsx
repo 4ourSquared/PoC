@@ -4,27 +4,27 @@ import { Link, useNavigate } from "react-router-dom";
 import SensItem from "../types/SensItem";
 
 interface SensTableProps {
-  // Per definire i props, se necessari
+  areaId: string | undefined;
 }
 
-const SensTable: React.FC<SensTableProps> = () => {
+const SensTable: React.FC<SensTableProps> = ({ areaId }) => {
   const [sensori, setSensori] = useState<SensItem[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    loadSensori();
-  });
-
-  const loadSensori = async () => {
+    const loadSensori = async () => {
     try {
       const response = await axios.get<SensItem[]>(
-        "http://localhost:5000/api/sensori"
+      `http://localhost:5000/api/aree/${areaId}/sensori`
       );
       setSensori(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+    loadSensori();
+  }, [areaId]);
+
 
   const deleteSensore = async (id: number) => {
     const confirmed = window.confirm(

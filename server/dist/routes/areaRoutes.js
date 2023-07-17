@@ -48,13 +48,13 @@ areaRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const { nome, descrizione, latitudine, longitudine, sensori, lampioni } = req.body;
     const id = yield generateIdAree();
     const newArea = new areaSchema_1.default({
-        id: String(id),
+        id,
         nome,
         descrizione,
         latitudine,
         longitudine,
         sensori,
-        lampioni,
+        lampioni
     });
     try {
         const savedArea = yield newArea.save();
@@ -68,7 +68,8 @@ areaRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* (
 function generateIdAree() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const maxId = yield areaSchema_1.default.findOne()
+            const maxId = yield areaSchema_1.default
+                .findOne()
                 .sort({ id: -1 })
                 .select("id")
                 .exec();

@@ -8,10 +8,7 @@ export const AreaTable: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    loadAree();
-  }, []);
-
-  const loadAree = async () => {
+     const loadAree = async () => {
     try {
       const response = await axios.get<AreaItem[]>(
         "http://localhost:5000/api/aree"
@@ -21,6 +18,8 @@ export const AreaTable: React.FC = () => {
       console.error("Error fetching data:", error);
     }
   };
+    loadAree();
+  }, []);
 
   const deleteArea = async (id: number) => {
     const confirmed = window.confirm(

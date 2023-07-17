@@ -3,17 +3,14 @@
 import SensoreItem from './SensItem';
 import LampioneItem from './LampItem';
 
-export {};
-
 interface AreaItem {
     id: number;
     nome: string;
     descrizione: string;
     latitudine: string;
     longitudine: string;
-    sensori: SensoreItem[]; // Aggiunto
-    lampioni: LampioneItem[]; // Aggiunto
+    sensori: SensoreItem[];
+    lampioni: LampioneItem[];
 }
-
 
 export default AreaItem;
