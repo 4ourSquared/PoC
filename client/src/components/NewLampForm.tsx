@@ -26,7 +26,7 @@ const NewLampForm: React.FC<{ areaId: number }> = ({ areaId }) => {
         //riempito correttamente
       })}
       onSubmit={(values, { setSubmitting }) => {
-        axios.post(`/aree/${values.area}/lampioni`, values);
+        axios.post(`/aree/${values.area.toString()}/lampioni`, values);
         setSubmitting(false); //Serve a resettare la submit del form e riportarla False
         navigate("/");
       }}
@@ -83,7 +83,7 @@ const NewLampForm: React.FC<{ areaId: number }> = ({ areaId }) => {
         </div>
         <div className="form-group">
           <label htmlFor="area">ID Area di Riferimento</label>
-          <Field name="area" type="text" className="form-control" readOnly />
+          <Field name="area" type="number" className="form-control" readOnly />
         </div>
         <button type="submit" className="btn btn-primary">
           Crea
