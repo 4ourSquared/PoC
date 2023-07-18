@@ -5,6 +5,9 @@
 import { Router, Request, Response } from "express";
 import AreaSchema from "../areaSchema";
 import { Area } from "../models/area";
+import lampioneSchema from "../lampioneSchema";
+import { Lampione } from "../models/lampione";
+import areaSchema from "../areaSchema";
 
 const areaRouter = Router();
 
@@ -44,47 +47,49 @@ areaRouter.get("/:id", async (req: Request, res: Response) => {
 });
 
 areaRouter.get("/:id/lampioni", async (req: Request, res: Response) => {
-  const { id } = req.params;
-  try {
-    const area = await AreaSchema.findOne({ id: parseInt(id, 10) });
-    if (area) {
-      res.status(200).json(area.lampioni);
-    } else {
-      res.status(404).json({ error: "Area non trovata." });
+    const { id } = req.params;
+    try {
+        const area = await AreaSchema.findOne({ id: parseInt(id, 10) });
+        if (area) {
+            console.log("Area trovata");
+            res.status(200).json(area.lampioni);
+        } else {
+            res.status(404).json({ error: "Area non trovata." });
+        }
+    } catch (error) {
+        console.error(
+            "Errore durante il recupero dei lampioni dall'area dal database:",
+            error
+        );
+        res.status(500).send(
+            "Errore durante il recupero dei lampioni dall'area dal database"
+        );
     }
-  } catch (error) {
-    console.error(
-      "Errore durante il recupero dei lampioni dall'area dal database:",
-      error
-    );
-    res.status(500).send(
-      "Errore durante il recupero dei lampioni dall'area dal database"
-    );
-  }
 });
 
 areaRouter.get("/:id/sensori", async (req: Request, res: Response) => {
-  const { id } = req.params;
-  try {
-    const area = await AreaSchema.findOne({ id: parseInt(id, 10) });
-    if (area) {
-      res.status(200).json(area.sensori);
-    } else {
-      res.status(404).json({ error: "Area non trovata." });
+    const { id } = req.params;
+    try {
+        const area = await AreaSchema.findOne({ id: parseInt(id, 10) });
+        if (area) {
+            res.status(200).json(area.sensori);
+        } else {
+            res.status(404).json({ error: "Area non trovata." });
+        }
+    } catch (error) {
+        console.error(
+            "Errore durante il recupero dei sensori dall'area dal database:",
+            error
+        );
+        res.status(500).send(
+            "Errore durante il recupero dei sensori dall'area dal database"
+        );
     }
-  } catch (error) {
-    console.error(
-      "Errore durante il recupero dei sensori dall'area dal database:",
-      error
-    );
-    res.status(500).send(
-      "Errore durante il recupero dei sensori dall'area dal database"
-    );
-  }
 });
 
 areaRouter.post("/", async (req: Request, res: Response) => {
-    const { nome, descrizione, latitudine, longitudine, sensori, lampioni } = req.body;
+    const { nome, descrizione, latitudine, longitudine, sensori, lampioni } =
+        req.body;
     const id: number = await generateIdAree();
     const newArea = new AreaSchema({
         id,
@@ -93,7 +98,7 @@ areaRouter.post("/", async (req: Request, res: Response) => {
         latitudine,
         longitudine,
         sensori,
-        lampioni
+        lampioni,
     });
 
     try {
@@ -112,8 +117,7 @@ areaRouter.post("/", async (req: Request, res: Response) => {
 
 async function generateIdAree(): Promise<number> {
     try {
-        const maxId = await AreaSchema
-            .findOne()
+        const maxId = await AreaSchema.findOne()
             .sort({ id: -1 })
             .select("id")
             .exec();
@@ -153,10 +157,17 @@ areaRouter.put("/edit/:id", async (req: Request, res: Response) => {
 
         await areaToUpdate.save();
 
-        res.status(200).send(`Area illuminata con id = ${id} aggiornato con successo`);
+        res.status(200).send(
+            `Area illuminata con id = ${id} aggiornato con successo`
+        );
     } catch (error) {
-        console.error("Errore durante l'aggiornamento dell'area illuminata:", error);
-        res.status(500).send("Errore durante l'aggiornamento dell'area illuminata");
+        console.error(
+            "Errore durante l'aggiornamento dell'area illuminata:",
+            error
+        );
+        res.status(500).send(
+            "Errore durante l'aggiornamento dell'area illuminata"
+        );
     }
 });
 
@@ -170,11 +181,99 @@ areaRouter.delete("/:id", async (req: Request, res: Response) => {
             return;
         }
 
-        res.status(200).send(`Area illuminata con id = ${id} eliminato con successo`);
+        res.status(200).send(
+            `Area illuminata con id = ${id} eliminato con successo`
+        );
     } catch (error) {
-        console.error("Errore durante l'eliminazione dell'area illuminata:", error);
-        res.status(500).send("Errore durante l'eliminazione dell'area illuminata");
+        console.error(
+            "Errore durante l'eliminazione dell'area illuminata:",
+            error
+        );
+        res.status(500).send(
+            "Errore durante l'eliminazione dell'area illuminata"
+        );
     }
 });
+
+areaRouter.post("/:id/lampioni", async (req: Request, res: Response) => {
+    try {
+        // Recupero ID area
+        const { id } = req.params;
+
+        // Recupero Area
+        const areaMod = await AreaSchema.findOne({ id: id });
+
+        if (!areaMod) {
+            res.status(400).json({ error: "Errore nel recupero dell'area" });
+        } else {
+            // Recupero nuovo lampione dalla richiesta
+            const { stato, lum, luogo, area } = req.body;
+            const id = await generateLampId(area);
+            const newLamp = new lampioneSchema({
+                id,
+                area: parseInt(area, 10),
+                stato,
+                lum: parseInt(lum, 10),
+                luogo,
+            });
+
+            // Aggiunta del lampione all'array dell'area
+            areaMod.lampioni.push(newLamp.toObject());
+            const savedLampione = areaMod.save();
+            res.status(200).json(savedLampione);
+        }
+    } catch (error) {
+        console.error(
+            "Errore durante il recupero delle aree illuminate dal database:",
+            error
+        );
+        res.status(500).send(
+            "Errore durante il recupero delle aree illuminate dal database"
+        );
+    }
+});
+
+areaRouter.get("/:idA/lampioni/:idL", async (req: Request, res: Response) => {
+    const { idA, idL } = req.params;
+
+    try {
+        const area = await AreaSchema.findOne({ id: idA });
+        if (area) {
+            const lampione = area.lampioni.find(
+                (lamp: any) => lamp.id === parseInt(idL)
+            );
+            if (lampione) {
+                res.status(200).json(lampione);
+            } else {
+                res.status(404).json({ error: "Lampione non trovato" });
+            }
+        } else {
+            res.status(404).json({ error: "Area non trovata" });
+        }
+    } catch (error) {
+        console.error("Errore durante il recupero del lampione:", error);
+        res.status(500).send("Errore durante il recupero del lampione");
+    }
+});
+
+async function generateLampId(areaId: number): Promise<number> {
+    try {
+        const area = await areaSchema.findOne({ id: areaId }).exec();
+
+        if (!area) {
+            throw new Error(`Area con ID ${areaId} non trovata.`);
+        }
+
+        const newLampId = area.lampioni.length + 1;
+
+        return newLampId;
+    } catch (error) {
+        console.error(
+            "Errore durante la generazione dell'ID del lampione:",
+            error
+        );
+        throw error;
+    }
+}
 
 export default areaRouter;
