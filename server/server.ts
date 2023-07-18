@@ -58,11 +58,13 @@ import LampioneModel from "./lampioneSchema";
 ------------------------------------------------------------------------------
 */
 
+/*
 // Collegamento alle route per i lampioni
 app.use("/api/lampioni", lampioneRoutes);
 
 // Collegamento alla route per i sensori
 app.use("/api/sensori", sensoreRoutes);
+*/
 
 // Collegamento alla route per i sensori
 app.use("/api/aree", areaRoutes);
