@@ -4,13 +4,15 @@ mongoose.pluralize(null);
 const lampioneSchema = new mongoose.Schema({
     id: {
         type: Number,
-        unique: true,
         required: true,
     },
     stato: String,
     lum: Number,
     luogo: String,
-    area: Number,
+    area: {
+        type: Number,
+        required: true,
+    }
 });
 
 export default mongoose.model("lampioni", lampioneSchema);

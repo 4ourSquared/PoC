@@ -4,7 +4,6 @@ mongoose.pluralize(null);
 const sensoreSchema = new mongoose.Schema({
     id: {
         type: Number,
-        unique: true,
         required: true,
     },
     iter: { type: String, default: "manuale" },
