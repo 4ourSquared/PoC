@@ -11,6 +11,36 @@ import areaSchema from "../areaSchema";
 
 const areaRouter = Router();
 
+areaRouter.get("/:idA/lampioni/:idL", async (req: Request, res: Response) => {
+    console.log("Ricevuta richiesta per info lampione specifico");
+    const { idA, idL } = req.params;
+    parseInt(idA, 10);
+    parseInt(idL, 10);
+    console.log(idA, idL);
+
+    try {
+        const area = await AreaSchema.findOne({ id: idA });
+        if (area) {
+            console.log("Area trovata: ", idA);
+            const lampione = area.lampioni.find(
+                (lamp: any) => lamp.id === parseInt(idL)
+            );
+            if (lampione) {
+                console.log("Lampione trovato: ", idL);
+                res.status(200).json(lampione);
+            } else {
+                res.status(404).json({ error: "Lampione non trovato" });
+            }
+        } else {
+            res.status(404).json({ error: "Area non trovata" });
+        }
+    } catch (error) {
+        console.error("Errore durante il recupero del lampione:", error);
+        res.status(500).send("Errore durante il recupero del lampione");
+    }
+});
+
+
 areaRouter.get("/", async (req: Request, res: Response) => {
     try {
         const aree = await AreaSchema.find();
@@ -233,28 +263,6 @@ areaRouter.post("/:id/lampioni", async (req: Request, res: Response) => {
     }
 });
 
-areaRouter.get("/:idA/lampioni/:idL", async (req: Request, res: Response) => {
-    const { idA, idL } = req.params;
-
-    try {
-        const area = await AreaSchema.findOne({ id: idA });
-        if (area) {
-            const lampione = area.lampioni.find(
-                (lamp: any) => lamp.id === parseInt(idL)
-            );
-            if (lampione) {
-                res.status(200).json(lampione);
-            } else {
-                res.status(404).json({ error: "Lampione non trovato" });
-            }
-        } else {
-            res.status(404).json({ error: "Area non trovata" });
-        }
-    } catch (error) {
-        console.error("Errore durante il recupero del lampione:", error);
-        res.status(500).send("Errore durante il recupero del lampione");
-    }
-});
 
 async function generateLampId(areaId: number): Promise<number> {
     try {
