@@ -16,11 +16,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const lampioneSchema_1 = __importDefault(require("../lampioneSchema"));
+const lampioneSchema_1 = __importDefault(require("../schemas/lampioneSchema"));
 const lampRouter = (0, express_1.Router)();
 lampRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const lampioni = yield lampioneSchema_1.default.find();
+        res.status(200).json(lampioni);
+    }
+    catch (error) {
+        console.error("Errore durante il recupero dei lampioni dal database:", error);
+        res.status(500).send("Errore durante il recupero dei lampioni dal database");
+    }
+}));
+lampRouter.get("/guasti", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const lampioni = yield lampioneSchema_1.default.find({ guasto: true });
         res.status(200).json(lampioni);
     }
     catch (error) {
@@ -54,6 +64,7 @@ lampRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* (
             stato,
             lum: parseInt(lum, 10),
             luogo,
+            guasto: false
         });
         const savedLampione = yield newLampione.save();
         res.status(200).json(savedLampione);
@@ -100,6 +111,30 @@ lampRouter.put("/edit/:id", (req, res) => __awaiter(void 0, void 0, void 0, func
         }
         yield lampToUpdate.save();
         res.status(200).send(`Lampione con id = ${id} aggiornato con successo`);
+    }
+    catch (error) {
+        console.error("Errore durante l'aggiornamento del lampione:", error);
+        res.status(500).send("Errore durante l'aggiornamento del lampione");
+    }
+}));
+lampRouter.put("/guasti/add/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = parseInt(req.params.id); // ID del lampione da aggiornare
+    try {
+        const lampToUpdate = yield lampioneSchema_1.default.findOne({ id: id });
+        console.log(`Ricevuta richiesta PUT su /api/lampioni/setguasto -> ID: ${id}`);
+        console.log("Richiesto toggle per la lista guasti di un lampione esistente");
+        if (!lampToUpdate) {
+            res.status(404).send(`Lampione con id = ${id} non trovato!`);
+            return;
+        }
+        if (!lampToUpdate.guasto)
+            lampToUpdate.guasto = true;
+        else {
+            res.status(409).send(`Lampione con id = ${id} già presente nella lista guasti!`);
+            return;
+        }
+        yield lampToUpdate.save();
+        res.status(200).send(`Lampione con id = ${id} trasferito nella lista guasti con successo`);
     }
     catch (error) {
         console.error("Errore durante l'aggiornamento del lampione:", error);

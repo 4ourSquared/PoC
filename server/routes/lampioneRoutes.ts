@@ -3,14 +3,28 @@
 */
 
 import { Router, Request, Response } from "express";
-import { Lampione } from "../models/lampione";
-import LampioneModel from "../lampioneSchema";
+import LampioneSchema from "../schemas/lampioneSchema";
 
 const lampRouter = Router();
 
 lampRouter.get("/", async (req: Request, res: Response) => {
     try {
-        const lampioni = await LampioneModel.find();
+        const lampioni = await LampioneSchema.find();
+        res.status(200).json(lampioni);
+    } catch (error) {
+        console.error(
+            "Errore durante il recupero dei lampioni dal database:",
+            error
+        );
+        res.status(500).send(
+            "Errore durante il recupero dei lampioni dal database"
+        );
+    }
+});
+
+lampRouter.get("/guasti", async (req: Request, res: Response) => {
+    try {
+        const lampioni = await LampioneSchema.find({guasto:true});
         res.status(200).json(lampioni);
     } catch (error) {
         console.error(
@@ -26,7 +40,7 @@ lampRouter.get("/", async (req: Request, res: Response) => {
 lampRouter.get("/:id", async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-        const lampione = await LampioneModel.findOne({ id: parseInt(id, 10) });
+        const lampione = await LampioneSchema.findOne({ id: parseInt(id, 10) });
         if (lampione) {
             res.status(200).json(lampione);
         } else {
@@ -49,11 +63,12 @@ lampRouter.post("/", async (req: Request, res: Response) => {
 
     try {
         const id = await generateId();
-        const newLampione = new LampioneModel({
+        const newLampione = new LampioneSchema({
             id,
             stato,
             lum: parseInt(lum, 10),
             luogo,
+            guasto:false
         });
 
         const savedLampione = await newLampione.save();
@@ -71,7 +86,7 @@ lampRouter.post("/", async (req: Request, res: Response) => {
 
 async function generateId(): Promise<number> {
     try {
-        const maxId = await LampioneModel.findOne()
+        const maxId = await LampioneSchema.findOne()
             .sort({ id: -1 })
             .select("id")
             .exec();
@@ -87,7 +102,7 @@ lampRouter.put("/edit/:id", async (req: Request, res: Response) => {
     const id = parseInt(req.params.id); // ID del lampione da aggiornare
 
     try {
-        const lampToUpdate = await LampioneModel.findOne({ id: id });
+        const lampToUpdate = await LampioneSchema.findOne({ id: id });
 
         console.log(
             `Ricevuta richiesta PUT su /api/lampioni/edit -> ID: ${id}`
@@ -118,12 +133,44 @@ lampRouter.put("/edit/:id", async (req: Request, res: Response) => {
     }
 });
 
+lampRouter.put("/guasti/add/:id", async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id); // ID del lampione da aggiornare
+
+    try {
+        const lampToUpdate = await LampioneSchema.findOne({ id: id });
+
+        console.log(
+            `Ricevuta richiesta PUT su /api/lampioni/setguasto -> ID: ${id}`
+        );
+        console.log("Richiesto toggle per la lista guasti di un lampione esistente");
+
+        if (!lampToUpdate) {
+            res.status(404).send(`Lampione con id = ${id} non trovato!`);
+            return;
+        }
+
+        if(!lampToUpdate.guasto)
+            lampToUpdate.guasto = true;
+        else {
+            res.status(409).send(`Lampione con id = ${id} già presente nella lista guasti!`);
+            return;
+        }
+
+        await lampToUpdate.save();
+
+        res.status(200).send(`Lampione con id = ${id} trasferito nella lista guasti con successo`);
+    } catch (error) {
+        console.error("Errore durante l'aggiornamento del lampione:", error);
+        res.status(500).send("Errore durante l'aggiornamento del lampione");
+    }
+});
+
 // Richiesta per eliminare un lampione dal sistema
 lampRouter.delete("/:id", async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
 
     try {
-        const result = await LampioneModel.deleteOne({ id: id });
+        const result = await LampioneSchema.deleteOne({ id: id });
 
         if (result.deletedCount === 0) {
             res.status(404).send(`Lampione con id = ${id} non trovato`);

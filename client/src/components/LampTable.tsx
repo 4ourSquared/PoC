@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { isAmministratore,isManutentore } from "../auth/LoginState";
 import LampItem from "../types/LampItem"; // Import del tipo LampItem, da rimuovere in futuro
+import { Tooltip } from 'react-tooltip'
 
 interface LampTableProps {
   // Per definire i props, se necessari
@@ -9,10 +11,12 @@ interface LampTableProps {
 
 const LampTable: React.FC<LampTableProps> = () => {
   const [lampioni, setLampioni] = useState<LampItem[]>([]);
+  const [isAdmin] = useState(isAmministratore());
+  const [isManut] = useState(isManutentore());
   const navigate = useNavigate();
 
   useEffect(() => {
-    loadLampioni();
+    loadLampioni()
   }, []);
 
   const loadLampioni = async () => {
@@ -21,8 +25,21 @@ const LampTable: React.FC<LampTableProps> = () => {
         "http://localhost:5000/api/lampioni"
       );
       setLampioni(response.data);
+      console.error("porcodio")
     } catch (error) {
       console.error("Error fetching data:", error);
+    }
+  };
+
+  const markGuasto = async (id: number) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/lampioni/guasti/add/${id}`
+      );
+      const confirmed = window.confirm(response.data);
+    } catch (error:any) {
+      window.confirm(error.response.data);
+      console.error("Errore nell'aggiunta guasto:", error);
     }
   };
 
@@ -38,6 +55,10 @@ const LampTable: React.FC<LampTableProps> = () => {
     } catch (error) {
       console.error("Errore nella cancellazione del lampione: ", error);
     }
+  };
+  
+  const showListaGuasti = async () => {
+    navigate(`/api/lampioni/guasti`)
   };
 
   return (
@@ -58,6 +79,7 @@ const LampTable: React.FC<LampTableProps> = () => {
               <th scope="col">Info</th>
               <th scope="col">Modifica</th>
               <th scope="col">Elimina</th>
+              {isAdmin && <th scope="col">Guasto</th>}
             </tr>
           </thead>
           <tbody id="tableBody">
@@ -94,10 +116,34 @@ const LampTable: React.FC<LampTableProps> = () => {
                     Elimina
                   </button>
                 </td>
+                {isAdmin && 
+                <td>
+                  {lampione.guasto 
+                    ?
+                    <>
+                      <span style={{cursor:"default"}} data-tooltip-id="x" data-tooltip-content="Già marcato come guasto">
+                        {'\u274c'}
+                      </span>
+                      <Tooltip id="x" />
+                    </>
+                    :
+                    <button className="btn btn-dark"
+                      onClick={() => markGuasto(lampione.id)}
+                    >
+                      Segnala guasto
+                    </button>
+                  }
+                </td>
+                }
               </tr>
             ))}
           </tbody>
         </table>
+
+        {isManut &&
+        <button className="btn btn-secondary"
+        onClick={() => showListaGuasti()}>Vai alla lista guasti</button>
+        }
       </div>
   );
 };

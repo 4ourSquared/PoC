@@ -1,14 +1,16 @@
-import React, {useState} from "react";
-import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import React from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import EditForm from "../components/EditForm";
 import EditSensForm from "../components/EditSensForm";
 import NewLampPage from "../components/NewLampPage";
 import NewSensPage from "../components/NewSensPage";
 import LampsSingleView from "../components/LampSingleView";
+import LampGuastiPage from '../components/LampGuastiPage';
 import SensSingleView from "../components/SensSingleView";
 import LoginPage from "../components/LoginPage";
 import PageFullView from "../components/PageFullView";
 import GuardedRoute from "./GuardedRoute";
+import { isManutentore } from "../auth/LoginState";
 
 
 /*
@@ -31,8 +33,10 @@ const RouterComponent: React.FC = () => {
         <Route path="api/sensori/add" Component={NewSensPage} />
         <Route path="api/sensori/edit/:id" Component={EditSensForm} />
       </Route>
-
-        
+      
+      <Route element={<GuardedRoute condition={isManutentore()} redirectRoute="/"/>}>
+        <Route path="api/lampioni/guasti" Component={LampGuastiPage} />
+      </Route>
       </Routes>
     </Router>
   );

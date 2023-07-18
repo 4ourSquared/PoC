@@ -3,9 +3,7 @@
 */
 
 import { Router, Request, Response } from "express";
-import SensoreSchema from "../sensoreSchema";
-import sensoreSchema from "../sensoreSchema";
-import { Sensore } from "../models/sensore";
+import SensoreSchema from "../schemas/sensoreSchema";
 
 const sensRouter = Router();
 
@@ -71,7 +69,7 @@ sensRouter.post("/", async (req: Request, res: Response) => {
 
 async function generateIdSensori(): Promise<number> {
     try {
-        const maxId = await sensoreSchema
+        const maxId = await SensoreSchema
             .findOne()
             .sort({ id: -1 })
             .select("id")

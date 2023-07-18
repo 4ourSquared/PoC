@@ -9,7 +9,7 @@ const SensSingleView: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-  }); //Anche se il compilatore da warning, mantenere l'array vuoto per evitare loop infiniti, dato che
+  },[]); //Anche se il compilatore da warning, mantenere l'array vuoto per evitare loop infiniti, dato che
   //effettua la richiesta ad ogni render della pagina
 
   const fetchData = async () => {

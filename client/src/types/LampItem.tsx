@@ -8,6 +8,7 @@ interface LampItem {
   stato: string;
   lum: number;
   luogo: string;
+  guasto: boolean;
 }
 
 export default LampItem;

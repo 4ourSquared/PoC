@@ -10,6 +10,7 @@ const lampioneSchema = new mongoose.Schema({
     stato: String,
     lum: Number,
     luogo: String,
+    guasto: Boolean
 });
 
 export default mongoose.model("lampioni", lampioneSchema);

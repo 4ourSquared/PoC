@@ -1,7 +1,5 @@
 import express, { Request, Response } from "express";
-import { Lampione } from "./models/lampione";
 import lampioneRoutes from "./routes/lampioneRoutes";
-import { Sensore } from "./models/sensore";
 import sensoreRoutes from "./routes/sensoreRoutes";
 
 
@@ -46,10 +44,6 @@ db.once("open", () => {
   console.log("Connessione a MongoDB avvenuta con successo");
 });
 
-import LampioneModel from "./lampioneSchema";
-
-
-
 /*
 ------------------------------------------------------------------------------
                               CONFIGURAZIONE API
@@ -65,7 +59,7 @@ app.use("/api/sensori", sensoreRoutes);
 // Accesso alla pagina
 app.get("/", (req, res) => {
   console.log("Ricevuta richiesta GET su /");
-  res.status(200).send();
+  res.status(200).send("Porcodio");
 });
 
 // Porta di ascolto predefinita per il server

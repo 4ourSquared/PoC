@@ -15,6 +15,7 @@ const EditForm: React.FC = () => {
     stato: "",
     lum: 0,
     luogo: "",
+    guasto: false
   });
 
   useEffect(() => {

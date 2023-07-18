@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose from "mongoose";
 mongoose.pluralize(null);
 
 const sensoreSchema = new mongoose.Schema({

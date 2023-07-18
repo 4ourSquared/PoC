@@ -6,8 +6,6 @@ import * as Yup from "yup"; //Libreria per la validazione del form: si può usar
 
 /*
   CLASSE NEWLAMPFORM: classe che renderizza automaticamente la struttura HTML della pagina di aggiunta di un lampione, definendo anche il metodo per la trasmissione dei dati al server. Stile associato a Bootstrap.
-  ATTENZIONE: L'id univoco è stato implementato in questa versione, non compare
-  come valore iniziale dell'id ancora, bisogna rifarlo nel DB
 */
 
 const NewLampForm: React.FC = () => {

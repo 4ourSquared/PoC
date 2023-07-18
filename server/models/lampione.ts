@@ -7,18 +7,20 @@ export class Lampione {
   private stato: string;
   private lum: number;
   private luogo: string;
+  private isGuasto: boolean;
 
   // Costruttore
   public constructor(
     id: number = 0,
     stato: string,
     lum: number,
-    luogo: string
+    luogo: string,
   ) {
     this.id = id;
     this.stato = stato;
     this.lum = lum;
     this.luogo = luogo;
+    this.isGuasto = false;
   }
 
   // Interfaccia
@@ -34,6 +36,10 @@ export class Lampione {
   public getLuogo(): string {
     return this.luogo;
   }
+  public getGuasto(): boolean {
+    return this.isGuasto;
+  }
+
   public setStato(stato: string): void {
     this.stato = stato;
   }
@@ -42,5 +48,8 @@ export class Lampione {
   }
   public setLuogo(luogo: string): void {
     this.luogo = luogo;
+  }
+  public setGuasto(value: boolean) {
+    this.isGuasto = value;
   }
 }

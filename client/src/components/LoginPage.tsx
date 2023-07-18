@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import React from "react";
+import {useNavigate } from "react-router-dom";
 import UseLoginMechanism from "../auth/LoginMechanism";
 
 export default function LoginPage() {

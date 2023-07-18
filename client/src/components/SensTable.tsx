@@ -13,7 +13,7 @@ const SensTable: React.FC<SensTableProps> = () => {
 
   useEffect(() => {
     loadSensori();
-  });
+  },[]);
 
   const loadSensori = async () => {
     try {
