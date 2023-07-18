@@ -15,8 +15,8 @@ const areaSchema = new mongoose.Schema({
     descrizione: String,
     latitudine: String,
     longitudine: String,
-    lampioni: [{ type: Number, ref: "Lampione" }],
-    sensori: [{ type: Number, ref: "Sensore" }],
+    lampioni: [{ type: lampioneSchema.schema}],
+    sensori: [{ type: sensoreSchema.schema}],
 });
 
 export default mongoose.model("aree", areaSchema);
