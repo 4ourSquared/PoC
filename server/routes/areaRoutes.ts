@@ -13,7 +13,9 @@ const areaRouter = Router();
 
 areaRouter.get("/:idA/lampioni/:idL", async (req: Request, res: Response) => {
     console.log("Ricevuta richiesta per info lampione specifico");
-    const { idA, idL } = req.params;
+
+    const idA = req.params.idA;
+    const idL = req.params.idL;
     parseInt(idA, 10);
     parseInt(idL, 10);
     console.log(idA, idL);

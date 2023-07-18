@@ -3,9 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import LampItem from "../types/LampItem";
 
-const LampSingleView: React.FC = () => {
+interface LampSingleViewProps{
+  areaId: number;
+}
+
+const LampSingleView: React.FC<LampSingleViewProps> = ({areaId}) => {
   const [lamp, setLamp] = useState<LampItem | null>(null);
   const { id } = useParams<{ id: string }>(); // Accesso al parametro id passandolo a useParams()
+  
 
   useEffect(() => {
     fetchData();
@@ -13,9 +18,9 @@ const LampSingleView: React.FC = () => {
   //effettua la richiesta ad ogni render della pagina
 
   const fetchData = async () => {
-    axios.defaults.baseURL = "http://localhost:5000/api";
+    axios.defaults.baseURL = "http://localhost:5000/api/";
     try {
-      const response = await axios.get<LampItem>(`lampioni/${id}`);
+      const response = await axios.get<LampItem>(`aree/${areaId}/lampioni/${id}`);
       setLamp(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -38,7 +43,11 @@ const LampSingleView: React.FC = () => {
           </ul>
         </div>
       ) : (
+        <div>
         <p>Nessun dato disponibile</p>
+        <p>{areaId}</p>
+        <p>{lamp}</p>
+        </div>
       )}
       <Link to="/" type="button" className="btn btn-primary">
         Indietro

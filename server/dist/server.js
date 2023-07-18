@@ -4,8 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const lampioneRoutes_1 = __importDefault(require("./routes/lampioneRoutes"));
-const sensoreRoutes_1 = __importDefault(require("./routes/sensoreRoutes"));
 const areaRoutes_1 = __importDefault(require("./routes/areaRoutes"));
 /*
     SERVER: questo file al momento rappresenta il server in tutto e per tutto. Al suo interno si trovano tutti i metodi attualmente sviluppati per la gestione delle richieste in arrivo
@@ -45,10 +43,13 @@ db.once("open", () => {
                               CONFIGURAZIONE API
 ------------------------------------------------------------------------------
 */
+/*
 // Collegamento alle route per i lampioni
-app.use("/api/lampioni", lampioneRoutes_1.default);
+app.use("/api/lampioni", lampioneRoutes);
+
 // Collegamento alla route per i sensori
-app.use("/api/sensori", sensoreRoutes_1.default);
+app.use("/api/sensori", sensoreRoutes);
+*/
 // Collegamento alla route per i sensori
 app.use("/api/aree", areaRoutes_1.default);
 // Accesso alla pagina

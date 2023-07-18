@@ -24,6 +24,12 @@ const NewLampPageWrapper: React.FC = () => {
   return <NewLampPage areaId={areaIdNumber} />;
 };
 
+const LampSingleViewWrapper: React.FC = () =>{
+  const {areaId} = useParams();
+  const areaIdNumber = areaId? parseInt(areaId) : 0;
+  return <LampSingleView areaId={areaIdNumber} />;
+}
+
 const RouterComponent: React.FC = () => {
   return (
     <Router>
@@ -34,7 +40,7 @@ const RouterComponent: React.FC = () => {
           <Route path="api/aree/add" element={<NewAreaPage />} />
           <Route path="api/aree/edit/:areaId" element={<EditAreaForm />} />
           <Route path="api/aree/:areaId" element={<AreaSingleView />} />
-          <Route path="api/aree/:areaId/lampioni/:lampioneId" element={<LampSingleView />} />
+          <Route path="api/aree/:areaId/lampioni/:lampioneId" element={<LampSingleViewWrapper />} />
           <Route path="api/aree/:areaId/lampioni/edit/:lampioneId" element={<EditLampForm />} />
           <Route path="api/aree/:areaId/lampioni/add" element={<NewLampPageWrapper />} />
           <Route path="api/aree/:areaId/sensori/:sensoreId" element={<SensSingleView />} />

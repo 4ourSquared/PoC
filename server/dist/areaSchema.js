@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const lampioneSchema_1 = __importDefault(require("./lampioneSchema"));
+const sensoreSchema_1 = __importDefault(require("./sensoreSchema"));
 mongoose_1.default.pluralize(null);
 const areaSchema = new mongoose_1.default.Schema({
     id: {
@@ -15,7 +17,7 @@ const areaSchema = new mongoose_1.default.Schema({
     descrizione: String,
     latitudine: String,
     longitudine: String,
-    lampioni: [{ type: Number, ref: "Lampione" }],
-    sensori: [{ type: Number, ref: "Sensore" }],
+    lampioni: [{ type: lampioneSchema_1.default.schema }],
+    sensori: [{ type: sensoreSchema_1.default.schema }],
 });
 exports.default = mongoose_1.default.model("aree", areaSchema);

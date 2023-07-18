@@ -8,12 +8,14 @@ mongoose_1.default.pluralize(null);
 const lampioneSchema = new mongoose_1.default.Schema({
     id: {
         type: Number,
-        unique: true,
         required: true,
     },
     stato: String,
     lum: Number,
     luogo: String,
-    area: Number,
+    area: {
+        type: Number,
+        required: true,
+    }
 });
 exports.default = mongoose_1.default.model("lampioni", lampioneSchema);
