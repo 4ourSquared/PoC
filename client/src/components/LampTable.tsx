@@ -54,7 +54,7 @@ const LampTable: React.FC<LampTableProps> = ({ lampioni, onLampioneDeleted, area
               <td>
                 <button
                   className="btn btn-outline-primary"
-                  onClick={() => navigate(`/api/lampioni/${lampione.id}`)}
+                  onClick={() => navigate(`/api/aree/${areaId}/lampioni/${lampione.id}`)}
                 >
                   Info
                 </button>
