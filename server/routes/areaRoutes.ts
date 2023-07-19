@@ -362,6 +362,37 @@ areaRouter.put(
     }
 );
 
+areaRouter.delete(
+    "/:idA/sensori/:idS",
+    async (req: Request, res: Response) => {
+        const { idA, idS } = req.params;
+        parseInt(idA, 10);
+        parseInt(idS, 10);
+
+        try {
+            const area = await AreaSchema.findOne({ id: idA });
+
+            if (!area) {
+                res.status(404).send(
+                    "Errore nel recupero dell'area illuminata"
+                );
+                return;
+            } else {
+                area.sensori = area.sensori.filter(
+                    (sens: ISensoreSchema) => sens.id !== parseInt(idS)
+                );
+                await area.save();
+
+                res.status(200).send("Sensore eliminato con successo");
+            }
+        } catch (error) {
+            console.error("Errore durante l'eliminazione del sensore:", error);
+            res.status(500).send("Errore durante l'eliminazione del sensore");
+        }
+    }
+);
+
+
 /*
  * ------------------------------------------------------------------------------------------*
  *                                                                                           *
