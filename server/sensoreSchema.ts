@@ -5,6 +5,7 @@ export interface ISensoreSchema extends Document{
     id: number;
     iter: string;
     IP: string;
+    luogo: string;
     raggio: number;
     area: number;
 }
