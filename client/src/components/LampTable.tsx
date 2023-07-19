@@ -79,10 +79,11 @@ const LampTable: React.FC<LampTableProps> = ({
                             <td>
                                 <button
                                     className="btn btn-outline-warning"
-                                    onClick={() =>
+                                    onClick={() =>{
                                         navigate(
                                             `/api/lampioni/edit/${lampione.id}`
                                         )
+                                    }
                                     }
                                 >
                                     Modifica

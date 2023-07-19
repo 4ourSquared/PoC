@@ -5,9 +5,10 @@ import LampItem from "../types/LampItem";
 
 interface LampSingleViewProps{
   areaId: number;
+  lampioneId: number;
 }
 
-const LampSingleView: React.FC<LampSingleViewProps> = ({areaId}) => {
+const LampSingleView: React.FC<LampSingleViewProps> = ({areaId, lampioneId}) => {
   const [lamp, setLamp] = useState<LampItem | null>(null);
   const { id } = useParams<{ id: string }>(); // Accesso al parametro id passandolo a useParams()
   
@@ -20,7 +21,7 @@ const LampSingleView: React.FC<LampSingleViewProps> = ({areaId}) => {
   const fetchData = async () => {
     axios.defaults.baseURL = "http://localhost:5000/api/";
     try {
-      const response = await axios.get<LampItem>(`aree/${areaId}/lampioni/${id}`);
+      const response = await axios.get<LampItem>(`aree/${areaId}/lampioni/${lampioneId}`);
       setLamp(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);

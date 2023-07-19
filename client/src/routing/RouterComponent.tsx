@@ -24,11 +24,13 @@ const NewLampPageWrapper: React.FC = () => {
   return <NewLampPage areaId={areaIdNumber} />;
 };
 
-const LampSingleViewWrapper: React.FC = () =>{
-  const {areaId} = useParams();
-  const areaIdNumber = areaId? parseInt(areaId) : 0;
-  return <LampSingleView areaId={areaIdNumber} />;
-}
+const LampSingleViewWrapper: React.FC = () => {
+  const { areaId, lampioneId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0;
+  const lampioneIdNumber = lampioneId ? parseInt(lampioneId) : 0;
+  return <LampSingleView areaId={areaIdNumber} lampioneId={lampioneIdNumber} />;
+};
+
 
 const RouterComponent: React.FC = () => {
   return (

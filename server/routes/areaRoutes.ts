@@ -12,23 +12,19 @@ import areaSchema from "../areaSchema";
 const areaRouter = Router();
 
 areaRouter.get("/:idA/lampioni/:idL", async (req: Request, res: Response) => {
-    console.log("Ricevuta richiesta per info lampione specifico");
 
     const idA = req.params.idA;
     const idL = req.params.idL;
     parseInt(idA, 10);
     parseInt(idL, 10);
-    console.log(idA, idL);
 
     try {
         const area = await AreaSchema.findOne({ id: idA });
         if (area) {
-            console.log("Area trovata: ", idA);
             const lampione = area.lampioni.find(
                 (lamp: any) => lamp.id === parseInt(idL)
             );
             if (lampione) {
-                console.log("Lampione trovato: ", idL);
                 res.status(200).json(lampione);
             } else {
                 res.status(404).json({ error: "Lampione non trovato" });
