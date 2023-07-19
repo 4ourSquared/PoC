@@ -152,6 +152,37 @@ areaRouter.put(
     }
 );
 
+// RICHIESTA ELIMINAZIONE LAMPIONE
+areaRouter.delete(
+    "/:idA/lampioni/:idL",
+    async (req: Request, res: Response) => {
+        const { idA, idL } = req.params;
+        parseInt(idA, 10);
+        parseInt(idL, 10);
+
+        try {
+            const area = await AreaSchema.findOne({ id: idA });
+
+            if (!area) {
+                res.status(404).send(
+                    "Errore nel recupero dell'area illuminata"
+                );
+                return;
+            } else {
+                area.lampioni = area.lampioni.filter(
+                    (lamp: ILampioneSchema) => lamp.id !== parseInt(idL)
+                );
+                await area.save();
+
+                res.status(200).send("Lampione eliminato con successo");
+            }
+        } catch (error) {
+            console.error("Errore durante l'eliminazione del lampione:", error);
+            res.status(500).send("Errore durante l'eliminazione del lampione");
+        }
+    }
+);
+
 // GENERAZIONE ID INCREMENTALE PER LAMPIONI
 async function generateLampId(areaId: number): Promise<number> {
     try {
