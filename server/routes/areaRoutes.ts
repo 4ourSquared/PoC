@@ -7,7 +7,8 @@ import AreaSchema from "../areaSchema";
 import { Area } from "../models/area";
 import lampioneSchema from "../lampioneSchema";
 import { Lampione } from "../models/lampione";
-import areaSchema from "../areaSchema";
+import sensoreSchema from "../sensoreSchema";
+import { Sensore } from "../models/sensore";
 
 const areaRouter = Router();
 
@@ -35,6 +36,33 @@ areaRouter.get("/:idA/lampioni/:idL", async (req: Request, res: Response) => {
     } catch (error) {
         console.error("Errore durante il recupero del lampione:", error);
         res.status(500).send("Errore durante il recupero del lampione");
+    }
+});
+
+areaRouter.get("/:idA/sensori/:idS", async (req: Request, res: Response) => {
+
+    const idA = req.params.idA;
+    const idS = req.params.idS;
+    parseInt(idA, 10);
+    parseInt(idS, 10);
+
+    try {
+        const area = await AreaSchema.findOne({ id: idA });
+        if (area) {
+            const sensore = area.sensori.find(
+                (lamp: any) => lamp.id === parseInt(idS)
+            );
+            if (sensore) {
+                res.status(200).json(sensore);
+            } else {
+                res.status(404).json({ error: "Sensore non trovato" });
+            }
+        } else {
+            res.status(404).json({ error: "Area non trovata" });
+        }
+    } catch (error) {
+        console.error("Errore durante il recupero del sensore:", error);
+        res.status(500).send("Errore durante il recupero del sensore");
     }
 });
 
@@ -264,7 +292,7 @@ areaRouter.post("/:id/lampioni", async (req: Request, res: Response) => {
 
 async function generateLampId(areaId: number): Promise<number> {
     try {
-        const area = await areaSchema.findOne({ id: areaId }).exec();
+        const area = await AreaSchema.findOne({ id: areaId }).exec();
 
         if (!area) {
             throw new Error(`Area con ID ${areaId} non trovata.`);
