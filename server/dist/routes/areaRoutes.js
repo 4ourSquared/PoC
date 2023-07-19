@@ -18,22 +18,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const areaSchema_1 = __importDefault(require("../areaSchema"));
 const lampioneSchema_1 = __importDefault(require("../lampioneSchema"));
-const areaSchema_2 = __importDefault(require("../areaSchema"));
+const sensoreSchema_1 = __importDefault(require("../sensoreSchema"));
 const areaRouter = (0, express_1.Router)();
 areaRouter.get("/:idA/lampioni/:idL", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("Ricevuta richiesta per info lampione specifico");
     const idA = req.params.idA;
     const idL = req.params.idL;
     parseInt(idA, 10);
     parseInt(idL, 10);
-    console.log(idA, idL);
     try {
         const area = yield areaSchema_1.default.findOne({ id: idA });
         if (area) {
-            console.log("Area trovata: ", idA);
             const lampione = area.lampioni.find((lamp) => lamp.id === parseInt(idL));
             if (lampione) {
-                console.log("Lampione trovato: ", idL);
                 res.status(200).json(lampione);
             }
             else {
@@ -47,6 +43,31 @@ areaRouter.get("/:idA/lampioni/:idL", (req, res) => __awaiter(void 0, void 0, vo
     catch (error) {
         console.error("Errore durante il recupero del lampione:", error);
         res.status(500).send("Errore durante il recupero del lampione");
+    }
+}));
+areaRouter.get("/:idA/sensori/:idS", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idA = req.params.idA;
+    const idS = req.params.idS;
+    parseInt(idA, 10);
+    parseInt(idS, 10);
+    try {
+        const area = yield areaSchema_1.default.findOne({ id: idA });
+        if (area) {
+            const sensore = area.sensori.find((lamp) => lamp.id === parseInt(idS));
+            if (sensore) {
+                res.status(200).json(sensore);
+            }
+            else {
+                res.status(404).json({ error: "Sensore non trovato" });
+            }
+        }
+        else {
+            res.status(404).json({ error: "Area non trovata" });
+        }
+    }
+    catch (error) {
+        console.error("Errore durante il recupero del sensore:", error);
+        res.status(500).send("Errore durante il recupero del sensore");
     }
 }));
 areaRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -224,7 +245,7 @@ areaRouter.post("/:id/lampioni", (req, res) => __awaiter(void 0, void 0, void 0,
 function generateLampId(areaId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const area = yield areaSchema_2.default.findOne({ id: areaId }).exec();
+            const area = yield areaSchema_1.default.findOne({ id: areaId }).exec();
             if (!area) {
                 throw new Error(`Area con ID ${areaId} non trovata.`);
             }
@@ -233,6 +254,54 @@ function generateLampId(areaId) {
         }
         catch (error) {
             console.error("Errore durante la generazione dell'ID del lampione:", error);
+            throw error;
+        }
+    });
+}
+areaRouter.post("/:id/sensori", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // Recupero ID area
+        const { id } = req.params;
+        // Recupero Area
+        const areaMod = yield areaSchema_1.default.findOne({ id: id });
+        if (!areaMod) {
+            res.status(400).json({ error: "Errore nel recupero dell'area" });
+        }
+        else {
+            // Recupero nuovo sensore dalla richiesta
+            const { iter, IP, luogo, raggio, area } = req.body;
+            const id = yield generateSensId(area);
+            const newSens = new sensoreSchema_1.default({
+                id,
+                area: parseInt(area, 10),
+                iter,
+                IP,
+                luogo,
+                raggio,
+            });
+            // Aggiunta del sensore all'array dell'area
+            areaMod.sensori.push(newSens.toObject());
+            const savedSensore = areaMod.save();
+            res.status(200).json(savedSensore);
+        }
+    }
+    catch (error) {
+        console.error("Errore durante il recupero delle aree illuminate dal database:", error);
+        res.status(500).send("Errore durante il recupero delle aree illuminate dal database");
+    }
+}));
+function generateSensId(areaId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const area = yield areaSchema_1.default.findOne({ id: areaId }).exec();
+            if (!area) {
+                throw new Error(`Area con ID ${areaId} non trovata.`);
+            }
+            const newSensId = area.sensori.length + 1;
+            return newSensId;
+        }
+        catch (error) {
+            console.error("Errore durante la generazione dell'ID del sensore:", error);
             throw error;
         }
     });

@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import SensItem from "../types/SensItem";
 
-const SensSingleView: React.FC = () => {
+interface LampSingleViewProps{
+  areaId: number;
+  sensoreId: number;
+}
+
+const SensSingleView: React.FC<LampSingleViewProps> = ({areaId, sensoreId}) => {
   const [sens, setSens] = useState<SensItem | null>(null);
   const { id } = useParams<{ id: string }>(); // Accesso al parametro id passandolo a useParams()
 
@@ -15,7 +20,7 @@ const SensSingleView: React.FC = () => {
   const fetchData = async () => {
     axios.defaults.baseURL = "http://localhost:5000/api";
     try {
-      const response = await axios.get<SensItem>(`sensori/${id}`);
+      const response = await axios.get<SensItem>(`aree/${areaId}/sensore/${sensoreId}`);
       setSens(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);

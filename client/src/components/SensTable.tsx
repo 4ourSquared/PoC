@@ -6,8 +6,13 @@ import SensItem from "../types/SensItem";
 interface SensTableProps {
   sensori: SensItem[];
   onSensoreDeleted: (id: number) => void; // Aggiunta di una nuova prop
+  areaId: number; // Aggiunta dell'ID dell'area come prop
 }
-const SensTable: React.FC<SensTableProps> = ({ sensori, onSensoreDeleted }) => {
+const SensTable: React.FC<SensTableProps> =  ({
+  sensori,
+  onSensoreDeleted,
+  areaId,
+}) => {
   const navigate = useNavigate();
 
   const deleteSensore = async (id: number) => {
@@ -24,9 +29,13 @@ const SensTable: React.FC<SensTableProps> = ({ sensori, onSensoreDeleted }) => {
     }
   };
 
+
   return (
       <div className="row justify-content-center">
-        <Link to="/api/sensori/add" type="button" className="btn btn-primary">
+        <Link
+          to={`/api/aree/${areaId}/sensori/add`}
+          type="button"
+          className="btn btn-primary">
           Aggiungi Sensore
         </Link>
         <table
@@ -56,7 +65,7 @@ const SensTable: React.FC<SensTableProps> = ({ sensori, onSensoreDeleted }) => {
                 <td>
                   <button
                     className="btn btn-outline-primary"
-                    onClick={() => navigate(`/api/sensori/${sensore.id}`)}
+                    onClick={() => navigate(`/api/aree/${areaId}/sensori/${sensore.id}`)}
                   >
                     Info
                   </button>

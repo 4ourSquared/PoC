@@ -9,13 +9,13 @@ import * as Yup from "yup"; //Libreria per la validazione del form: si può usar
   ATTENZIONE: L'id univoco è stato implementato in questa versione, non compare
   come valore iniziale dell'id ancora, bisogna rifarlo nel DB
 */
-const NewSensForm: React.FC = () => {
+const NewSensForm: React.FC<{ areaId: number }> = ({ areaId }) => {
   axios.defaults.baseURL = "http://localhost:5000/api"; //URL base, così una volta in produzione basta cambiare questo
   const navigate = useNavigate();
 
   return (
     <Formik
-      initialValues={{ id: 0, iter: "manuale", IP: "", luogo: "", raggio: 0, area: 0 }}
+      initialValues={{ id: 0, iter: "manuale", IP: "", luogo: "", raggio: 0, area: areaId }}
       validationSchema={Yup.object({
       IP: Yup.string()
         .matches(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/, "Deve essere un indirizzo IP valido")
@@ -29,7 +29,7 @@ const NewSensForm: React.FC = () => {
 
       onSubmit={(values, { setSubmitting }) => {
         console.log(values);
-        axios.post("/sensori", values); // Solito invio dei dati al server
+        axios.post(`/aree/${values.area.toString()}/sensori`, values); // Solito invio dei dati al server
         setSubmitting(false); //Serve a resettare la submit del form e riportarla False
         navigate("/");
       }}
@@ -96,7 +96,7 @@ const NewSensForm: React.FC = () => {
         </div>
         <div className="form-group">
           <label htmlFor="area">ID Area di Riferimento</label>
-          <Field name="area" type="text" className="form-control" />
+          <Field name="area" type="number" className="form-control"/>
         </div>
         <button type="submit" className="btn btn-primary">
           Crea
