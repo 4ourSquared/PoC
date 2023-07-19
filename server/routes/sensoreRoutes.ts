@@ -46,17 +46,19 @@ sensRouter.get("/:id", async (req: Request, res: Response) => {
 
 sensRouter.post("/", async (req: Request, res: Response) => {
     const { iter, IP, luogo, raggio, area } = req.body;
-    const id: number = await generateIdSensori();
-    const newSensore = new SensoreSchema({
-        id,
-        iter,
-        IP,
-        luogo,
-        raggio: parseInt(raggio, 10),
-        area: parseInt(area, 10),
-    });
 
     try {
+        const id: number = await generateIdSensori();
+        const newSensore = new SensoreSchema({
+            id,
+            iter,
+            IP,
+            luogo,
+            raggio: parseInt(raggio, 10),
+            area: parseInt(area, 10),
+        });
+
+        const savedSensore = await newSensore.save();
 
         try{
             const designedArea = await areaSchema.findOne({id: parseInt(area, 10)});
@@ -79,7 +81,7 @@ sensRouter.post("/", async (req: Request, res: Response) => {
                 "Errore durante il recupero dell'area illuminata dal database"
             );
         }
-        const savedSensore = await newSensore.save();
+        
         res.status(200).json(savedSensore);
     } catch (error) {
         console.error(

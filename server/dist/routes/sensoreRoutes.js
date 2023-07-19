@@ -47,16 +47,17 @@ sensRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function*
 }));
 sensRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { iter, IP, luogo, raggio, area } = req.body;
-    const id = yield generateIdSensori();
-    const newSensore = new sensoreSchema_1.default({
-        id,
-        iter,
-        IP,
-        luogo,
-        raggio: parseInt(raggio, 10),
-        area: parseInt(area, 10),
-    });
     try {
+        const id = yield generateIdSensori();
+        const newSensore = new sensoreSchema_1.default({
+            id,
+            iter,
+            IP,
+            luogo,
+            raggio: parseInt(raggio, 10),
+            area: parseInt(area, 10),
+        });
+        const savedSensore = yield newSensore.save();
         try {
             const designedArea = yield areaSchema_1.default.findOne({ id: parseInt(area, 10) });
             if (!designedArea) {
@@ -73,7 +74,6 @@ sensRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* (
             console.error("Errore durante il recupero dell'area illuminata dal database:", error);
             res.status(500).send("Errore durante il recupero dell'area illuminata dal database");
         }
-        const savedSensore = yield newSensore.save();
         res.status(200).json(savedSensore);
     }
     catch (error) {
