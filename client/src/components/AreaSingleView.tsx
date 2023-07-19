@@ -99,6 +99,7 @@ const AreaSingleView: React.FC = () => {
                     <div className="row">
                         <SensTable
                             sensori={area.sensori}
+                            areaId={area.id}
                             onSensoreDeleted={(id) => {
                                 setArea((currentArea) => {
                                     if (currentArea) {
