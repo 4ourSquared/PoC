@@ -1,7 +1,15 @@
 import mongoose, { Schema, Document } from "mongoose";
 mongoose.pluralize(null);
 
-const sensoreSchema = new mongoose.Schema({
+export interface ISensoreSchema extends Document{
+    id: number;
+    iter: string;
+    IP: string;
+    raggio: number;
+    area: number;
+}
+
+const sensoreSchema : Schema= new mongoose.Schema({
     id: {
         type: Number,
         required: true,

@@ -47,7 +47,7 @@ const SensSingleViewWrapper: React.FC = () => {
   const { areaId, sensoreId } = useParams();
   const areaIdNumber = areaId ? parseInt(areaId) : 0;
   const sensoreIdNumber = sensoreId ? parseInt(sensoreId) : 0;
-  return <LampSingleView areaId={areaIdNumber} lampioneId={sensoreIdNumber} />;
+  return <SensSingleView areaId={areaIdNumber} sensoreId={sensoreIdNumber} />;
 };
 
 
