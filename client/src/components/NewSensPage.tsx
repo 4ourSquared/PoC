@@ -12,7 +12,7 @@ export default class NewSensPage extends Component<{ areaId: number }> {
     return (
       <>
         <Header />
-        <NewSensForm />
+        <NewSensForm areaId={areaId} />
         <Footer />
       </>
     );
