@@ -29,7 +29,7 @@ const NewSensForm: React.FC = () => {
 
       onSubmit={(values, { setSubmitting }) => {
         console.log(values);
-        axios.post("/sensori", values); // Solito invio dei dati al server
+        axios.post(`/aree/${values.area.toString()}/sensori`, values); // Solito invio dei dati al server
         setSubmitting(false); //Serve a resettare la submit del form e riportarla False
         navigate("/");
       }}
@@ -96,7 +96,7 @@ const NewSensForm: React.FC = () => {
         </div>
         <div className="form-group">
           <label htmlFor="area">ID Area di Riferimento</label>
-          <Field name="area" type="text" className="form-control" />
+          <Field name="area" type="number" className="form-control" readOnly/>
         </div>
         <button type="submit" className="btn btn-primary">
           Crea
