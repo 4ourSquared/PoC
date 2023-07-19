@@ -310,4 +310,66 @@ async function generateLampId(areaId: number): Promise<number> {
     }
 }
 
+
+areaRouter.post("/:id/sensori", async (req: Request, res: Response) => {
+    try {
+        // Recupero ID area
+        const { id } = req.params;
+
+        // Recupero Area
+        const areaMod = await AreaSchema.findOne({ id: id });
+
+        if (!areaMod) {
+            res.status(400).json({ error: "Errore nel recupero dell'area" });
+        } else {
+            // Recupero nuovo sensore dalla richiesta
+            const { iter, IP, luogo, raggio, area } = req.body;
+            const id = await generateSensId(area);
+            const newSens = new sensoreSchema({
+                id,
+                area: parseInt(area, 10),
+                iter,
+                IP,
+                luogo,
+                raggio,
+            });
+
+            // Aggiunta del sensore all'array dell'area
+            areaMod.sensori.push(newSens.toObject());
+            const savedSensore = areaMod.save();
+            res.status(200).json(savedSensore);
+        }
+    } catch (error) {
+        console.error(
+            "Errore durante il recupero delle aree illuminate dal database:",
+            error
+        );
+        res.status(500).send(
+            "Errore durante il recupero delle aree illuminate dal database"
+        );
+    }
+});
+
+
+async function generateSensId(areaId: number): Promise<number> {
+    try {
+        const area = await AreaSchema.findOne({ id: areaId }).exec();
+
+        if (!area) {
+            throw new Error(`Area con ID ${areaId} non trovata.`);
+        }
+
+        const newSensId = area.sensori.length + 1;
+
+        return newSensId;
+    } catch (error) {
+        console.error(
+            "Errore durante la generazione dell'ID del sensore:",
+            error
+        );
+        throw error;
+    }
+}
+
+
 export default areaRouter;
