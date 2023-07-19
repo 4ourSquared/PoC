@@ -37,6 +37,7 @@ const EditLampFormWrapper: React.FC = () =>{
   const lampioneIdNumber = lampioneId ? parseInt(lampioneId) : 0;
   return <EditLampForm areaId={areaIdNumber} lampioneId={lampioneIdNumber} />;
 }
+
 const NewSensPageWrapper: React.FC = () => {
   const { areaId } = useParams();
   const areaIdNumber = areaId ? parseInt(areaId) : 0; // converti in numero, usa 0 se undefined
@@ -49,6 +50,13 @@ const SensSingleViewWrapper: React.FC = () => {
   const sensoreIdNumber = sensoreId ? parseInt(sensoreId) : 0;
   return <SensSingleView areaId={areaIdNumber} sensoreId={sensoreIdNumber} />;
 };
+
+const EditSensFormWrapper: React.FC = () =>{
+  const { areaId, sensoreId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0;
+  const sensIdNumber = sensoreId ? parseInt(sensoreId) : 0;
+  return <EditSensForm areaId={areaIdNumber} sensoreId={sensIdNumber} />;
+}
 
 
 const RouterComponent: React.FC = () => {
@@ -65,7 +73,7 @@ const RouterComponent: React.FC = () => {
           <Route path="api/aree/:areaId/lampioni/edit/:lampioneId" element={<EditLampFormWrapper />} />
           <Route path="api/aree/:areaId/lampioni/add" element={<NewLampPageWrapper />} />
           <Route path="api/aree/:areaId/sensori/:sensoreId" element={<SensSingleViewWrapper />} />
-          <Route path="api/aree/:areaId/sensori/edit/:sensoreId" element={<EditSensForm />} />
+          <Route path="api/aree/:areaId/sensori/edit/:sensoreId" element={<EditSensFormWrapper />} />
           <Route path="api/aree/:areaId/sensori/add" element={<NewSensPageWrapper />} />
           <Route path="" element={<PageFullView />} />
         </Route>

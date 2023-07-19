@@ -20,7 +20,7 @@ const SensSingleView: React.FC<SensSingleViewProps> = ({areaId, sensoreId}) => {
   const fetchData = async () => {
     axios.defaults.baseURL = "http://localhost:5000/api";
     try {
-      const response = await axios.get<SensItem>(`aree/${areaId}/sensori/${sensoreId}`);
+      const response = await axios.get<SensItem>(`/aree/${areaId}/sensori/${sensoreId}`);
       setSens(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);

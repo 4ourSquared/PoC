@@ -5,7 +5,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import SensItem from "../types/SensItem";
 
-const EditSensForm: React.FC = () => {
+interface EditSensFormProps{
+  areaId: number;
+  sensoreId: number;
+}
+
+const EditSensForm: React.FC<EditSensFormProps> = ({areaId, sensoreId}) => {
   axios.defaults.baseURL = "http://localhost:5000/api";
   const navigate = useNavigate();
   const { id: paramId } = useParams<{ id: string }>();
@@ -20,16 +25,16 @@ const EditSensForm: React.FC = () => {
   });
 
   useEffect(() => {
-    if (sens.id !== 0) {
+    if (sensoreId !== 0) {
       axios
-        .get<SensItem>(`/sensori/${sens.id}`)
+        .get<SensItem>(`/aree/${areaId}/sensori/${sensoreId}`)
         .then((response) => {
           setSens(response.data);
           setIsLoading(false);
         })
         .catch((err) => console.log(err));
     }
-  }, [sens.id]);
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -56,7 +61,7 @@ const EditSensForm: React.FC = () => {
           .trim(),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        const url = `/sensori/edit/${sens.id}`;
+        const url = `aree/${areaId}/sensori/edit/${sensoreId}`;
         axios
           .put(url, values)
           .then(() => {

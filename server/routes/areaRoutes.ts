@@ -239,7 +239,7 @@ areaRouter.get("/:idA/sensori/:idS", async (req: Request, res: Response) => {
         const area = await AreaSchema.findOne({ id: idA });
         if (area) {
             const sensore = area.sensori.find(
-                (lamp: any) => lamp.id === parseInt(idS)
+                (sens: any) => sens.id === parseInt(idS)
             );
             if (sensore) {
                 res.status(200).json(sensore);
@@ -347,17 +347,17 @@ areaRouter.put(
                     }
                     await area.save();
                     res.status(200).send(
-                        `Lampione con id = ${idS} modificato con successo`
+                        `Sensore con id = ${idS} modificato con successo`
                     );
                 } else {
                     res.status(404).send(
-                        `Lampione con id = ${idS} non trovato`
+                        `Sensore con id = ${idS} non trovato`
                     );
                 }
             }
         } catch (error) {
-            console.error("Errore durante la modifica del lampione:", error);
-            res.status(500).send("Errore durante la modifica del lampione");
+            console.error("Errore durante la modifica del sensore:", error);
+            res.status(500).send("Errore durante la modifica del sensore");
         }
     }
 );
