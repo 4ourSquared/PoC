@@ -80,13 +80,14 @@ export const AreaTable: React.FC = () => {
                                     </button>
                                 </td>
                                 <td>
-                                    <Link
-                                        to={`/api/aree/edit/${area.id}`}
-                                        type="button"
+                                <button
                                         className="btn btn-outline-warning"
+                                        onClick={() =>
+                                            navigate(`/api/aree/edit/${area.id}`)
+                                        }
                                     >
                                         Modifica
-                                    </Link>
+                                    </button>
                                 </td>
                                 <td>
                                     <button

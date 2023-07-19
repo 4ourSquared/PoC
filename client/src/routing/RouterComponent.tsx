@@ -58,6 +58,12 @@ const EditSensFormWrapper: React.FC = () =>{
   return <EditSensForm areaId={areaIdNumber} sensoreId={sensIdNumber} />;
 }
 
+const EditAreaFormWrapper : React.FC = () =>{
+  const { areaId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0;
+  return <EditAreaForm areaId={areaIdNumber}/>
+}
+
 
 const RouterComponent: React.FC = () => {
   return (
@@ -67,7 +73,7 @@ const RouterComponent: React.FC = () => {
 
         <Route element={<GuardedRoute redirectRoute="/login" />}>
           <Route path="api/aree/add" element={<NewAreaPage />} />
-          <Route path="api/aree/edit/:areaId" element={<EditAreaForm />} />
+          <Route path="api/aree/edit/:areaId" element={<EditAreaFormWrapper />} />
           <Route path="api/aree/:areaId" element={<AreaSingleView />} />
           <Route path="api/aree/:areaId/lampioni/:lampioneId" element={<LampSingleViewWrapper />} />
           <Route path="api/aree/:areaId/lampioni/edit/:lampioneId" element={<EditLampFormWrapper />} />

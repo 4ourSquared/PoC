@@ -7,7 +7,11 @@ import AreaItem from "../types/AreaItem";
 import Sensore from "../types/SensItem";
 import Lampione from "../types/LampItem";
 
-const EditAreaForm: React.FC = () => {
+interface EditAreaFormProps{
+  areaId: number;
+}
+
+const EditAreaForm: React.FC<EditAreaFormProps> = ({areaId}) => {
   axios.defaults.baseURL = "http://localhost:5000/api";
   const navigate = useNavigate();
   const { id: paramId } = useParams<{ id: string }>();
@@ -26,12 +30,12 @@ const EditAreaForm: React.FC = () => {
   const [availableLampioni, setAvailableLampioni] = useState<Lampione[]>([]);
 
   useEffect(() => {
-    axios.get('/sensori').then(response => setAvailableSensori(response.data));
-    axios.get('/lampioni').then(response => setAvailableLampioni(response.data));
+    axios.get(`aree/${areaId}/sensori`).then(response => setAvailableSensori(response.data));
+    axios.get(`aree/${areaId}/lampioni`).then(response => setAvailableLampioni(response.data));
 
     if (area.id !== 0) {
       axios
-        .get<AreaItem>(`/aree/${area.id}`)
+        .get<AreaItem>(`/aree/${areaId}`)
         .then((response) => {
           setArea(response.data);
           setIsLoading(false);
