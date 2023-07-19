@@ -109,7 +109,7 @@ areaRouter.post("/:id/lampioni", async (req: Request, res: Response) => {
 
 // RICHIESTA MODIFICA LAMPIONE
 areaRouter.put(
-    "/:idA/lampioni/:idL/edit",
+    "/:idA/lampioni/edit/:idL",
     async (req: Request, res: Response) => {
         const idA = req.params.idA;
         const idL = req.params.idL;

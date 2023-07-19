@@ -81,7 +81,7 @@ const LampTable: React.FC<LampTableProps> = ({
                                     className="btn btn-outline-warning"
                                     onClick={() =>{
                                         navigate(
-                                            `/api/lampioni/edit/${lampione.id}`
+                                            `/api/aree/${areaId}/lampioni/edit/${lampione.id}`
                                         )
                                     }
                                     }

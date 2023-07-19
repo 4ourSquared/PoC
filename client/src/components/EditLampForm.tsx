@@ -5,7 +5,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import LampItem from "../types/LampItem";
 
-const EditLampForm: React.FC = () => {
+interface EditLampFormProps{
+  areaId: number;
+  lampioneId: number;
+}
+
+const EditLampForm: React.FC<EditLampFormProps> = ({areaId, lampioneId}) => {
   axios.defaults.baseURL = "http://localhost:5000/api";
   const navigate = useNavigate();
   const { id: paramId } = useParams<{ id: string }>();
@@ -19,16 +24,16 @@ const EditLampForm: React.FC = () => {
   });
 
   useEffect(() => {
-    if (lampioneData.id !== 0) {
+    if (lampioneId !== 0) {
       axios
-        .get<LampItem>(`/lampioni/${lampioneData.id}`)
+        .get<LampItem>(`/aree/${areaId}/lampioni/${lampioneId}`)
         .then((response) => {
           setLampioneData(response.data);
           setIsLoading(false);
         })
         .catch((err) => console.log(err));
     }
-  }, [lampioneData.id]); //Dipendenze vuote significa che viene eseguito solo al montaggio
+  }, []); //Dipendenze vuote significa che viene eseguito solo al montaggio
 
   if (isLoading) {
     return <div>Loading...</div>; // Banner per ingannare l'attesa del caricamento
@@ -50,7 +55,7 @@ const EditLampForm: React.FC = () => {
           .trim(),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        const url = `/lampioni/edit/${lampioneData.id}`;
+        const url = `aree/${areaId}/lampioni/edit/${lampioneId}`;
         axios
           .put(url, values)
           .then(() => {
