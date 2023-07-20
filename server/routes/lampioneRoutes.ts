@@ -165,6 +165,38 @@ lampRouter.put("/guasti/add/:id", async (req: Request, res: Response) => {
     }
 });
 
+lampRouter.put("/guasti/remove/:id", async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id); // ID del lampione da aggiornare
+
+    try {
+        const lampToUpdate = await LampioneSchema.findOne({ id: id });
+
+        console.log(
+            `Ricevuta richiesta PUT su /api/lampioni/setguasto -> ID: ${id}`
+        );
+        console.log("Richiesta rimozione da lista guasti di un lampione esistente");
+
+        if (!lampToUpdate) {
+            res.status(404).send(`Lampione con id = ${id} non trovato!`);
+            return;
+        }
+
+        if(lampToUpdate.guasto)
+            lampToUpdate.guasto = false;
+        else {
+            res.status(409).send(`Lampione con id = ${id} non era presente nella lista guasti!`);
+            return;
+        }
+
+        await lampToUpdate.save();
+
+        res.status(200).send(`Lampione con id = ${id} rimosso dalla lista guasti con successo`);
+    } catch (error) {
+        console.error("Errore durante l'aggiornamento del lampione:", error);
+        res.status(500).send("Errore durante l'aggiornamento del lampione");
+    }
+});
+
 // Richiesta per eliminare un lampione dal sistema
 lampRouter.delete("/:id", async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);

@@ -24,6 +24,16 @@ export default function LampGuastiTable() {
         }
     };
     
+    const removeLampione = async (id:Number) => {
+      try {
+        await axios.put<LampItem[]>(
+          `http://localhost:5000/api/lampioni/guasti/remove/${id}`
+        );
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+  };
+
     return (
       <table
       className="table table-hover align-middle"
@@ -47,7 +57,15 @@ export default function LampGuastiTable() {
               >
                 Info
               </button>
-          </td>
+            </td>
+            <td>
+              <button
+                className="btn btn-dark"
+                onClick={() => removeLampione(lampione.id)}
+              >
+                Marca come riparato
+              </button>
+            </td>
           </tr>
         ))}
       </tbody>
