@@ -25,7 +25,6 @@ const LampTable: React.FC<LampTableProps> = () => {
         "http://localhost:5000/api/lampioni"
       );
       setLampioni(response.data);
-      console.error("porcodio")
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -121,10 +120,10 @@ const LampTable: React.FC<LampTableProps> = () => {
                   {lampione.guasto 
                     ?
                     <>
-                      <span style={{cursor:"default"}} data-tooltip-id="x" data-tooltip-content="Già marcato come guasto">
+                      <span style={{cursor:"default"}} data-tooltip-id={`x${lampione.id}`} data-tooltip-content="Già marcato come guasto">
                         {'\u274c'}
                       </span>
-                      <Tooltip id="x" />
+                      <Tooltip id={`x${lampione.id}`} />
                     </>
                     :
                     <button className="btn btn-dark"

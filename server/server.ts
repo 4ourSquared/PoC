@@ -59,7 +59,7 @@ app.use("/api/sensori", sensoreRoutes);
 // Accesso alla pagina
 app.get("/", (req, res) => {
   console.log("Ricevuta richiesta GET su /");
-  res.status(200).send("Porcodio");
+  res.status(200);
 });
 
 // Porta di ascolto predefinita per il server
