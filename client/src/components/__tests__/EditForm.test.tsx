@@ -1,8 +1,17 @@
-import { render, screen } from "@testing-library/react";
-//import EditForm from "../EditForm";
-/*
-test("apre la pagina dedicata alla modifica del singolo lampione", () => {
-  render(<EditForm />);
-  const id = screen.getByText(/Modifica il lampione id: /i);
+import { fireEvent, render, screen } from "@testing-library/react";
+import React from "react";
+import EditForm from "../EditForm";
+
+describe("EditForm", () => {
+  it("should render correctly", () => {
+    const { container } = render(<EditForm />);
+    expect(container).toMatchSnapshot();
+  });
+  it("should submit correctly", () => {
+    const luogoInput = screen.getByLabelText("Luogo di Installazione");
+    const submitButton = screen.getByText("Crea");
+    fireEvent.change(luogoInput, { target: { value: "Test" } });
+    fireEvent.click(submitButton);
+    // Check that the form was submitted correctly
+  });
 });
-*/
