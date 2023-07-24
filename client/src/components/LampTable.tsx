@@ -2,6 +2,8 @@ import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LampItem from "../types/LampItem";
+import { isAmministratore, isManutentore } from "../auth/LoginState";
+import { Tooltip } from "react-tooltip";
 
 interface LampTableProps {
     lampioni: LampItem[];
@@ -16,18 +18,40 @@ const LampTable: React.FC<LampTableProps> = ({
 }) => {
     const navigate = useNavigate();
 
+    // TODO - Capire come risolvere
+    const [isAdmin] = useState(isAmministratore());
+    const [isManut] = useState(isManutentore());
+
     const deleteLampione = async (id: number) => {
         const confirmed = window.confirm(
             "Sei sicuro di voler eliminare il lampione?"
         );
         try {
             if (confirmed) {
-                await axios.delete(`http://localhost:5000/api/aree/${areaId}/lampioni/${id}`);
+                await axios.delete(
+                    `http://localhost:5000/api/aree/${areaId}/lampioni/${id}`
+                );
                 onLampioneDeleted(id); // Chiamata alla funzione di callback
             }
         } catch (error) {
             console.error("Errore nella cancellazione del lampione: ", error);
         }
+    };
+
+    const markGuasto = async (id: number) => {
+        try {
+            const response = await axios.put(
+                `http://localhost:5000/api/lampioni/guasti/add/${id}`
+            );
+            const confirmed = window.confirm(response.data);
+        } catch (error: any) {
+            window.confirm(error.response.data);
+            console.error("Errore nell'aggiunta guasto:", error);
+        }
+    };
+
+    const showListaGuasti = async () => {
+        navigate(`/api/lampioni/guasti`);
     };
 
     return (
@@ -52,6 +76,7 @@ const LampTable: React.FC<LampTableProps> = ({
                         <th scope="col">Info</th>
                         <th scope="col">Modifica</th>
                         <th scope="col">Elimina</th>
+                        {isAdmin && <th scope="col">Guasto</th>}
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -66,12 +91,11 @@ const LampTable: React.FC<LampTableProps> = ({
                             <td>
                                 <button
                                     className="btn btn-outline-primary"
-                                    onClick={() =>{
+                                    onClick={() => {
                                         navigate(
                                             `/api/aree/${areaId}/lampioni/${lampione.id}`
-                                        )
-                                    }
-                                    }
+                                        );
+                                    }}
                                 >
                                     Info
                                 </button>
@@ -79,12 +103,11 @@ const LampTable: React.FC<LampTableProps> = ({
                             <td>
                                 <button
                                     className="btn btn-outline-warning"
-                                    onClick={() =>{
+                                    onClick={() => {
                                         navigate(
                                             `/api/aree/${areaId}/lampioni/edit/${lampione.id}`
-                                        )
-                                    }
-                                    }
+                                        );
+                                    }}
                                 >
                                     Modifica
                                 </button>
@@ -97,10 +120,43 @@ const LampTable: React.FC<LampTableProps> = ({
                                     Elimina
                                 </button>
                             </td>
+                            {isAdmin && (
+                                <td>
+                                    {lampione.guasto ? (
+                                        <>
+                                            <span
+                                                style={{ cursor: "default" }}
+                                                data-tooltip-id={`x${lampione.id}`}
+                                                data-tooltip-content="Già marcato come guasto"
+                                            >
+                                                {"\u274c"}
+                                            </span>
+                                            <Tooltip id={`x${lampione.id}`} />
+                                        </>
+                                    ) : (
+                                        <button
+                                            className="btn btn-dark"
+                                            onClick={() =>
+                                                markGuasto(lampione.id)
+                                            }
+                                        >
+                                            Segnala guasto
+                                        </button>
+                                    )}
+                                </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>
             </table>
+            {isManut && (
+                <button
+                    className="btn btn-secondary"
+                    onClick={() => showListaGuasti()}
+                >
+                    Vai alla lista guasti
+                </button>
+            )}
         </div>
     );
 };

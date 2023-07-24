@@ -21,6 +21,7 @@ const EditLampForm: React.FC<EditLampFormProps> = ({areaId, lampioneId}) => {
     lum: 0,
     luogo: "",
     area: 0,
+    guasto: false
   });
 
   useEffect(() => {
