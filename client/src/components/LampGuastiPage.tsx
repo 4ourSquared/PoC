@@ -1,17 +1,18 @@
 import React, { Component } from "react";
-import Header from "./Header";
 import Footer from "./Footer";
+import Header from "./Header";
 import LampGuastiTable from "./LampGuastiTable";
 
-export default class LampGuastiPage extends Component {
-    render() {
-        return (
-            <>
-                <Header />
-                <h2>Lista degli impianti luminosi guasti</h2>
-                <LampGuastiTable />
-                <Footer />
-            </>
-        );
-    }
+export default class LampGuastiPage extends Component<{ areaId: number }> {
+  render() {
+    const { areaId } = this.props;
+    return (
+      <>
+        <Header />
+        <h2>Lista degli impianti luminosi guasti</h2>
+        <LampGuastiTable areaId={areaId} />
+        <Footer />
+      </>
+    );
+  }
 }
