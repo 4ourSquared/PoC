@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  Navigate,
   Route,
   BrowserRouter as Router,
   Routes,
@@ -122,7 +121,7 @@ const RouterComponent: React.FC = () => {
           >
             <Route
               path="api/aree/:areaId/lampioni/guasti"
-              Component={<GuastiPageWrapper />}
+              element={<GuastiPageWrapper />} //TODO - Errore "Page not found"
             />
           </Route>
           <Route path="" element={<PageFullView />} />
