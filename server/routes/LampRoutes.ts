@@ -81,21 +81,39 @@ lampRouter.put("/:idA/lampioni/guasti/remove/:idL", async (req: Request, res: Re
     }
 })
 
-lampRouter.get("/:idA/lampioni/guasti/",  async (req: Request, res: Response) => {
-    try{
-        const lampioni = await LampioneSchema.find({guasto: true});
-        res.status(200).json(lampioni)
+lampRouter.get("/:idA/lampioni/guasti/",
+    async (req: Request, res: Response) => {
+        const idA = req.params.idA;
+        parseInt(idA, 10);
+
+        try {
+            const area = await AreaSchema.findOne({ id: idA });
+
+            if (area) {
+                const lampioni: ILampSchema[] = area.lampioni.filter(
+                    (lamp: ILampSchema) => lamp.guasto === true
+                );
+
+                if (lampioni) {
+                    res.status(200).json(lampioni);
+                } else {
+                    res.status(404).json({ error: "Nessun lampione trovato" });
+                }
+            }
+            else{
+                res.status(404).json({error: "Area non trovata"});
+            }
+        } catch (error) {
+            console.error(
+                "Errore durante il recupero dei lampioni guasti",
+                error
+            );
+            res.status(500).send(
+                "Errore durante il recupero dei lampioni guasti"
+            );
+        }
     }
-    catch (error) {
-        console.error(
-            "Errore durante il recupero dei lampioni dal database:",
-            error
-        );
-        res.status(500).send(
-            "Errore durante il recupero dei lampioni dal database"
-        );
-    }
-})
+);
 
 // RICHIESTA INFORMAZIONI SINGOLO LAMPIONE
 lampRouter.get("/:idA/lampioni/:idL", async (req: Request, res: Response) => {
