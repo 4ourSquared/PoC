@@ -17,94 +17,126 @@ const areaRouter = Router();
  * ------------------------------------------------------------------------------------------*
  */
 
-areaRouter.put("/:idA/lampioni/guasti/:idL", async (req: Request, res: Response) =>{
-    const idA = req.params.idA;
-    const idL = req.params.idL;
+areaRouter.put(
+    "/:idA/lampioni/guasti/:idL",
+    async (req: Request, res: Response) => {
+        const idA = req.params.idA;
+        const idL = req.params.idL;
 
-    parseInt(idA, 10);
-    parseInt(idL, 10);
+        parseInt(idA, 10);
+        parseInt(idL, 10);
 
-    try{
-        const area = await AreaSchema.findOne({id:idA});
+        try {
+            const area = await AreaSchema.findOne({ id: idA });
 
-        if(area){
-            const lampione = area.lampioni.find(
-                (lamp: ILampioneSchema) => lamp.id === parseInt(idL)
-            );
+            if (area) {
+                const lampione = area.lampioni.find(
+                    (lamp: ILampioneSchema) => lamp.id === parseInt(idL)
+                );
 
-            if(lampione){
-                if(!lampione.guasto){
-                    lampione.guasto = true;
-                }
-                else{
-                    res.status(409).send(`Lampione con id = ${idL} già presente nella lista guasti!`);
+                if (lampione) {
+                    if (!lampione.guasto) {
+                        lampione.guasto = true;
+                    } else {
+                        res.status(409).send(
+                            `Lampione con id = ${idL} già presente nella lista guasti!`
+                        );
+                        return;
+                    }
+                    await area.save();
+                    res.status(200).send(
+                        `Lampione con id = ${idL} segnalato come guasto`
+                    );
                     return;
+                } else {
+                    res.status(404).send(
+                        `Lampione con id = ${idL} non trovato`
+                    );
                 }
-                await area.save();
-                res.status(200).send(
-                    `Lampione con id = ${idL} segnalato come guasto`
-                );
-                return;
-            }else{
-                res.status(404).send(
-                    `Lampione con id = ${idL} non trovato`
-                );
             }
+        } catch (error) {
+            console.error(
+                "Errore durante l'aggiornamento del lampione:",
+                error
+            );
+            res.status(500).send("Errore durante l'aggiornamento del lampione");
         }
     }
-    catch (error){
-        console.error("Errore durante l'aggiornamento del lampione:", error);
-        res.status(500).send("Errore durante l'aggiornamento del lampione");
-    }
-})
+);
 
-areaRouter.put("/:idA/lampioni/guasti/remove/:idL", async (req: Request, res: Response) =>{
-    const idA = req.params.idA;
-    const idL = req.params.idL;
+areaRouter.put(
+    "/:idA/lampioni/guasti/remove/:idL",
+    async (req: Request, res: Response) => {
+        const idA = req.params.idA;
+        const idL = req.params.idL;
 
-    parseInt(idA, 10);
-    parseInt(idL, 10);
+        parseInt(idA, 10);
+        parseInt(idL, 10);
 
-    try{
-        const area = await AreaSchema.findOne({id:idA});
+        try {
+            const area = await AreaSchema.findOne({ id: idA });
 
-        if(area){
-            const lampione = area.lampioni.find(
-                (lamp: ILampioneSchema) => lamp.id === parseInt(idL)
-            );
+            if (area) {
+                const lampione = area.lampioni.find(
+                    (lamp: ILampioneSchema) => lamp.id === parseInt(idL)
+                );
 
-            if(lampione){
-                if(lampione.guasto){
-                    lampione.guasto = false;
+                if (lampione) {
+                    if (lampione.guasto) {
+                        lampione.guasto = false;
+                    } else {
+                        res.status(409).send(
+                            `Lampione con id = ${idL} non era presente nella lista guasti!`
+                        );
+                        return;
+                    }
+                    await area.save();
                 }
-                else {
-                    res.status(409).send(`Lampione con id = ${idL} non era presente nella lista guasti!`);
-                    return;
-                }
-                await area.save();
             }
+        } catch (error) {
+            console.error(
+                "Errore durante l'aggiornamento del lampione:",
+                error
+            );
+            res.status(500).send("Errore durante l'aggiornamento del lampione");
         }
-    } catch (error){
-        console.error("Errore durante l'aggiornamento del lampione:", error);
-        res.status(500).send("Errore durante l'aggiornamento del lampione");
     }
-})
+);
 
-areaRouter.get("/:idA/lampioni/guasti/",  async (req: Request, res: Response) => {
-    try{
-        const lampioni = await lampioneSchema.find({guasto: true});
-        res.status(200).json(lampioni)
+areaRouter.get(
+    "/:idA/lampioni/guasti/",
+    async (req: Request, res: Response) => {
+        const idA = req.params.idA;
+        parseInt(idA, 10);
+
+        try {
+            const area = await AreaSchema.findOne({ id: idA });
+
+            if (area) {
+                const lampioni: ILampioneSchema[] = area.lampioni.filter(
+                    (lamp: ILampioneSchema) => lamp.guasto === true
+                );
+
+                if (lampioni) {
+                    res.status(200).json(lampioni);
+                } else {
+                    res.status(404).json({ error: "Nessun lampione trovato" });
+                }
+            }
+            else{
+                res.status(404).json({error: "Area non trovata"});
+            }
+        } catch (error) {
+            console.error(
+                "Errore durante il recupero dei lampioni guasti",
+                error
+            );
+            res.status(500).send(
+                "Errore durante il recupero dei lampioni guasti"
+            );
+        }
     }
-    catch (error) {
-        console.error(
-            "Errore durante il recupero dei lampioni dal database:",
-            error
-        );
-        res.status(500).send(
-            "Errore durante il recupero dei lampioni dal database"
-        );
-    }
-})
+);
 
 // RICHIESTA INFORMAZIONI SINGOLO LAMPIONE
 areaRouter.get("/:idA/lampioni/:idL", async (req: Request, res: Response) => {
@@ -117,7 +149,7 @@ areaRouter.get("/:idA/lampioni/:idL", async (req: Request, res: Response) => {
         const area = await AreaSchema.findOne({ id: idA });
         if (area) {
             const lampione = area.lampioni.find(
-                (lamp: any) => lamp.id === parseInt(idL)
+                (lamp: ILampioneSchema) => lamp.id === parseInt(idL)
             );
             if (lampione) {
                 res.status(200).json(lampione);
@@ -160,6 +192,7 @@ areaRouter.post("/:id/lampioni", async (req: Request, res: Response) => {
     try {
         // Recupero ID area
         const { id } = req.params;
+        parseInt(id, 10);
 
         // Recupero Area
         const areaMod = await AreaSchema.findOne({ id: id });
@@ -176,7 +209,7 @@ areaRouter.post("/:id/lampioni", async (req: Request, res: Response) => {
                 stato,
                 lum: parseInt(lum, 10),
                 luogo,
-                guasto: false
+                guasto: false,
             });
 
             // Aggiunta del lampione all'array dell'area
@@ -186,11 +219,11 @@ areaRouter.post("/:id/lampioni", async (req: Request, res: Response) => {
         }
     } catch (error) {
         console.error(
-            "Errore durante il recupero delle aree illuminate dal database:",
+            "Errore durante il recupero delle aree illuminate dal database (aggiunta lampione):",
             error
         );
         res.status(500).send(
-            "Errore durante il recupero delle aree illuminate dal database"
+            "Errore durante il recupero delle aree illuminate dal database (aggiunta lampione)"
         );
     }
 });
@@ -270,8 +303,6 @@ areaRouter.delete(
         }
     }
 );
-
-
 
 // GENERAZIONE ID INCREMENTALE PER LAMPIONI
 async function generateLampId(areaId: number): Promise<number> {
@@ -434,7 +465,7 @@ areaRouter.put(
                     if (req.body.luogo !== undefined) {
                         sensore.luogo = req.body.luogo;
                     }
-                    if (req.body.raggio !== undefined){
+                    if (req.body.raggio !== undefined) {
                         sensore.raggio = req.body.raggio;
                     }
                     await area.save();
@@ -442,9 +473,7 @@ areaRouter.put(
                         `Sensore con id = ${idS} modificato con successo`
                     );
                 } else {
-                    res.status(404).send(
-                        `Sensore con id = ${idS} non trovato`
-                    );
+                    res.status(404).send(`Sensore con id = ${idS} non trovato`);
                 }
             }
         } catch (error) {
@@ -454,36 +483,30 @@ areaRouter.put(
     }
 );
 
-areaRouter.delete(
-    "/:idA/sensori/:idS",
-    async (req: Request, res: Response) => {
-        const { idA, idS } = req.params;
-        parseInt(idA, 10);
-        parseInt(idS, 10);
+areaRouter.delete("/:idA/sensori/:idS", async (req: Request, res: Response) => {
+    const { idA, idS } = req.params;
+    parseInt(idA, 10);
+    parseInt(idS, 10);
 
-        try {
-            const area = await AreaSchema.findOne({ id: idA });
+    try {
+        const area = await AreaSchema.findOne({ id: idA });
 
-            if (!area) {
-                res.status(404).send(
-                    "Errore nel recupero dell'area illuminata"
-                );
-                return;
-            } else {
-                area.sensori = area.sensori.filter(
-                    (sens: ISensoreSchema) => sens.id !== parseInt(idS)
-                );
-                await area.save();
+        if (!area) {
+            res.status(404).send("Errore nel recupero dell'area illuminata");
+            return;
+        } else {
+            area.sensori = area.sensori.filter(
+                (sens: ISensoreSchema) => sens.id !== parseInt(idS)
+            );
+            await area.save();
 
-                res.status(200).send("Sensore eliminato con successo");
-            }
-        } catch (error) {
-            console.error("Errore durante l'eliminazione del sensore:", error);
-            res.status(500).send("Errore durante l'eliminazione del sensore");
+            res.status(200).send("Sensore eliminato con successo");
         }
+    } catch (error) {
+        console.error("Errore durante l'eliminazione del sensore:", error);
+        res.status(500).send("Errore durante l'eliminazione del sensore");
     }
-);
-
+});
 
 /*
  * ------------------------------------------------------------------------------------------*
