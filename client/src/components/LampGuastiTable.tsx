@@ -5,7 +5,7 @@ import LampItem from "../types/LampItem";
 
 //TODO - Modificare le routes
 
-export default function LampGuastiTable() {
+export default function LampGuastiTable(areaId:Number) {
     const [lampioni, setLampioni] = useState<LampItem[]>([]);
     const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ export default function LampGuastiTable() {
     const loadLampioni = async () => {
         try {
             const response = await axios.get<LampItem[]>(
-                "http://localhost:5000/api/lampioni/guasti/"
+                `http://localhost:5000/api/aree/${areaId}/guasti/`
             );
             setLampioni(response.data);
         } catch (error) {
@@ -27,7 +27,7 @@ export default function LampGuastiTable() {
     const removeLampione = async (id: Number) => {
         try {
             await axios.put<LampItem[]>(
-                `http://localhost:5000/api/lampioni/guasti/remove/${id}`
+                `http://localhost:5000/api/aree/${areaId}/guasti/remove/${id}`
             );
         } catch (error) {
             console.error("Error fetching data:", error);

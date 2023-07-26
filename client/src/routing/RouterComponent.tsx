@@ -75,13 +75,22 @@ const EditAreaFormWrapper: React.FC = () => {
     return <EditAreaForm areaId={areaIdNumber} />;
 };
 
+const LampGuastiWrapper: React.FC = () => {
+    const { areaId } = useParams();
+    const areaIdNumber = areaId ? parseInt(areaId) : 0;
+    return <LampGuastiPage areaId={areaIdNumber} />;
+};
+
 const RouterComponent: React.FC = () => {
     return (
         <Router>
             <Routes>
                 <Route path="login" element={<LoginPage />} />
                 <Route element={<GuardedRoute redirectRoute="/login" />}>
-                    <Route path="api/aree/add" element={<NewAreaPage />} />
+                    <Route 
+                        path="api/aree/add"
+                        element={<NewAreaPage />} 
+                    />
                     <Route
                         path="api/aree/edit/:areaId"
                         element={<EditAreaFormWrapper />}
@@ -114,21 +123,15 @@ const RouterComponent: React.FC = () => {
                         path="api/aree/:areaId/sensori/add"
                         element={<NewSensPageWrapper />}
                     />
-                    <Route
-                        element={
-                            <GuardedRoute
-                                condition={isManutentore()}
-                                redirectRoute="/"
-                            />
-                        }
-                    >
-                        <Route
-                            path="api/lampioni/guasti"
-                            Component={LampGuastiPage}
-                        />
-                    </Route>
-                    <Route path="" element={<PageFullView />} />
                 </Route>
+
+                <Route element={<GuardedRoute condition={isManutentore()} redirectRoute="/"/>}>
+                    <Route
+                        path="api/aree/:areaId/lampioni/guasti"
+                        element={<LampGuastiWrapper />}
+                    />
+                </Route>
+                <Route path="" element={<PageFullView />} />
                 <Route path="*" element={<NotFoundPage />} />{" "}
                 {/* Pagina di fallback per tutte le altre route non corrispondenti */}
             </Routes>

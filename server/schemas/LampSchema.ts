@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 mongoose.pluralize(null);
 
-export interface ILampioneSchema extends Document{
+export interface ILampSchema extends Document{
     id: number;
     stato: string;
     lum: number;

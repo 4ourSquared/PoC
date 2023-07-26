@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, {useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LampItem from "../types/LampItem";
 import { isAmministratore, isManutentore } from "../auth/LoginState";
@@ -18,7 +18,6 @@ const LampTable: React.FC<LampTableProps> = ({
 }) => {
     const navigate = useNavigate();
 
-    // TODO - Capire come risolvere
     const [isAdmin] = useState(isAmministratore());
     const [isManut] = useState(isManutentore());
 
