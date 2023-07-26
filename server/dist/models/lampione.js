@@ -12,6 +12,7 @@ class Lampione {
         this.lum = lum;
         this.luogo = luogo;
         this.area = area;
+        this.isGuasto = false;
     }
     // Interfaccia
     getId() {
@@ -29,6 +30,9 @@ class Lampione {
     getArea() {
         return this.area;
     }
+    getGuasto() {
+        return this.isGuasto;
+    }
     setStato(stato) {
         this.stato = stato;
     }
@@ -40,6 +44,9 @@ class Lampione {
     }
     setArea(area) {
         this.area = area;
+    }
+    setGuasto(value) {
+        this.isGuasto = value;
     }
 }
 exports.Lampione = Lampione;
