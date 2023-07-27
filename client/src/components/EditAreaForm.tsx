@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import AreaItem from "../types/AreaItem";
-import Sensore from "../types/SensItem";
+import Sensore from "../types/SensorItem";
 import Lampione from "../types/LampItem";
 
 interface EditAreaFormProps{

@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import areaRoutes from "./routes/AreaRoutes";
 import lampRoutes from "./routes/LampRoutes"
-import sensRoutes from "./routes/SensRoutes"
+import sensRoutes from "./routes/SensorRoutes"
 
 
 

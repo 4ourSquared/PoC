@@ -28,7 +28,7 @@ const NewLampForm: React.FC<{ areaId: number }> = ({ areaId }) => {
       onSubmit={(values, { setSubmitting }) => {
         axios.post(`/aree/${values.area.toString()}/lampioni`, values);
         setSubmitting(false); //Serve a resettare la submit del form e riportarla False
-        navigate("/");
+        navigate(`/api/aree/${areaId}`);
       }}
     >
       <Form>

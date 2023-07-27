@@ -9,15 +9,15 @@ import { isManutentore } from "../auth/LoginState";
 import AreaSingleView from "../components/AreaSingleView";
 import EditAreaForm from "../components/EditAreaForm";
 import EditLampForm from "../components/EditLampForm";
-import EditSensForm from "../components/EditSensForm";
+import EditSensorForm from "../components/EditSensorForm";
 import LampGuastiPage from "../components/LampGuastiPage";
 import LampSingleView from "../components/LampSingleView";
 import LoginPage from "../components/LoginPage";
 import NewAreaPage from "../components/NewAreaPage";
 import NewLampPage from "../components/NewLampPage";
-import NewSensPage from "../components/NewSensPage";
+import NewSensorPage from "../components/NewSensorPage";
 import PageFullView from "../components/PageFullView";
-import SensSingleView from "../components/SensSingleView";
+import SensorSingleView from "../components/SensorSingleView";
 import GuardedRoute from "./GuardedRoute";
 
 //TODO - Probabilmente ci saranno da creare dei nuovi wrapper e delle nuove routes
@@ -49,21 +49,21 @@ const EditLampFormWrapper: React.FC = () => {
 const NewSensPageWrapper: React.FC = () => {
   const { areaId } = useParams();
   const areaIdNumber = areaId ? parseInt(areaId) : 0; // converti in numero, usa 0 se undefined
-  return <NewSensPage areaId={areaIdNumber} />;
+  return <NewSensorPage areaId={areaIdNumber} />;
 };
 
 const SensSingleViewWrapper: React.FC = () => {
   const { areaId, sensoreId } = useParams();
   const areaIdNumber = areaId ? parseInt(areaId) : 0;
   const sensoreIdNumber = sensoreId ? parseInt(sensoreId) : 0;
-  return <SensSingleView areaId={areaIdNumber} sensoreId={sensoreIdNumber} />;
+  return <SensorSingleView areaId={areaIdNumber} sensoreId={sensoreIdNumber} />;
 };
 
 const EditSensFormWrapper: React.FC = () => {
   const { areaId, sensoreId } = useParams();
   const areaIdNumber = areaId ? parseInt(areaId) : 0;
   const sensIdNumber = sensoreId ? parseInt(sensoreId) : 0;
-  return <EditSensForm areaId={areaIdNumber} sensoreId={sensIdNumber} />;
+  return <EditSensorForm areaId={areaIdNumber} sensoreId={sensIdNumber} />;
 };
 
 const EditAreaFormWrapper: React.FC = () => {

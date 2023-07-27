@@ -9,7 +9,7 @@ import * as Yup from "yup"; //Libreria per la validazione del form: si può usar
   ATTENZIONE: L'id univoco è stato implementato in questa versione, non compare
   come valore iniziale dell'id ancora, bisogna rifarlo nel DB
 */
-const NewSensForm: React.FC<{ areaId: number }> = ({ areaId }) => {
+const NewSensorForm: React.FC<{ areaId: number }> = ({ areaId }) => {
   axios.defaults.baseURL = "http://localhost:5000/api"; //URL base, così una volta in produzione basta cambiare questo
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const NewSensForm: React.FC<{ areaId: number }> = ({ areaId }) => {
         console.log(values);
         axios.post(`/aree/${values.area.toString()}/sensori`, values); // Solito invio dei dati al server
         setSubmitting(false); //Serve a resettare la submit del form e riportarla False
-        navigate("/");
+        navigate(`/api/aree/${areaId}`);
       }}
     >
       <Form>
@@ -111,4 +111,4 @@ const NewSensForm: React.FC<{ areaId: number }> = ({ areaId }) => {
     </Formik>
   );
 };
-export default NewSensForm;
+export default NewSensorForm;

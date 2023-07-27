@@ -13,26 +13,29 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
     loadLampioni();
   }, []);
 
-  const loadLampioni = async () => {
-    try {
-      const response = await axios.get<LampItem[]>(
+    const loadLampioni = async () => {
+        try {
+            const response = await axios.get<LampItem[]>(
         `http://localhost:5000/api/aree/${areaId}/lampioni/guasti/`
-      );
-      setLampioni(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+            );
+            setLampioni(response.data);
 
-  const removeLampione = async (id: Number) => {
-    try {
-      await axios.put<LampItem[]>(
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    const removeLampione = async (id: Number) => {
+        try {
+            await axios.put<LampItem[]>(
         `http://localhost:5000/api/aree/${areaId}/lampioni/guasti/remove/${id}`
-      );
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+            );
+            window.confirm("Lampione non più marcato come guasto!")
+        } catch (error) {
+            window.confirm("Errore")
+            console.error("Error fetching data:", error);
+        }
+    };
 
   return (
     <table
@@ -43,8 +46,6 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Zona Illuminata</th>
-          <th scope="col">Info</th>
-          <th scope="col">Segnala Riparazione</th>
         </tr>
       </thead>
       <tbody id="tableBody">

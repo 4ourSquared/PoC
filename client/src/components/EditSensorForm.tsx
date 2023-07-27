@@ -3,19 +3,19 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import SensItem from "../types/SensItem";
+import SensorItem from "../types/SensorItem";
 
-interface EditSensFormProps{
+interface EditSensorFormProps{
   areaId: number;
   sensoreId: number;
 }
 
-const EditSensForm: React.FC<EditSensFormProps> = ({areaId, sensoreId}) => {
+const EditSensorForm: React.FC<EditSensorFormProps> = ({areaId, sensoreId}) => {
   axios.defaults.baseURL = "http://localhost:5000/api";
   const navigate = useNavigate();
   const { id: paramId } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState(true);
-  const [sens, setSens] = useState<SensItem>({
+  const [sens, setSens] = useState<SensorItem>({
     id: Number(paramId),
     iter: "manuale",
     IP: "",
@@ -27,7 +27,7 @@ const EditSensForm: React.FC<EditSensFormProps> = ({areaId, sensoreId}) => {
   useEffect(() => {
     if (sensoreId !== 0) {
       axios
-        .get<SensItem>(`/aree/${areaId}/sensori/${sensoreId}`)
+        .get<SensorItem>(`/aree/${areaId}/sensori/${sensoreId}`)
         .then((response) => {
           setSens(response.data);
           setIsLoading(false);
@@ -137,7 +137,7 @@ const EditSensForm: React.FC<EditSensFormProps> = ({areaId, sensoreId}) => {
         <button type="submit" className="btn btn-primary">
           Modifica
         </button>
-        <Link to="/" type="button" className="btn btn-outline-primary">
+        <Link to={`/api/aree/${areaId}`} type="button" className="btn btn-outline-primary">
           Indietro
         </Link>
       </Form>
@@ -145,4 +145,4 @@ const EditSensForm: React.FC<EditSensFormProps> = ({areaId, sensoreId}) => {
   );
 };
 
-export default EditSensForm;
+export default EditSensorForm;
