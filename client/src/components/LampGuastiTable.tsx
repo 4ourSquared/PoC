@@ -16,7 +16,7 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
   const loadLampioni = async () => {
     try {
       const response = await axios.get<LampItem[]>(
-        `http://localhost:5000/api/${areaId}/lampioni/guasti/`
+        `http://localhost:5000/api/aree/${areaId}/lampioni/guasti/`
       );
       setLampioni(response.data);
     } catch (error) {
@@ -27,7 +27,7 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
   const removeLampione = async (id: Number) => {
     try {
       await axios.put<LampItem[]>(
-        `http://localhost:5000/api/lampioni/guasti/remove/${id}`
+        `http://localhost:5000/api/aree/${areaId}/lampioni/guasti/remove/${id}`
       );
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -43,6 +43,8 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Zona Illuminata</th>
+          <th scope="col">Info</th>
+          <th scope="col">Segnala Riparazione</th>
         </tr>
       </thead>
       <tbody id="tableBody">
@@ -53,7 +55,7 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
             <td>
               <button
                 className="btn btn-outline-primary"
-                onClick={() => navigate(`/api/lampioni/${lampione.id}`)}
+                onClick={() => navigate(`/api/aree/${areaId}/lampioni/${lampione.id}`)}
               >
                 Info
               </button>

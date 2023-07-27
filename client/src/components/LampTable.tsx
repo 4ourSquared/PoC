@@ -51,7 +51,7 @@ const LampTable: React.FC<LampTableProps> = ({
   };
 
   const showListaGuasti = async () => {
-    navigate(`/api/lampioni/guasti`);
+    navigate(`/api/aree/${areaId}/lampioni/guasti`);
   };
 
   return (
