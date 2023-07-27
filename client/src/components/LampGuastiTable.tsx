@@ -5,14 +5,42 @@ import LampItem from "../types/LampItem";
 
 //TODO - Modificare le routes
 
+<<<<<<< HEAD
+export default function LampGuastiTable(areaId:Number) {
+    const [lampioni, setLampioni] = useState<LampItem[]>([]);
+    const navigate = useNavigate();
+=======
 const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
   const [lampioni, setLampioni] = useState<LampItem[]>([]);
   const navigate = useNavigate();
+>>>>>>> 29c19a230ce05c45ed538c8ed152006f0610b9c4
 
   useEffect(() => {
     loadLampioni();
   }, []);
 
+<<<<<<< HEAD
+    const loadLampioni = async () => {
+        try {
+            const response = await axios.get<LampItem[]>(
+                `http://localhost:5000/api/aree/${areaId}/guasti/`
+            );
+            setLampioni(response.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    const removeLampione = async (id: Number) => {
+        try {
+            await axios.put<LampItem[]>(
+                `http://localhost:5000/api/aree/${areaId}/guasti/remove/${id}`
+            );
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+=======
   const loadLampioni = async () => {
     try {
       const response = await axios.get<LampItem[]>(
@@ -33,6 +61,7 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
       console.error("Error fetching data:", error);
     }
   };
+>>>>>>> 29c19a230ce05c45ed538c8ed152006f0610b9c4
 
   return (
     <table

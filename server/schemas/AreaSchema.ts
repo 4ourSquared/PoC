@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Schema, Document } from "mongoose";
-import lampioneSchema, { ILampioneSchema } from "./lampioneSchema";
-import sensoreSchema, {ISensoreSchema} from "./sensoreSchema";
+import lampioneSchema, { ILampSchema } from "./LampSchema";
+import sensoreSchema, {ISensorSchema} from "./SensorSchema";
 
 mongoose.pluralize(null);
 
@@ -11,8 +11,8 @@ export interface IAreaSchema extends Document {
     descrizione: string;
     latitudine: string;
     longitudine: string;
-    lampioni: ILampioneSchema[];
-    sensori: ISensoreSchema[];
+    lampioni: ILampSchema[];
+    sensori: ISensorSchema[];
 }
 
 const areaSchema : Schema<IAreaSchema> = new mongoose.Schema<IAreaSchema>({

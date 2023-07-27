@@ -16,8 +16,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const lampioneSchema_1 = __importDefault(require("../lampioneSchema"));
-const areaSchema_1 = __importDefault(require("../areaSchema"));
+const lampioneSchema_1 = __importDefault(require("../schemas/lampioneSchema"));
+const areaSchema_1 = __importDefault(require("../schemas/areaSchema"));
 const lampRouter = (0, express_1.Router)();
 lampRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
