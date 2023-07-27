@@ -1,9 +1,5 @@
 import axios from "axios";
-<<<<<<< HEAD
-import React, {useState} from "react";
-=======
 import React, { useState } from "react";
->>>>>>> 29c19a230ce05c45ed538c8ed152006f0610b9c4
 import { Link, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { isAmministratore, isManutentore } from "../auth/LoginState";
@@ -22,14 +18,9 @@ const LampTable: React.FC<LampTableProps> = ({
 }) => {
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-    const [isAdmin] = useState(isAmministratore());
-    const [isManut] = useState(isManutentore());
-=======
   // TODO - Capire come risolvere
   const [isAdmin] = useState(isAmministratore());
   const [isManut] = useState(isManutentore());
->>>>>>> 29c19a230ce05c45ed538c8ed152006f0610b9c4
 
   const deleteLampione = async (id: number) => {
     const confirmed = window.confirm(

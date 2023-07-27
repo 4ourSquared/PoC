@@ -85,63 +85,6 @@ const LampGuastiWrapper: React.FC = () => {
 };
 
 const RouterComponent: React.FC = () => {
-<<<<<<< HEAD
-    return (
-        <Router>
-            <Routes>
-                <Route path="login" element={<LoginPage />} />
-                <Route element={<GuardedRoute redirectRoute="/login" />}>
-                    <Route 
-                        path="api/aree/add"
-                        element={<NewAreaPage />} 
-                    />
-                    <Route
-                        path="api/aree/edit/:areaId"
-                        element={<EditAreaFormWrapper />}
-                    />
-                    <Route
-                        path="api/aree/:areaId"
-                        element={<AreaSingleView />}
-                    />
-                    <Route
-                        path="api/aree/:areaId/lampioni/:lampioneId"
-                        element={<LampSingleViewWrapper />}
-                    />
-                    <Route
-                        path="api/aree/:areaId/lampioni/edit/:lampioneId"
-                        element={<EditLampFormWrapper />}
-                    />
-                    <Route
-                        path="api/aree/:areaId/lampioni/add"
-                        element={<NewLampPageWrapper />}
-                    />
-                    <Route
-                        path="api/aree/:areaId/sensori/:sensoreId"
-                        element={<SensSingleViewWrapper />}
-                    />
-                    <Route
-                        path="api/aree/:areaId/sensori/edit/:sensoreId"
-                        element={<EditSensFormWrapper />}
-                    />
-                    <Route
-                        path="api/aree/:areaId/sensori/add"
-                        element={<NewSensPageWrapper />}
-                    />
-                </Route>
-
-                <Route element={<GuardedRoute condition={isManutentore()} redirectRoute="/"/>}>
-                    <Route
-                        path="api/aree/:areaId/lampioni/guasti"
-                        element={<LampGuastiWrapper />}
-                    />
-                </Route>
-                <Route path="" element={<PageFullView />} />
-                <Route path="*" element={<NotFoundPage />} />{" "}
-                {/* Pagina di fallback per tutte le altre route non corrispondenti */}
-            </Routes>
-        </Router>
-    );
-=======
   return (
     <Router>
       <Routes>
@@ -194,7 +137,6 @@ const RouterComponent: React.FC = () => {
       </Routes>
     </Router>
   );
->>>>>>> 29c19a230ce05c45ed538c8ed152006f0610b9c4
 };
 
 export default RouterComponent;
