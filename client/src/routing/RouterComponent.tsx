@@ -20,8 +20,6 @@ import PageFullView from "../components/PageFullView";
 import SensorSingleView from "../components/SensorSingleView";
 import GuardedRoute from "./GuardedRoute";
 
-//TODO - Probabilmente ci saranno da creare dei nuovi wrapper e delle nuove routes
-
 const NotFoundPage: React.FC = () => {
   return <h1>Page not found</h1>;
 };
