@@ -102,7 +102,6 @@ areaRouter.put("/edit/:id", (req, res) => __awaiter(void 0, void 0, void 0, func
         if (req.body.longitudine !== undefined) {
             areaToUpdate.longitudine = req.body.longitudine;
         }
-        //manca la parte dei sensori e dei lampioni
         yield areaToUpdate.save();
         res.status(200).send(`Area illuminata con id = ${id} aggiornato con successo`);
     }

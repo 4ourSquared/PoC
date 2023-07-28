@@ -73,13 +73,10 @@ lampRouter.put("/:idA/lampioni/guasti/remove/:idL", async (req: Request, res: Re
                     return;
                 }
                 await area.save();
-<<<<<<< HEAD
                 res.status(200).send(
                     `Lampione con id = ${idL} rimosso dalla lista guasti!`
                 );
                 return;
-=======
->>>>>>> 8e47538c86c9837c29a8a0dabb6d5576b40481dc
             }
         }
     } catch (error){

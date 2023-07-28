@@ -17,17 +17,9 @@ const LampTable: React.FC<LampTableProps> = ({
   areaId,
 }) => {
   const navigate = useNavigate();
-<<<<<<< HEAD
-
-  // TODO - Capire come risolvere
   const [isAdmin] = useState(isAmministratore());
   const [isManut] = useState(isManutentore());
 
-=======
-  const [isAdmin] = useState(isAmministratore());
-  const [isManut] = useState(isManutentore());
-
->>>>>>> 8e47538c86c9837c29a8a0dabb6d5576b40481dc
   const deleteLampione = async (id: number) => {
     const confirmed = window.confirm(
       "Sei sicuro di voler eliminare il lampione?"
@@ -49,15 +41,9 @@ const LampTable: React.FC<LampTableProps> = ({
       const response = await axios.put(
         `http://localhost:5000/api/aree/${areaId}/lampioni/guasti/${id}`
       );
-<<<<<<< HEAD
-      window.alert(response.data);
-    } catch (error: any) {
-      window.alert(error.response.data);
-=======
       const confirmed = window.confirm(response.data);
     } catch (error: any) {
       window.confirm(error.response.data);
->>>>>>> 8e47538c86c9837c29a8a0dabb6d5576b40481dc
       console.error("Errore nell'aggiunta guasto:", error);
     }
   };

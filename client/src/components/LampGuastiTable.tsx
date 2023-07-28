@@ -3,11 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LampItem from "../types/LampItem";
 
-<<<<<<< HEAD
-//TODO - Modificare le routes
-
-=======
->>>>>>> 8e47538c86c9837c29a8a0dabb6d5576b40481dc
 const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
   const [lampioni, setLampioni] = useState<LampItem[]>([]);
   const navigate = useNavigate();
@@ -29,7 +24,6 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
     };
 
     const removeLampione = async (id: Number) => {
-<<<<<<< HEAD
       
         try {
             const response = await axios.put<LampItem[]>(
@@ -42,17 +36,6 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
             console.error("Error fetching data:", error);
         }
 
-=======
-        try {
-            await axios.put<LampItem[]>(
-        `http://localhost:5000/api/aree/${areaId}/lampioni/guasti/remove/${id}`
-            );
-            window.confirm("Lampione non più marcato come guasto!")
-        } catch (error) {
-            window.confirm("Errore")
-            console.error("Error fetching data:", error);
-        }
->>>>>>> 8e47538c86c9837c29a8a0dabb6d5576b40481dc
     };
 
   return (
@@ -84,11 +67,7 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
             <td>
               <button
                 className="btn btn-dark"
-<<<<<<< HEAD
                 onClick={() => {removeLampione(lampione.id);}}
-=======
-                onClick={() => {removeLampione(lampione.id); navigate(`/`)}}
->>>>>>> 8e47538c86c9837c29a8a0dabb6d5576b40481dc
               >
                 Marca come riparato
               </button>
