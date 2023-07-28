@@ -1,7 +1,7 @@
 //INTERFACCIA: serve ad ottenere le info sul tipo di file che stiamo importando
 //dalla richiesta GET al server
 
-interface SensItem {
+interface SensorItem {
   id: number;
   iter: string;
   IP: string;
@@ -10,4 +10,4 @@ interface SensItem {
   area: number;
 }
 
-export default SensItem;
+export default SensorItem;

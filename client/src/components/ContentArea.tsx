@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import LampTable from './LampTable'
-import SensTable from './SensTable'
+import SensorTable from './SensorTable'
 
 /*
     CLASSE CONTENT: classe che renderizza automaticamente il content. Stile associato a Bootstrap.

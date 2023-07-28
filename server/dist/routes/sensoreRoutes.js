@@ -16,8 +16,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const sensoreSchema_1 = __importDefault(require("../sensoreSchema"));
-const areaSchema_1 = __importDefault(require("../areaSchema"));
+const sensoreSchema_1 = __importDefault(require("../schemas/sensoreSchema"));
+const areaSchema_1 = __importDefault(require("../schemas/areaSchema"));
 const sensRouter = (0, express_1.Router)();
 sensRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

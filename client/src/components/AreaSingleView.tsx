@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import AreaItem from "../types/AreaItem";
 import LampItem from "../types/LampItem";
-import SensItem from "../types/SensItem";
+import SensorItem from "../types/SensorItem";
 import LampTable from "./LampTable";
-import SensTable from "./SensTable";
+import SensorTable from "./SensorTable";
 
 const AreaSingleView: React.FC = () => {
     const [area, setArea] = useState<AreaItem | null>(null);
@@ -39,7 +39,7 @@ const AreaSingleView: React.FC = () => {
             }
 
             try {
-                sensoriResponse = await axios.get<SensItem[]>(
+                sensoriResponse = await axios.get<SensorItem[]>(
                     `/aree/${areaId}/sensori`
                 );
                 console.log("Sensori Response:", sensoriResponse.data);
@@ -97,7 +97,7 @@ const AreaSingleView: React.FC = () => {
                     </div>
                     <h2>Sensori Collegati</h2>
                     <div className="row">
-                        <SensTable
+                        <SensorTable
                             sensori={area.sensori}
                             areaId={area.id}
                             onSensoreDeleted={(id) => {

@@ -50,7 +50,7 @@ const LampSingleView: React.FC<LampSingleViewProps> = ({areaId, lampioneId}) => 
         <p>{lamp}</p>
         </div>
       )}
-      <Link to="/" type="button" className="btn btn-primary">
+      <Link to={`/api/aree/${areaId}`} type="button" className="btn btn-primary">
         Indietro
       </Link>
     </div>

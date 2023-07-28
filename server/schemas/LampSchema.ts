@@ -1,12 +1,13 @@
 import mongoose, { Schema } from "mongoose";
 mongoose.pluralize(null);
 
-export interface ILampioneSchema extends Document{
+export interface ILampSchema extends Document{
     id: number;
     stato: string;
     lum: number;
     luogo: string;
     area: number;
+    guasto: boolean;
 }
 
 const lampioneSchema : Schema= new mongoose.Schema({
@@ -20,7 +21,8 @@ const lampioneSchema : Schema= new mongoose.Schema({
     area: {
         type: Number,
         required: true,
-    }
+    },
+    guasto: Boolean
 });
 
 export default mongoose.model("lampioni", lampioneSchema);

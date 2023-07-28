@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 mongoose.pluralize(null);
 
-export interface ISensoreSchema extends Document{
+export interface ISensorSchema extends Document{
     id: number;
     iter: string;
     IP: string;

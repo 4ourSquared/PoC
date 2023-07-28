@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+import useLogoutMechanism from '../auth/LogoutMechanism'
 
 /*
     CLASSE BREADCRUMB: renderizza automaticamente il breadcrumb della pagina. Stile associato a Bootstrap. 
@@ -20,14 +21,21 @@ class Breadcrumb extends Component{
 /*
     CLASSE HEADER: renderizza automaticamente l'header della pagina (breadcrumb incluso). Stile associato a Bootstrap.
 */
-export default class Header extends Component{
-    render(){
+export default function Header(){
+
+    let logout = useLogoutMechanism()
+    let navigate = useNavigate()
+        
+        function logoutRedirect() {
+            logout()
+            navigate("/login")
+        }
+
         return(
             <header>
                 <h1>Lumos Minima</h1>
-                <Link to="/" type="button" style={{float:"right"}}>Esci</Link>
+                <button onMouseDown={()=>logoutRedirect()} className="btn btn-primary" style={{float:"right"}}> Esci </button>
                 <Breadcrumb />
             </header>
         )
-    }
 }

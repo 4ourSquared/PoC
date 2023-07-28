@@ -21,6 +21,7 @@ const EditLampForm: React.FC<EditLampFormProps> = ({areaId, lampioneId}) => {
     lum: 0,
     luogo: "",
     area: 0,
+    guasto: false
   });
 
   useEffect(() => {
@@ -124,12 +125,12 @@ const EditLampForm: React.FC<EditLampFormProps> = ({areaId, lampioneId}) => {
         </div>
 
         <button type="submit" className="btn btn-primary">
-          Crea
+          Modifica
         </button>
         <button type="reset" className="btn btn-secondary">
           Resetta
         </button>
-        <Link to="/" type="button" className="btn btn-outline-primary">
+        <Link to={`/api/aree/${areaId}`} type="button" className="btn btn-outline-primary">
           Indietro
         </Link>
       </Form>

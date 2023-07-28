@@ -1,14 +1,14 @@
 import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import SensItem from "../types/SensItem";
+import SensorItem from "../types/SensorItem";
 
-interface SensTableProps {
-    sensori: SensItem[];
+interface SensorTableProps {
+    sensori: SensorItem[];
     onSensoreDeleted: (id: number) => void; // Aggiunta di una nuova prop
     areaId: number; // Aggiunta dell'ID dell'area come prop
 }
-const SensTable: React.FC<SensTableProps> = ({
+const SensorTable: React.FC<SensorTableProps> = ({
     sensori,
     onSensoreDeleted,
     areaId,
@@ -105,4 +105,4 @@ const SensTable: React.FC<SensTableProps> = ({
         </div>
     );
 };
-export default SensTable;
+export default SensorTable;

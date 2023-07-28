@@ -7,6 +7,7 @@ interface LampItem {
   lum: number;
   luogo: string;
   area: number;
+  guasto:boolean;
 }
 
 export default LampItem;
