@@ -26,15 +26,18 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
     };
 
     const removeLampione = async (id: Number) => {
+      
         try {
-            await axios.put<LampItem[]>(
+            const response = await axios.put<LampItem[]>(
         `http://localhost:5000/api/aree/${areaId}/lampioni/guasti/remove/${id}`
             );
-            window.confirm("Lampione non più marcato come guasto!")
-        } catch (error) {
-            window.confirm("Errore")
+            window.alert(response.data)
+            loadLampioni()
+        } catch (error: any) {
+            window.alert(error.response.data);
             console.error("Error fetching data:", error);
         }
+
     };
 
   return (
@@ -46,6 +49,8 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Zona Illuminata</th>
+          <th scope="col">Informazioni</th>
+          <th scope="col">Marca come Riparato</th>
         </tr>
       </thead>
       <tbody id="tableBody">
@@ -64,7 +69,7 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
             <td>
               <button
                 className="btn btn-dark"
-                onClick={() => removeLampione(lampione.id)}
+                onClick={() => {removeLampione(lampione.id);}}
               >
                 Marca come riparato
               </button>

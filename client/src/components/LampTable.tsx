@@ -43,9 +43,9 @@ const LampTable: React.FC<LampTableProps> = ({
       const response = await axios.put(
         `http://localhost:5000/api/aree/${areaId}/lampioni/guasti/${id}`
       );
-      const confirmed = window.confirm(response.data);
+      window.alert(response.data);
     } catch (error: any) {
-      window.confirm(error.response.data);
+      window.alert(error.response.data);
       console.error("Errore nell'aggiunta guasto:", error);
     }
   };
