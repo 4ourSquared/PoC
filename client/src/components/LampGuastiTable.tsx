@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LampItem from "../types/LampItem";
 
-//TODO - Modificare le routes
-
 const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
   const [lampioni, setLampioni] = useState<LampItem[]>([]);
   const navigate = useNavigate();
