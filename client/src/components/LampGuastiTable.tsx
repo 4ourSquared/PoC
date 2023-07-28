@@ -46,6 +46,8 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Zona Illuminata</th>
+          <th scope="col">Informazioni</th>
+          <th scope="col">Marca come Riparato</th>
         </tr>
       </thead>
       <tbody id="tableBody">
@@ -64,7 +66,7 @@ const LampGuastiTable: React.FC<{ areaId: number }> = ({ areaId }) => {
             <td>
               <button
                 className="btn btn-dark"
-                onClick={() => removeLampione(lampione.id)}
+                onClick={() => {removeLampione(lampione.id); navigate(`/`)}}
               >
                 Marca come riparato
               </button>

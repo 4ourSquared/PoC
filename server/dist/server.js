@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const AreaRoutes_1 = __importDefault(require("./routes/AreaRoutes"));
 const LampRoutes_1 = __importDefault(require("./routes/LampRoutes"));
-const SensRoutes_1 = __importDefault(require("./routes/SensRoutes"));
+const SensorRoutes_1 = __importDefault(require("./routes/SensorRoutes"));
 /*
     SERVER: questo file al momento rappresenta il server in tutto e per tutto. Al suo interno si trovano tutti i metodi attualmente sviluppati per la gestione delle richieste in arrivo
             dal client
@@ -48,7 +48,7 @@ db.once("open", () => {
 // Collegamento alla route per i sensori
 app.use("/api/aree", AreaRoutes_1.default);
 app.use("/api/aree", LampRoutes_1.default);
-app.use("/api/aree", SensRoutes_1.default);
+app.use("/api/aree", SensorRoutes_1.default);
 // Accesso alla pagina
 app.get("/", (req, res) => {
     console.log("Ricevuta richiesta GET su /");
