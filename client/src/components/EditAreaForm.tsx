@@ -123,7 +123,8 @@ const EditAreaForm: React.FC<EditAreaFormProps> = ({areaId}) => {
           <Field name="longitudine" type="text" className="form-control" />
           <ErrorMessage name="longitudine" />
         </div>
-
+        
+        {/*
         <div className="form-group">
           <label htmlFor="sensori">Sensori</label>
           <Field name="sensori" as="select" multiple className="form-control">
@@ -143,6 +144,7 @@ const EditAreaForm: React.FC<EditAreaFormProps> = ({areaId}) => {
           </Field>
           <ErrorMessage name="lampioni" />
         </div>
+        */}
 
         <button type="submit" className="btn btn-primary">
           Modifica

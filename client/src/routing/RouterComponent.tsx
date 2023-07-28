@@ -125,7 +125,7 @@ const RouterComponent: React.FC = () => {
           >
             <Route
               path="api/aree/:areaId/lampioni/guasti"
-              element={<GuastiPageWrapper />} //TODO - Errore "Page not found"
+              element={<LampGuastiWrapper />}
             />
           </Route>
           <Route path="" element={<PageFullView />} />

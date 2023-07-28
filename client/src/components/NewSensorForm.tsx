@@ -94,7 +94,7 @@ const NewSensorForm: React.FC<{ areaId: number }> = ({ areaId }) => {
         </div>
         <div className="form-group">
           <label htmlFor="area">ID Area di Riferimento</label>
-          <Field name="area" type="number" className="form-control"/>
+          <Field name="area" type="number" className="form-control" readOnly/>
         </div>
         <button type="submit" className="btn btn-primary">
           Crea
