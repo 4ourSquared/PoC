@@ -109,7 +109,10 @@ areaRouter.put("/edit/:id", async (req: Request, res: Response) => {
         if (req.body.longitudine !== undefined) {
             areaToUpdate.longitudine = req.body.longitudine;
         }
+<<<<<<< HEAD
         //manca la parte dei sensori e dei lampioni
+=======
+>>>>>>> 8e47538c86c9837c29a8a0dabb6d5576b40481dc
 
         await areaToUpdate.save();
 

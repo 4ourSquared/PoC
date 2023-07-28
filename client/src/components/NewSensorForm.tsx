@@ -6,8 +6,6 @@ import * as Yup from "yup"; //Libreria per la validazione del form: si può usar
 
 /*
   CLASSE NEWSENSFORM: classe che renderizza automaticamente la struttura HTML della pagina di aggiunta di un sensore, definendo anche il metodo per la trasmissione dei dati al server. Stile associato a Bootstrap.
-  ATTENZIONE: L'id univoco è stato implementato in questa versione, non compare
-  come valore iniziale dell'id ancora, bisogna rifarlo nel DB
 */
 const NewSensorForm: React.FC<{ areaId: number }> = ({ areaId }) => {
   axios.defaults.baseURL = "http://localhost:5000/api"; //URL base, così una volta in produzione basta cambiare questo
