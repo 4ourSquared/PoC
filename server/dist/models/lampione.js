@@ -6,11 +6,13 @@ exports.Lampione = void 0;
  */
 class Lampione {
     // Costruttore
-    constructor(id = 0, stato, lum, luogo) {
+    constructor(id = 0, stato, lum, luogo, area) {
         this.id = id;
         this.stato = stato;
         this.lum = lum;
         this.luogo = luogo;
+        this.area = area;
+        this.isGuasto = false;
     }
     // Interfaccia
     getId() {
@@ -24,6 +26,27 @@ class Lampione {
     }
     getLuogo() {
         return this.luogo;
+    }
+    getArea() {
+        return this.area;
+    }
+    getGuasto() {
+        return this.isGuasto;
+    }
+    setStato(stato) {
+        this.stato = stato;
+    }
+    setLum(lum) {
+        this.lum = lum;
+    }
+    setLuogo(luogo) {
+        this.luogo = luogo;
+    }
+    setArea(area) {
+        this.area = area;
+    }
+    setGuasto(value) {
+        this.isGuasto = value;
     }
 }
 exports.Lampione = Lampione;
