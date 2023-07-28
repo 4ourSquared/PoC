@@ -16,8 +16,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const sensoreSchema_1 = __importDefault(require("../sensoreSchema"));
-const sensoreSchema_2 = __importDefault(require("../sensoreSchema"));
+const sensoreSchema_1 = __importDefault(require("../schemas/sensoreSchema"));
+const areaSchema_1 = __importDefault(require("../schemas/areaSchema"));
 const sensRouter = (0, express_1.Router)();
 sensRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -46,17 +46,34 @@ sensRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 }));
 sensRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { iter, IP, luogo, raggio } = req.body;
-    const id = yield generateIdSensori();
-    const newSensore = new sensoreSchema_1.default({
-        id,
-        iter,
-        IP,
-        luogo,
-        raggio: parseInt(raggio, 10),
-    });
+    const { iter, IP, luogo, raggio, area } = req.body;
     try {
+        const id = yield generateIdSensori();
+        const newSensore = new sensoreSchema_1.default({
+            id,
+            iter,
+            IP,
+            luogo,
+            raggio: parseInt(raggio, 10),
+            area: parseInt(area, 10),
+        });
         const savedSensore = yield newSensore.save();
+        try {
+            const designedArea = yield areaSchema_1.default.findOne({ id: parseInt(area, 10) });
+            if (!designedArea) {
+                res.status(404).json({ error: "Area illuminata per l'inserimento del sensore non trovata" });
+            }
+            else {
+                console.log("Area Trovata!");
+                designedArea.sensori.push(newSensore.id);
+                designedArea.save();
+                console.log(designedArea);
+            }
+        }
+        catch (error) {
+            console.error("Errore durante il recupero dell'area illuminata dal database:", error);
+            res.status(500).send("Errore durante il recupero dell'area illuminata dal database");
+        }
         res.status(200).json(savedSensore);
     }
     catch (error) {
@@ -67,7 +84,7 @@ sensRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* (
 function generateIdSensori() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const maxId = yield sensoreSchema_2.default
+            const maxId = yield sensoreSchema_1.default
                 .findOne()
                 .sort({ id: -1 })
                 .select("id")

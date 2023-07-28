@@ -1,40 +1,145 @@
-import React, {useState} from "react";
-import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import EditForm from "../components/EditForm";
-import EditSensForm from "../components/EditSensForm";
-import NewLampPage from "../components/NewLampPage";
-import NewSensPage from "../components/NewSensPage";
-import LampsSingleView from "../components/LampSingleView";
-import SensSingleView from "../components/SensSingleView";
+import React from "react";
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  useParams,
+} from "react-router-dom";
+import { isManutentore } from "../auth/LoginState";
+import AreaSingleView from "../components/AreaSingleView";
+import EditAreaForm from "../components/EditAreaForm";
+import EditLampForm from "../components/EditLampForm";
+import EditSensorForm from "../components/EditSensorForm";
+import LampGuastiPage from "../components/LampGuastiPage";
+import LampSingleView from "../components/LampSingleView";
 import LoginPage from "../components/LoginPage";
+import NewAreaPage from "../components/NewAreaPage";
+import NewLampPage from "../components/NewLampPage";
+import NewSensorPage from "../components/NewSensorPage";
 import PageFullView from "../components/PageFullView";
+import SensorSingleView from "../components/SensorSingleView";
 import GuardedRoute from "./GuardedRoute";
+<<<<<<< HEAD
 
+//TODO - Probabilmente ci saranno da creare dei nuovi wrapper e delle nuove routes
+=======
+>>>>>>> 8e47538c86c9837c29a8a0dabb6d5576b40481dc
 
-/*
-  ANONYMOUS FUNCTION ROUTERCOMPONENT: componente fittizio che si pone l'obiettivo di gestire il routing dell'applicazione. Qualora si digitasse il "path", verrebbe renderizzato sulla pagina
-                                      il "component"
-*/
+const NotFoundPage: React.FC = () => {
+  return <h1>Page not found</h1>;
+};
+
+const NewLampPageWrapper: React.FC = () => {
+  const { areaId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0; // converti in numero, usa 0 se undefined
+  return <NewLampPage areaId={areaIdNumber} />;
+};
+
+const LampSingleViewWrapper: React.FC = () => {
+  const { areaId, lampioneId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0;
+  const lampioneIdNumber = lampioneId ? parseInt(lampioneId) : 0;
+  return <LampSingleView areaId={areaIdNumber} lampioneId={lampioneIdNumber} />;
+};
+
+const EditLampFormWrapper: React.FC = () => {
+  const { areaId, lampioneId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0;
+  const lampioneIdNumber = lampioneId ? parseInt(lampioneId) : 0;
+  return <EditLampForm areaId={areaIdNumber} lampioneId={lampioneIdNumber} />;
+};
+
+const NewSensPageWrapper: React.FC = () => {
+  const { areaId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0; // converti in numero, usa 0 se undefined
+  return <NewSensorPage areaId={areaIdNumber} />;
+};
+
+const SensSingleViewWrapper: React.FC = () => {
+  const { areaId, sensoreId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0;
+  const sensoreIdNumber = sensoreId ? parseInt(sensoreId) : 0;
+  return <SensorSingleView areaId={areaIdNumber} sensoreId={sensoreIdNumber} />;
+};
+
+const EditSensFormWrapper: React.FC = () => {
+  const { areaId, sensoreId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0;
+  const sensIdNumber = sensoreId ? parseInt(sensoreId) : 0;
+  return <EditSensorForm areaId={areaIdNumber} sensoreId={sensIdNumber} />;
+};
+
+const EditAreaFormWrapper: React.FC = () => {
+  const { areaId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0;
+  return <EditAreaForm areaId={areaIdNumber} />;
+};
+
+const GuastiPageWrapper: React.FC = () => {
+  const { areaId } = useParams();
+  const areaIdNumber = areaId ? parseInt(areaId) : 0;
+  return <LampGuastiPage areaId={areaIdNumber} />;
+};
+
+const LampGuastiWrapper: React.FC = () => {
+    const { areaId } = useParams();
+    const areaIdNumber = areaId ? parseInt(areaId) : 0;
+    return <LampGuastiPage areaId={areaIdNumber} />;
+};
+
 const RouterComponent: React.FC = () => {
   return (
     <Router>
       <Routes>
-
-      <Route path="login" Component={LoginPage} />
-
-      <Route element={<GuardedRoute redirectRoute="/login"/>}>
-        <Route path="/" Component={PageFullView} />
-        <Route path="api/lampioni/:id" Component={LampsSingleView} />
-        <Route path="api/lampioni/edit/:id" Component={EditForm} />
-        <Route path="api/lampioni/add" Component={NewLampPage} />
-        <Route path="api/sensori/:id" Component={SensSingleView} />
-        <Route path="api/sensori/add" Component={NewSensPage} />
-        <Route path="api/sensori/edit/:id" Component={EditSensForm} />
-      </Route>
-
-        
+        <Route path="login" element={<LoginPage />} />
+        <Route element={<GuardedRoute redirectRoute="/login" />}>
+          <Route path="api/aree/add" element={<NewAreaPage />} />
+          <Route
+            path="api/aree/edit/:areaId"
+            element={<EditAreaFormWrapper />}
+          />
+          <Route path="api/aree/:areaId" element={<AreaSingleView />} />
+          <Route
+            path="api/aree/:areaId/lampioni/:lampioneId"
+            element={<LampSingleViewWrapper />}
+          />
+          <Route
+            path="api/aree/:areaId/lampioni/edit/:lampioneId"
+            element={<EditLampFormWrapper />}
+          />
+          <Route
+            path="api/aree/:areaId/lampioni/add"
+            element={<NewLampPageWrapper />}
+          />
+          <Route
+            path="api/aree/:areaId/sensori/:sensoreId"
+            element={<SensSingleViewWrapper />}
+          />
+          <Route
+            path="api/aree/:areaId/sensori/edit/:sensoreId"
+            element={<EditSensFormWrapper />}
+          />
+          <Route
+            path="api/aree/:areaId/sensori/add"
+            element={<NewSensPageWrapper />}
+          />
+          <Route
+            element={
+              <GuardedRoute condition={isManutentore()} redirectRoute="/" />
+            }
+          >
+            <Route
+              path="api/aree/:areaId/lampioni/guasti"
+              element={<GuastiPageWrapper />} //TODO - Errore "Page not found"
+            />
+          </Route>
+          <Route path="" element={<PageFullView />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />{" "}
+        {/* Pagina di fallback per tutte le altre route non corrispondenti */}
       </Routes>
     </Router>
   );
 };
+
 export default RouterComponent;

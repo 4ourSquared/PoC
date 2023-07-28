@@ -6,16 +6,14 @@ import * as Yup from "yup"; //Libreria per la validazione del form: si può usar
 
 /*
   CLASSE NEWSENSFORM: classe che renderizza automaticamente la struttura HTML della pagina di aggiunta di un sensore, definendo anche il metodo per la trasmissione dei dati al server. Stile associato a Bootstrap.
-  ATTENZIONE: L'id univoco è stato implementato in questa versione, non compare
-  come valore iniziale dell'id ancora, bisogna rifarlo nel DB
 */
-const NewSensForm: React.FC = () => {
+const NewSensorForm: React.FC<{ areaId: number }> = ({ areaId }) => {
   axios.defaults.baseURL = "http://localhost:5000/api"; //URL base, così una volta in produzione basta cambiare questo
   const navigate = useNavigate();
 
   return (
     <Formik
-      initialValues={{ id: 0, iter: "manuale", IP: "", luogo: "", raggio: 0 }}
+      initialValues={{ id: 0, iter: "manuale", IP: "", luogo: "", raggio: 0, area: areaId }}
       validationSchema={Yup.object({
       IP: Yup.string()
         .matches(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/, "Deve essere un indirizzo IP valido")
@@ -29,9 +27,9 @@ const NewSensForm: React.FC = () => {
 
       onSubmit={(values, { setSubmitting }) => {
         console.log(values);
-        axios.post("/sensori", values); // Solito invio dei dati al server
+        axios.post(`/aree/${values.area.toString()}/sensori`, values); // Solito invio dei dati al server
         setSubmitting(false); //Serve a resettare la submit del form e riportarla False
-        navigate("/");
+        navigate(`/api/aree/${areaId}`);
       }}
     >
       <Form>
@@ -94,6 +92,10 @@ const NewSensForm: React.FC = () => {
             Indica il raggio d'azione (in metri) del sensore.
           </small>
         </div>
+        <div className="form-group">
+          <label htmlFor="area">ID Area di Riferimento</label>
+          <Field name="area" type="number" className="form-control"/>
+        </div>
         <button type="submit" className="btn btn-primary">
           Crea
         </button>
@@ -107,4 +109,4 @@ const NewSensForm: React.FC = () => {
     </Formik>
   );
 };
-export default NewSensForm;
+export default NewSensorForm;

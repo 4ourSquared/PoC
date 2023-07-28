@@ -1,10 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import SensItem from "../types/SensItem";
+import SensorItem from "../types/SensorItem";
 
-const SensSingleView: React.FC = () => {
-  const [sens, setSens] = useState<SensItem | null>(null);
+interface SensorSingleViewProps{
+  areaId: number;
+  sensoreId: number;
+}
+
+const SensorSingleView: React.FC<SensorSingleViewProps> = ({areaId, sensoreId}) => {
+  const [sens, setSens] = useState<SensorItem | null>(null);
   const { id } = useParams<{ id: string }>(); // Accesso al parametro id passandolo a useParams()
 
   useEffect(() => {
@@ -15,7 +20,7 @@ const SensSingleView: React.FC = () => {
   const fetchData = async () => {
     axios.defaults.baseURL = "http://localhost:5000/api";
     try {
-      const response = await axios.get<SensItem>(`sensori/${id}`);
+      const response = await axios.get<SensorItem>(`/aree/${areaId}/sensori/${sensoreId}`);
       setSens(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -35,16 +40,17 @@ const SensSingleView: React.FC = () => {
             <li>Indirizzo IP: {sens.IP}</li>
             <li>Luogo: {sens.luogo}</li>
             <li>Raggio d'azione: {sens.raggio}</li>
+            <li>ID Area di Riferimento: {sens.area}</li>
           </ul>
         </div>
       ) : (
         <p>Nessun dato disponibile</p>
       )}
-      <Link to="/" type="button" className="btn btn-primary">
+      <Link to={`/api/aree/${areaId}`} type="button" className="btn btn-primary">
         Indietro
       </Link>
     </div>
   );
 };
 
-export default SensSingleView;
+export default SensorSingleView;

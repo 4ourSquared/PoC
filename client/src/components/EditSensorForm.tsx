@@ -3,32 +3,38 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import SensItem from "../types/SensItem";
+import SensorItem from "../types/SensorItem";
 
-const EditSensForm: React.FC = () => {
+interface EditSensorFormProps{
+  areaId: number;
+  sensoreId: number;
+}
+
+const EditSensorForm: React.FC<EditSensorFormProps> = ({areaId, sensoreId}) => {
   axios.defaults.baseURL = "http://localhost:5000/api";
   const navigate = useNavigate();
   const { id: paramId } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState(true);
-  const [sens, setSens] = useState<SensItem>({
+  const [sens, setSens] = useState<SensorItem>({
     id: Number(paramId),
     iter: "manuale",
     IP: "",
     luogo: "",
     raggio: 0,
+    area: 0,
   });
 
   useEffect(() => {
-    if (sens.id !== 0) {
+    if (sensoreId !== 0) {
       axios
-        .get<SensItem>(`/sensori/${sens.id}`)
+        .get<SensorItem>(`/aree/${areaId}/sensori/${sensoreId}`)
         .then((response) => {
           setSens(response.data);
           setIsLoading(false);
         })
         .catch((err) => console.log(err));
     }
-  }, [sens.id]);
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -42,6 +48,7 @@ const EditSensForm: React.FC = () => {
         IP: sens.IP || "",
         luogo: sens.luogo || "",
         raggio: sens.raggio || 0,
+        area: sens.area || 0,
       }}
       validationSchema={Yup.object({
         IP: Yup.string()
@@ -54,7 +61,7 @@ const EditSensForm: React.FC = () => {
           .trim(),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        const url = `/sensori/edit/${sens.id}`;
+        const url = `aree/${areaId}/sensori/edit/${sensoreId}`;
         axios
           .put(url, values)
           .then(() => {
@@ -122,10 +129,15 @@ const EditSensForm: React.FC = () => {
           </small>
         </div>
 
+        <div className="form-group">
+          <label htmlFor="area">ID Area di Riferimento</label>
+          <Field name="area" type="text" className="form-control" readOnly />
+        </div>
+
         <button type="submit" className="btn btn-primary">
           Modifica
         </button>
-        <Link to="/" type="button" className="btn btn-outline-primary">
+        <Link to={`/api/aree/${areaId}`} type="button" className="btn btn-outline-primary">
           Indietro
         </Link>
       </Form>
@@ -133,4 +145,4 @@ const EditSensForm: React.FC = () => {
   );
 };
 
-export default EditSensForm;
+export default EditSensorForm;
