@@ -17,8 +17,6 @@ const LampTable: React.FC<LampTableProps> = ({
   areaId,
 }) => {
   const navigate = useNavigate();
-
-  // TODO - Capire come risolvere
   const [isAdmin] = useState(isAmministratore());
   const [isManut] = useState(isManutentore());
 
